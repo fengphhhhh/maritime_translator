@@ -65,22 +65,6 @@ DynamicLibrary _openLibrary() {
   if (override != null && override.isNotEmpty) {
     return DynamicLibrary.open(override);
   }
-  if (Platform.isIOS) {
-    const paths = [
-      'llama_ggml.framework/llama_ggml',
-      'Frameworks/llama_ggml.framework/llama_ggml',
-    ];
-    Object? lastError;
-    for (final path in paths) {
-      try {
-        return DynamicLibrary.open(path);
-      } on Object catch (error) {
-        lastError = error;
-      }
-    }
-    throw ArgumentError(
-      'Could not open llama_ggml.framework on iOS: $lastError',
-    );
-  }
+  // iOS/macOS: static pod — symbols are in the main executable.
   return DynamicLibrary.process();
 }

@@ -24,7 +24,7 @@ backend so a small instruct model can translate on the iPhone GPU.
 
   # Only the C ABI bridge is public; the vendored ggml tree must stay private.
   s.public_header_files = 'Classes/llama_ggml.h'
-  s.static_framework = false
+  s.static_framework = true
 
   s.platform = :ios, '15.6'
   s.ios.deployment_target  = '15.6'

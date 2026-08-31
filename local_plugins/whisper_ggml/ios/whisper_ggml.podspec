@@ -26,7 +26,7 @@ whisper.cpp v1.9.1. Upstream ships only the CPU/Accelerate backend on iOS.
   # Only the FFI bridge header is public; ggml stays private.
   s.public_header_files = 'Classes/whisper_ggml_ffi.h'
   s.preserve_paths = 'Classes/whisper/ggml/src/ggml-metal/*.metal', 'Classes/whisper_ggml.exports'
-  s.static_framework = false
+  s.static_framework = true
 
   s.platform = :ios, '15.6'
   s.ios.deployment_target  = '15.6'
