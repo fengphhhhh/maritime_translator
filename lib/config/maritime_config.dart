@@ -19,7 +19,21 @@ abstract final class MaritimeConfig {
 
   /// Number of decoder threads. Whisper on Apple silicon saturates around the
   /// performance-core count; more threads mostly add scheduling overhead.
+  ///
+  /// Only the parts of inference that stay on the CPU are affected while
+  /// [useMetal] is on.
   static const int decoderThreads = 4;
+
+  /// Run inference on the iPhone GPU through ggml's Metal backend.
+  ///
+  /// A turbo-class model on the CPU alone does not fit the few-seconds budget
+  /// a bridge conversation allows, which is why `local_plugins/whisper_ggml`
+  /// exists: the published plugin is CPU-only on iOS.
+  ///
+  /// Turn this off to fall back to the CPU/Accelerate backend without a
+  /// rebuild — worth trying if a specific device produces garbled transcripts
+  /// or runs out of memory under Metal.
+  static const bool useMetal = true;
 
   // ---------------------------------------------------------------------------
   // Hotwords

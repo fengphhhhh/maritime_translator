@@ -1,0 +1,7 @@
+# Vendored third-party sources. Upstream's lint rules are not our concern
+# here, and including a lint package would make `flutter analyze` at the repo
+# root fail whenever this fork has not had its own `pub get` run.
+analyzer:
+  exclude:
+    - build/**
+    - ios/**

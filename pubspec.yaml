@@ -36,7 +36,12 @@ dependencies:
   cupertino_icons: ^1.0.8
   record: ^7.1.1
   path_provider: ^2.1.6
-  whisper_ggml: ^2.6.0
+
+  # Fork of whisper_ggml 2.6.0. The published package builds whisper.cpp
+  # CPU-only on iOS; this copy vendors in the ggml Metal backend so
+  # large-v3-turbo runs on the iPhone GPU. See local_plugins/whisper_ggml.
+  whisper_ggml:
+    path: local_plugins/whisper_ggml
 
 dev_dependencies:
   flutter_test:

@@ -12,6 +12,7 @@ import 'package:marine_voice_translator/services/pcm_recorder.dart';
 import 'package:marine_voice_translator/theme/night_theme.dart';
 import 'package:marine_voice_translator/widgets/push_to_talk_button.dart';
 import 'package:marine_voice_translator/widgets/transcript_stage.dart';
+import 'package:whisper_ggml/whisper_ggml.dart';
 
 /// Pumps [TranscriptStage] on its own so each pipeline state can be inspected
 /// without a microphone or a whisper model.
@@ -219,6 +220,22 @@ void main() {
       );
       expect(AsrLanguage.english.code, 'en');
       expect(AsrLanguage.chinese.code, 'zh');
+    });
+  });
+
+  group('Metal 加速', () {
+    test('应用默认请求 GPU 推理', () {
+      expect(MaritimeConfig.useMetal, isTrue);
+    });
+
+    // useGpu only exists on the Metal fork in local_plugins/. Pointing
+    // pubspec.yaml back at the published whisper_ggml would silently drop the
+    // app to CPU-only inference; instead it stops compiling, here.
+    test('依赖的是带 Metal 的插件分支', () {
+      const request = TranscribeRequest(audio: '/tmp/clip.wav');
+
+      expect(request.useGpu, isTrue);
+      expect(request.copyWith(useGpu: false).useGpu, isFalse);
     });
   });
 }

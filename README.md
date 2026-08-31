@@ -114,10 +114,18 @@ abstract final class MaritimeConfig {
 
 App 退到后台时会调用 `AsrService.release()` 释放常驻内存中的模型——iOS 会杀掉在后台占着几 GB 内存的应用。
 
+## Metal 硬件加速
+
+pub.dev 上的 `whisper_ggml` 在 iOS 上只编译 CPU + Accelerate 后端，源码树里连 Metal 后端的实现文件都没有，large-v3-turbo 因此跑不进几秒的业务预算。`local_plugins/whisper_ggml/` 是它的分支，补齐了 ggml 的 Metal 后端；`pubspec.yaml` 通过 `path:` 指向这份分支。
+
+改动内容见 [`local_plugins/whisper_ggml/README.md`](local_plugins/whisper_ggml/README.md) 顶部的分支说明。
+
+`MaritimeConfig.useMetal` 是运行时开关，会作为 `whisper_context_params.use_gpu` 传到原生层。改成 `false` 即可退回 CPU 后端，不需要重新编译原生代码——某台设备在 Metal 下表现异常时可以这样先顶住。
+
 ## 已知限制
 
-- **没有 Metal 加速。** `whisper_ggml` 的 iOS podspec 编译的是 CPU + Accelerate 后端（`GGML_USE_CPU=1 GGML_USE_ACCELERATE=1`），源码树里只有 `ggml-metal.h`，没有 Metal 后端的实现文件。要跑 Metal 得 fork 这个插件，把 whisper.cpp 的 `ggml-metal.m` 与 `.metal` 着色器加进 podspec 并打开 `GGML_USE_METAL`。
-- **large-v3-turbo 在手机 CPU 上不快。** 这是选它的代价：识别耗时会显示在结果下方，可据此判断是否要换更小的模型。真机实测偏慢的话，把 `modelAssetPath` 换成 `ggml-medium-q5_0.bin` 或 `ggml-small-q5_1.bin` 即可。
+- **large-v3-turbo 仍然不轻。** 识别耗时会显示在结果下方；真机实测偏慢的话，把 `modelAssetPath` 换成 `ggml-medium-q5_0.bin` 或 `ggml-small-q5_1.bin` 即可。
+- **首次加载会多花几秒。** Metal 着色器是在运行时按设备能力编译的（见分支说明），每个进程一次。之后 `keepModelLoaded` 会让上下文常驻，按键到出字的延迟不含这部分。
 - **多带了一个 ffmpeg 依赖。** `whisper_ggml` 会先把输入音频过一遍 ffmpeg，因此传递依赖了 `ffmpeg_kit_flutter_new_min`，会让 IPA 变大。我们的音频本来就是目标格式，所以那次转换只是拷贝，产生的 `<路径>.wav.wav` 中间文件在转写后会被删掉。
 - **模型体积。** 547 MB 打进包里会让 IPA 很大，且 App Store 有下载体积限制。真要上架，一般改成首次启动按需下载到 `Documents/models/`。
 

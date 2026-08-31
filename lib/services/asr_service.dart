@@ -34,8 +34,9 @@ class AsrException implements Exception {
 /// Offline speech recognition through whisper.cpp.
 ///
 /// Everything happens on device: the model is read from the app bundle and
-/// inference runs in a background isolate via the `whisper_ggml` FFI plugin.
-/// No audio and no text ever leaves the phone.
+/// inference runs in a background isolate via the `whisper_ggml` FFI plugin,
+/// on the GPU through ggml's Metal backend. No audio and no text ever leaves
+/// the phone.
 class AsrService {
   AsrService();
 
@@ -113,6 +114,9 @@ class AsrService {
               // Loading a q5_0 turbo model costs seconds; park it in native
               // memory so only the first press pays for it.
               keepModelLoaded: true,
+              // Runs the model on the GPU via ggml's Metal backend. Only the
+              // forked plugin honours this; the published one is CPU-only.
+              useGpu: MaritimeConfig.useMetal,
             ),
             modelPath: model,
             onProgress: onProgress,
