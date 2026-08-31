@@ -54,6 +54,8 @@ def append_ldflags!(config, extra_flags)
 end
 
 target 'Runner' do
+  use_frameworks! :linkage => :static
+
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 
   target 'RunnerTests' do

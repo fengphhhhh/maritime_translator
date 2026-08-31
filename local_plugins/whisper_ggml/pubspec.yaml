@@ -41,4 +41,5 @@ flutter:
       # from this fork along with their copies of the whisper.cpp sources, so
       # the Metal backend only has to be maintained in one place.
       ios:
+        pluginClass: WhisperGgmlPlugin
         ffiPlugin: true

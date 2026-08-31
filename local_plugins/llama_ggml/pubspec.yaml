@@ -22,4 +22,5 @@ flutter:
       # iOS only, like the rest of this app. The vendored llama.cpp tree has
       # been trimmed to the CPU and Metal backends.
       ios:
+        pluginClass: LlamaGgmlPlugin
         ffiPlugin: true

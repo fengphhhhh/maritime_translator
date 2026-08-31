@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'llama_ggml'
-  s.version          = '0.1.3'
+  s.version          = '0.1.4'
   s.summary          = 'llama.cpp for Flutter, on Metal.'
   s.description      = <<-DESC
 Minimal Dart FFI plugin over llama.cpp b9700, built with the ggml Metal
@@ -14,6 +14,7 @@ backend so a small instruct model can translate on the iPhone GPU.
   s.source           = { :path => '.' }
 
   s.source_files = [
+    'Classes/LlamaGgmlPlugin.m',
     'Classes/llama_ggml.cpp',
     'Classes/llama/src/**/*.{cpp,c}',
     'Classes/llama/ggml/*.{c,cpp}',
@@ -23,7 +24,7 @@ backend so a small instruct model can translate on the iPhone GPU.
   s.preserve_paths = 'Classes/llama/ggml/ggml-metal/*.metal', 'Classes/llama_ggml.exports'
 
   # Only the C ABI bridge is public; the vendored ggml tree must stay private.
-  s.public_header_files = 'Classes/llama_ggml.h'
+  s.public_header_files = 'Classes/LlamaGgmlPlugin.h', 'Classes/llama_ggml.h'
   s.static_framework = true
 
   s.platform = :ios, '15.6'
