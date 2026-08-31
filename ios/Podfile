@@ -27,8 +27,7 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 
 flutter_ios_podfile_setup
 
-# Keep Dart FFI symbols in the export trie after -dead_strip. ios/Runner/ffi_anchor.c
-# supplies native undefined references so the static linker pulls them from pods.
+# Export Dart FFI symbols after -dead_strip (see WhisperGgmlPlugin / LlamaGgmlPlugin).
 RUNNER_FFI_EXPORTS = %w[
   _request
   _stream_start
