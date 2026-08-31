@@ -14,7 +14,9 @@ backend so a small instruct model can translate on the iPhone GPU.
   s.source           = { :path => '.' }
 
   s.source_files = [
+    'Classes/LlamaGgmlPlugin.h',
     'Classes/LlamaGgmlPlugin.m',
+    'Classes/llama_ggml.h',
     'Classes/llama_ggml.cpp',
     'Classes/llama/src/**/*.{cpp,c}',
     'Classes/llama/ggml/*.{c,cpp}',

@@ -17,7 +17,9 @@ whisper.cpp v1.9.1. Upstream ships only the CPU/Accelerate backend on iOS.
   # and are resolved through USER_HEADER_SEARCH_PATHS below, so they never
   # flatten into the framework module next to llama_ggml's copy of ggml.
   s.source_files = [
+    'Classes/WhisperGgmlPlugin.h',
     'Classes/WhisperGgmlPlugin.m',
+    'Classes/whisper_ggml_ffi.h',
     'Classes/whisper_flutter_plus.cpp',
     'Classes/whisper/src/whisper.cpp',
     'Classes/whisper/ggml/src/*.{c,cpp}',
