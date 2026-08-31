@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'whisper_ggml'
-  s.version          = '2.6.0-metal.5'
+  s.version          = '2.6.0-metal.6'
   s.summary          = 'whisper.cpp for Flutter, forked to run on Metal.'
   s.description      = <<-DESC
 Fork of whisper_ggml 2.6.0 with the ggml Metal backend vendored in from
@@ -23,7 +23,7 @@ whisper.cpp v1.9.1. Upstream ships only the CPU/Accelerate backend on iOS.
     'Classes/whisper/ggml/src/*.{c,cpp}',
     'Classes/whisper/ggml/src/ggml-cpu/**/*.{c,cpp}',
     'Classes/whisper/ggml/src/ggml-metal/*.{cpp,m,S}',
-  ].join(', ')
+  ]
   # Only the FFI bridge header is public; ggml stays private.
   s.public_header_files = 'Classes/WhisperGgmlPlugin.h', 'Classes/whisper_ggml_ffi.h'
   s.preserve_paths = 'Classes/whisper/ggml/src/ggml-metal/*.metal', 'Classes/whisper_ggml.exports'
