@@ -222,10 +222,9 @@ class PcmRecorder {
     await _finishStream();
     _emit(0);
 
-    final bytes = buffer?.takeBytes() ?? Uint8List(0);
-    final clip = PcmClip(bytes: bytes);
+    final clip = PcmClip(bytes: buffer?.takeBytes() ?? Uint8List(0));
 
-    return PcmClip(bytes: bytes, wavPath: await _writeWav(clip));
+    return PcmClip(bytes: clip.bytes, wavPath: await _writeWav(clip));
   }
 
   /// Stops the capture and throws the frames away (press cancelled, app

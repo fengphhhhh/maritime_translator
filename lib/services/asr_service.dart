@@ -84,10 +84,13 @@ class AsrService {
       throw AsrException('找不到录音文件：$audioPath');
     }
 
-    final String model = await _resolveModelPath();
+    // Claimed before the first await so a second press cannot slip past the
+    // check above while the model path is being resolved.
     _isTranscribing = true;
 
     try {
+      final String model = await _resolveModelPath();
+
       final WhisperTranscribeResponse response =
           await const Whisper(model: _unusedModelSelector).transcribe(
             transcribeRequest: TranscribeRequest(
