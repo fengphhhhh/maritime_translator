@@ -57,16 +57,27 @@ def apply_hidden_visibility!(target)
     path = build_file.file_ref&.path
     next if path.nil?
 
-    flags = if path.end_with?(
+    visibility = if path.end_with?(
       'whisper_flutter_plus.cpp', 'WhisperGgmlPlugin.m',
       'llama_ggml.cpp', 'LlamaGgmlPlugin.m'
     )
-              '-fvisibility=default'
-            elsif path.include?('/ggml/') || path.end_with?('whisper.cpp') || path.include?('/llama/src/')
-              '-fvisibility=hidden -fvisibility-inlines-hidden'
-            end
+                   '-fvisibility=default'
+                 elsif path.include?('/ggml/') || path.end_with?('whisper.cpp') || path.include?('/llama/src/')
+                   '-fvisibility=hidden -fvisibility-inlines-hidden'
+                 end
 
-    next if flags.nil?
+    next if visibility.nil?
+
+    existing = build_file.settings&.fetch('COMPILER_FLAGS', nil)
+    flags = [existing, visibility].compact.join(' ').strip
+
+    # ggml-metal *.m uses manual retain/release. Setting COMPILER_FLAGS replaces
+    # CocoaPods' per-file -fno-objc-arc, so put it back for non-plugin ObjC.
+    if path.end_with?('.m', '.mm') &&
+       !path.end_with?('WhisperGgmlPlugin.m', 'LlamaGgmlPlugin.m') &&
+       !flags.include?('-fno-objc-arc')
+      flags = "-fno-objc-arc #{flags}"
+    end
 
     build_file.settings = { 'COMPILER_FLAGS' => flags }
   end
@@ -93,8 +104,9 @@ post_install do |installer|
       next unless ['whisper_ggml', 'llama_ggml'].include?(target.name)
 
       config.build_settings['USE_HEADERMAP'] = 'NO'
-      apply_hidden_visibility!(target)
     end
+
+    apply_hidden_visibility!(target) if ['whisper_ggml', 'llama_ggml'].include?(target.name)
   end
 
   installer.aggregate_targets.each do |aggregate_target|

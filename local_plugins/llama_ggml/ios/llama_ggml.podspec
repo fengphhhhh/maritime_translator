@@ -30,7 +30,7 @@ backend so a small instruct model can translate on the iPhone GPU.
   s.platform = :ios, '15.6'
   s.ios.deployment_target  = '15.6'
 
-  s.requires_arc = false
+  s.requires_arc = 'Classes/LlamaGgmlPlugin.m'
 
   s.xcconfig = {
     'IPHONEOS_DEPLOYMENT_TARGET' => '15.6',

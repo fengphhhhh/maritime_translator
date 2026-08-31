@@ -32,7 +32,7 @@ whisper.cpp v1.9.1. Upstream ships only the CPU/Accelerate backend on iOS.
   s.platform = :ios, '15.6'
   s.ios.deployment_target  = '15.6'
 
-  s.requires_arc = false
+  s.requires_arc = 'Classes/WhisperGgmlPlugin.m'
 
   s.xcconfig = {
     'IPHONEOS_DEPLOYMENT_TARGET' => '15.6',
