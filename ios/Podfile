@@ -27,6 +27,13 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 
 flutter_ios_podfile_setup
 
+# Static FFI pods are only referenced from GeneratedPluginRegistrant; force-load
+# their archives so whisper/llama object files are not dropped by the linker.
+POD_FORCE_LOAD_FLAGS = [
+  '-Wl,-force_load,$(PODS_CONFIGURATION_BUILD_DIR)/whisper_ggml/whisper_ggml.framework/whisper_ggml',
+  '-Wl,-force_load,$(PODS_CONFIGURATION_BUILD_DIR)/llama_ggml/llama_ggml.framework/llama_ggml',
+].freeze
+
 # Export Dart FFI symbols after -dead_strip (see WhisperGgmlPlugin / LlamaGgmlPlugin).
 RUNNER_FFI_EXPORTS = %w[
   _request
@@ -49,6 +56,18 @@ def append_ldflags!(config, extra_flags)
     config.build_settings['OTHER_LDFLAGS'] = ['$(inherited)', *extra_flags]
   else
     config.build_settings['OTHER_LDFLAGS'] = "#{existing} #{extra_flags.join(' ')}"
+  end
+end
+
+def patch_pods_runner_xcconfigs!(aggregate_target)
+  return unless aggregate_target.name == 'Pods-Runner'
+
+  aggregate_target.xcconfigs.each do |_config_name, config_file|
+    xcconfig = Xcodeproj::Config.new(config_file)
+    ldflags = xcconfig.attributes['OTHER_LDFLAGS'] || '$(inherited)'
+    xcconfig.attributes['OTHER_LDFLAGS'] =
+      "#{ldflags} #{POD_FORCE_LOAD_FLAGS.join(' ')}"
+    xcconfig.save_as(config_file)
   end
 end
 
@@ -108,6 +127,8 @@ post_install do |installer|
   end
 
   installer.aggregate_targets.each do |aggregate_target|
+    patch_pods_runner_xcconfigs!(aggregate_target)
+
     aggregate_target.user_project.native_targets.each do |native_target|
       next unless native_target.name == 'Runner'
 
