@@ -4,15 +4,21 @@ import '../services/pcm_recorder.dart';
 import '../theme/night_theme.dart';
 
 /// Header strip: what the app is, that it is offline on purpose, and whether
-/// the microphone is actually usable.
+/// the two things recognition needs — the microphone and the model — are
+/// actually there.
 class BridgeStatusBar extends StatelessWidget {
   const BridgeStatusBar({
     super.key,
     required this.hasMicPermission,
+    required this.isModelReady,
     required this.onRequestPermission,
   });
 
   final bool hasMicPermission;
+
+  /// `null` while the model file is still being located.
+  final bool? isModelReady;
+
   final VoidCallback onRequestPermission;
 
   @override
@@ -34,7 +40,7 @@ class BridgeStatusBar extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                PcmFormat.description,
+                '离线 · ${PcmFormat.description}',
                 style: const TextStyle(
                   fontSize: 11.5,
                   letterSpacing: 0.4,
@@ -44,11 +50,7 @@ class BridgeStatusBar extends StatelessWidget {
             ],
           ),
         ),
-        const _StatusChip(
-          icon: Icons.wifi_off_rounded,
-          label: '离线运行',
-          color: NightPalette.online,
-        ),
+        _modelChip(),
         const SizedBox(width: 8),
         if (hasMicPermission)
           const _StatusChip(
@@ -65,6 +67,26 @@ class BridgeStatusBar extends StatelessWidget {
           ),
       ],
     );
+  }
+
+  Widget _modelChip() {
+    return switch (isModelReady) {
+      true => const _StatusChip(
+        icon: Icons.memory_rounded,
+        label: '模型就绪',
+        color: NightPalette.online,
+      ),
+      false => const _StatusChip(
+        icon: Icons.error_outline_rounded,
+        label: '模型缺失',
+        color: NightPalette.danger,
+      ),
+      null => const _StatusChip(
+        icon: Icons.hourglass_empty_rounded,
+        label: '模型检查中',
+        color: NightPalette.textMuted,
+      ),
+    };
   }
 }
 

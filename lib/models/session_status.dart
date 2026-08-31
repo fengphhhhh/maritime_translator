@@ -6,12 +6,12 @@ enum SessionStatus {
   /// A key is held down and PCM frames are streaming in.
   listening,
 
-  /// The key was released; the offline engine is working on the clip.
-  decoding,
+  /// The key was released; whisper is transcribing the clip.
+  recognizing,
 
-  /// A translation is on screen.
+  /// A transcript is on screen.
   done,
 
-  /// The turn failed (permission, mic, or engine).
+  /// The turn failed (permission, mic, model, or inference).
   failed,
 }

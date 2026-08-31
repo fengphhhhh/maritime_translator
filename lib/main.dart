@@ -3,15 +3,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'models/recognition_turn.dart';
 import 'models/session_status.dart';
 import 'models/speech_direction.dart';
-import 'models/translation_turn.dart';
+import 'services/asr_service.dart';
 import 'services/pcm_recorder.dart';
-import 'services/translation_engine.dart';
 import 'theme/night_theme.dart';
 import 'widgets/bridge_status_bar.dart';
 import 'widgets/push_to_talk_button.dart';
-import 'widgets/translation_stage.dart';
+import 'widgets/transcript_stage.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +20,10 @@ void main() {
 }
 
 class MarineVoiceApp extends StatelessWidget {
-  const MarineVoiceApp({super.key});
+  const MarineVoiceApp({super.key, this.asrService});
+
+  /// Injection point for tests; production builds create the real service.
+  final AsrService? asrService;
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +34,15 @@ class MarineVoiceApp extends StatelessWidget {
       // The bridge is dark at night and the app has no light palette to fall
       // back to, so the OS theme setting is deliberately ignored.
       themeMode: ThemeMode.dark,
-      home: const TranslatorHomePage(),
+      home: TranslatorHomePage(asrService: asrService),
     );
   }
 }
 
 class TranslatorHomePage extends StatefulWidget {
-  const TranslatorHomePage({super.key});
+  const TranslatorHomePage({super.key, this.asrService});
+
+  final AsrService? asrService;
 
   @override
   State<TranslatorHomePage> createState() => _TranslatorHomePageState();
@@ -49,7 +54,7 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
   static const Duration _minimumUtterance = Duration(milliseconds: 400);
 
   final PcmRecorder _recorder = PcmRecorder();
-  final TranslationEngine _engine = DemoPhrasebookEngine();
+  late final AsrService _asr = widget.asrService ?? AsrService();
 
   StreamSubscription<double>? _levelSubscription;
   Timer? _elapsedTicker;
@@ -57,14 +62,16 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
 
   SessionStatus _status = SessionStatus.idle;
   SpeechDirection? _activeDirection;
-  TranslationTurn? _turn;
+  RecognitionTurn? _turn;
   String? _errorMessage;
   Duration _elapsed = Duration.zero;
   double _level = 0;
+  int? _progress;
   bool _hasMicPermission = false;
+  bool? _isModelReady;
 
   bool get _isBusy =>
-      _status == SessionStatus.listening || _status == SessionStatus.decoding;
+      _status == SessionStatus.listening || _status == SessionStatus.recognizing;
 
   @override
   void initState() {
@@ -76,6 +83,8 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
     });
 
     unawaited(_refreshPermission());
+    unawaited(_prepareModel());
+    unawaited(_recorder.configureAudioSession());
   }
 
   @override
@@ -84,27 +93,48 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
     _elapsedTicker?.cancel();
     unawaited(_levelSubscription?.cancel());
     unawaited(_recorder.dispose());
+    unawaited(_asr.release());
     super.dispose();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     // Losing the foreground mid-utterance means the capture is unusable, so
-    // drop it rather than translating a truncated clip.
+    // drop it rather than transcribing a truncated clip.
     if (state != AppLifecycleState.resumed &&
         _status == SessionStatus.listening) {
       unawaited(_abortRecording());
     }
+
+    // A parked large model holds gigabytes; iOS will kill a backgrounded app
+    // that keeps them. Give them back and pay the reload on return.
+    if (state == AppLifecycleState.paused) {
+      unawaited(_asr.release());
+    }
+  }
+
+  Future<void> _prepareModel() async {
+    final ready = await _asr.prepare();
+    if (!mounted) return;
+    setState(() => _isModelReady = ready);
   }
 
   Future<void> _refreshPermission() async {
-    final granted = await _recorder.hasPermission();
+    final granted = await _recorder.hasPermission().catchError((Object error) {
+      debugPrint('读取麦克风权限失败: $error');
+      return false;
+    });
     if (!mounted) return;
     setState(() => _hasMicPermission = granted);
   }
 
   Future<void> _requestPermission() async {
-    final granted = await _recorder.requestPermission();
+    final granted = await _recorder.requestPermission().catchError((
+      Object error,
+    ) {
+      debugPrint('申请麦克风权限失败: $error');
+      return false;
+    });
     if (!mounted) return;
 
     setState(() => _hasMicPermission = granted);
@@ -122,6 +152,7 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
       _errorMessage = null;
       _elapsed = Duration.zero;
       _level = 0;
+      _progress = null;
     });
 
     try {
@@ -150,6 +181,7 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
     _startTicker();
   }
 
+  /// Key released: stop the capture, then hand the WAV to whisper.
   Future<void> _stopRecording() async {
     if (_status != SessionStatus.listening) return;
 
@@ -157,41 +189,75 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
     _stopTicker();
 
     setState(() {
-      _status = SessionStatus.decoding;
+      _status = SessionStatus.recognizing;
       _level = 0;
+      _progress = null;
     });
 
-    PcmClip? clip;
+    final PcmClip? clip;
     try {
       clip = await _recorder.stop();
     } on RecorderException catch (error) {
       _failTurn(error.message);
       return;
     }
-
     if (!mounted) return;
 
     if (clip == null || clip.duration < _minimumUtterance) {
-      setState(() {
-        _status = _turn == null ? SessionStatus.idle : SessionStatus.done;
-        _activeDirection = null;
-      });
+      _resetToLastResult();
       _showSnack('按住时间太短，请按住按键说完再松开。');
       return;
     }
 
+    final wavPath = clip.wavPath;
+    if (wavPath == null) {
+      _failTurn('录音文件写入失败，无法进行识别。');
+      return;
+    }
+
+    await _recognize(clip, wavPath, direction);
+  }
+
+  Future<void> _recognize(
+    PcmClip clip,
+    String wavPath,
+    SpeechDirection direction,
+  ) async {
+    final stopwatch = Stopwatch()..start();
+
     try {
-      final turn = await _engine.process(clip, direction: direction);
+      final text = await _asr.transcribe(
+        wavPath,
+        language: direction.asrLanguage,
+        onProgress: (percent) {
+          if (mounted && _status == SessionStatus.recognizing) {
+            setState(() => _progress = percent);
+          }
+        },
+      );
+      stopwatch.stop();
       if (!mounted) return;
+
       setState(() {
-        _turn = turn;
+        _turn = RecognitionTurn(
+          direction: direction,
+          text: text,
+          audioDuration: clip.duration,
+          inferenceTime: stopwatch.elapsed,
+          createdAt: DateTime.now(),
+          audioPath: wavPath,
+        );
         _status = SessionStatus.done;
         _activeDirection = null;
+        _progress = null;
       });
-    } on TranslationException catch (error) {
+    } on AsrException catch (error) {
+      if (error.isModelMissing && mounted) {
+        setState(() => _isModelReady = false);
+      }
       _failTurn(error.message);
     } on Object catch (error) {
-      _failTurn('翻译失败：$error');
+      _failTurn('语音识别失败：$error');
     }
   }
 
@@ -200,10 +266,15 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
     await _recorder.cancel();
     if (!mounted) return;
 
+    _resetToLastResult();
+  }
+
+  void _resetToLastResult() {
     setState(() {
       _status = _turn == null ? SessionStatus.idle : SessionStatus.done;
       _activeDirection = null;
       _level = 0;
+      _progress = null;
     });
   }
 
@@ -214,6 +285,7 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
       _activeDirection = null;
       _errorMessage = message;
       _level = 0;
+      _progress = null;
     });
   }
 
@@ -265,23 +337,20 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
                       children: [
                         BridgeStatusBar(
                           hasMicPermission: _hasMicPermission,
+                          isModelReady: _isModelReady,
                           onRequestPermission: _requestPermission,
                         ),
                         const SizedBox(height: 20),
                         Expanded(
-                          child: TranslationStage(
+                          child: TranscriptStage(
                             status: _status,
                             turn: _turn,
                             activeDirection: _activeDirection,
                             elapsed: _elapsed,
                             level: _level,
+                            progress: _progress,
                             errorMessage: _errorMessage,
-                            onDismissError: () => setState(() {
-                              _errorMessage = null;
-                              _status = _turn == null
-                                  ? SessionStatus.idle
-                                  : SessionStatus.done;
-                            }),
+                            onDismissError: _resetToLastResult,
                           ),
                         ),
                         const SizedBox(height: 20),

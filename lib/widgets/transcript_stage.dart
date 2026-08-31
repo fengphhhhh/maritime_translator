@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../models/recognition_turn.dart';
 import '../models/session_status.dart';
 import '../models/speech_direction.dart';
-import '../models/translation_turn.dart';
 import '../services/pcm_recorder.dart';
 import '../theme/night_theme.dart';
 
-/// The centre of the screen. Whatever it shows, the translated line is the
+/// The centre of the screen. Whatever it shows, the recognised text is the
 /// largest thing on the display at 32pt.
-class TranslationStage extends StatelessWidget {
-  const TranslationStage({
+class TranscriptStage extends StatelessWidget {
+  const TranscriptStage({
     super.key,
     required this.status,
     required this.turn,
     required this.activeDirection,
     required this.elapsed,
     required this.level,
+    required this.progress,
     required this.errorMessage,
     required this.onDismissError,
   });
@@ -24,10 +25,14 @@ class TranslationStage extends StatelessWidget {
   static const double resultFontSize = 32;
 
   final SessionStatus status;
-  final TranslationTurn? turn;
+  final RecognitionTurn? turn;
   final SpeechDirection? activeDirection;
   final Duration elapsed;
   final double level;
+
+  /// Whisper's progress, 0–100, or `null` before the first report.
+  final int? progress;
+
   final String? errorMessage;
   final VoidCallback onDismissError;
 
@@ -43,9 +48,10 @@ class TranslationStage extends StatelessWidget {
           elapsed: elapsed,
           level: level,
         ),
-        SessionStatus.decoding => _DecodingView(
-          key: const ValueKey('decoding'),
+        SessionStatus.recognizing => _RecognizingView(
+          key: const ValueKey('recognizing'),
           direction: activeDirection ?? SpeechDirection.englishToChinese,
+          progress: progress,
         ),
         SessionStatus.failed => _ErrorView(
           key: const ValueKey('failed'),
@@ -95,7 +101,7 @@ class _IdleView extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         const Text(
-          '英汉双向互译，全程在本机运行，无需网络。',
+          '语音识别在本机 Whisper 模型上运行，无需网络。',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 14,
@@ -141,7 +147,7 @@ class _ListeningView extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Text(
-          _formatElapsed(elapsed),
+          formatDuration(elapsed),
           style: const TextStyle(
             fontSize: 17,
             fontFeatures: [FontFeature.tabularFigures()],
@@ -150,7 +156,7 @@ class _ListeningView extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         const Text(
-          '松开按键即开始翻译',
+          '松开按键即开始识别',
           style: TextStyle(fontSize: 14, color: NightPalette.textMuted),
         ),
       ],
@@ -207,37 +213,67 @@ class _PulseRing extends StatelessWidget {
   }
 }
 
-class _DecodingView extends StatelessWidget {
-  const _DecodingView({super.key, required this.direction});
+/// Shown between key release and transcript. A turbo-class model on the phone's
+/// CPU takes seconds, so this state carries a real percentage rather than an
+/// indeterminate spinner.
+class _RecognizingView extends StatelessWidget {
+  const _RecognizingView({
+    super.key,
+    required this.direction,
+    required this.progress,
+  });
 
   final SpeechDirection direction;
+  final int? progress;
 
   @override
   Widget build(BuildContext context) {
+    final accent = direction.accent;
+    final percent = progress;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
-          width: 42,
-          height: 42,
-          child: CircularProgressIndicator(
-            strokeWidth: 3,
-            color: direction.accent,
-            backgroundColor: NightPalette.outline,
+          width: 60,
+          height: 60,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              SizedBox.expand(
+                child: CircularProgressIndicator(
+                  strokeWidth: 3,
+                  value: percent == null ? null : percent / 100,
+                  color: accent,
+                  backgroundColor: NightPalette.outline,
+                ),
+              ),
+              if (percent != null)
+                Text(
+                  '$percent',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    fontFeatures: const [FontFeature.tabularFigures()],
+                    color: accent,
+                  ),
+                ),
+            ],
           ),
         ),
         const SizedBox(height: 26),
         const Text(
-          '离线识别并翻译中',
+          '正在识别中...',
           style: TextStyle(
-            fontSize: 22,
+            fontSize: 24,
             fontWeight: FontWeight.w600,
+            letterSpacing: 1,
             color: NightPalette.textSecondary,
           ),
         ),
         const SizedBox(height: 10),
         Text(
-          direction.routeLabel,
+          '本机 Whisper 模型 · ${direction.buttonSubtitle}',
           style: const TextStyle(fontSize: 14, color: NightPalette.textMuted),
         ),
       ],
@@ -248,11 +284,11 @@ class _DecodingView extends StatelessWidget {
 class _ResultView extends StatelessWidget {
   const _ResultView({super.key, required this.turn});
 
-  final TranslationTurn turn;
+  final RecognitionTurn turn;
 
   @override
   Widget build(BuildContext context) {
-    final accent = turn.direction.accent;
+    final hasText = turn.text.isNotEmpty;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -264,51 +300,17 @@ class _ResultView extends StatelessWidget {
         const SizedBox(height: 18),
         Expanded(
           child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SelectableText(
-                  turn.translatedText,
-                  style: const TextStyle(
-                    fontSize: TranslationStage.resultFontSize,
-                    height: 1.38,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 0.2,
-                    color: NightPalette.textPrimary,
-                  ),
-                ),
-                const SizedBox(height: 22),
-                Container(height: 1, color: NightPalette.outline),
-                const SizedBox(height: 14),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 2),
-                      child: Text(
-                        '原文',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 1.2,
-                          color: accent.withValues(alpha: 0.85),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: SelectableText(
-                        turn.recognizedText,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          height: 1.5,
-                          color: NightPalette.textSecondary,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+            child: SelectableText(
+              hasText ? turn.text : '没有识别到语音内容',
+              style: TextStyle(
+                fontSize: TranscriptStage.resultFontSize,
+                height: 1.38,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.2,
+                color: hasText
+                    ? NightPalette.textPrimary
+                    : NightPalette.textMuted,
+              ),
             ),
           ),
         ),
@@ -317,26 +319,27 @@ class _ResultView extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                '${_formatElapsed(turn.audioDuration)} · ${PcmFormat.description}',
+                '录音 ${formatDuration(turn.audioDuration)} · '
+                '识别 ${formatDuration(turn.inferenceTime)} · '
+                '${PcmFormat.description}',
                 style: const TextStyle(
                   fontSize: 12,
                   color: NightPalette.textMuted,
                 ),
               ),
             ),
-            TextButton.icon(
-              onPressed: () async {
-                await Clipboard.setData(
-                  ClipboardData(text: turn.translatedText),
-                );
-              },
-              icon: const Icon(Icons.copy_rounded, size: 16),
-              label: const Text('复制译文'),
-              style: TextButton.styleFrom(
-                foregroundColor: NightPalette.textSecondary,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+            if (hasText)
+              TextButton.icon(
+                onPressed: () async {
+                  await Clipboard.setData(ClipboardData(text: turn.text));
+                },
+                icon: const Icon(Icons.copy_rounded, size: 16),
+                label: const Text('复制'),
+                style: TextButton.styleFrom(
+                  foregroundColor: NightPalette.textSecondary,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                ),
               ),
-            ),
           ],
         ),
       ],
@@ -361,7 +364,7 @@ class _RoutePill extends StatelessWidget {
         border: Border.all(color: accent.withValues(alpha: 0.35)),
       ),
       child: Text(
-        direction.routeLabel,
+        direction.resultLabel,
         style: TextStyle(
           fontSize: 12.5,
           fontWeight: FontWeight.w600,
@@ -382,47 +385,51 @@ class _ErrorView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        padding: const EdgeInsets.all(22),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: NightPalette.danger.withValues(alpha: 0.08),
-          border: Border.all(color: NightPalette.danger.withValues(alpha: 0.4)),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.error_outline_rounded,
-              size: 34,
-              color: NightPalette.danger,
+      child: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(22),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: NightPalette.danger.withValues(alpha: 0.08),
+            border: Border.all(
+              color: NightPalette.danger.withValues(alpha: 0.4),
             ),
-            const SizedBox(height: 14),
-            Text(
-              message,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 17,
-                height: 1.5,
-                color: NightPalette.textPrimary,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.error_outline_rounded,
+                size: 34,
+                color: NightPalette.danger,
               ),
-            ),
-            const SizedBox(height: 16),
-            TextButton(
-              onPressed: onDismiss,
-              style: TextButton.styleFrom(
-                foregroundColor: NightPalette.danger,
+              const SizedBox(height: 14),
+              Text(
+                message,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 16,
+                  height: 1.6,
+                  color: NightPalette.textPrimary,
+                ),
               ),
-              child: const Text('知道了'),
-            ),
-          ],
+              const SizedBox(height: 16),
+              TextButton(
+                onPressed: onDismiss,
+                style: TextButton.styleFrom(
+                  foregroundColor: NightPalette.danger,
+                ),
+                child: const Text('知道了'),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-String _formatElapsed(Duration duration) {
+String formatDuration(Duration duration) {
   final seconds = duration.inMilliseconds / 1000;
   if (seconds < 60) return '${seconds.toStringAsFixed(1)} 秒';
 

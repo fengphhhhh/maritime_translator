@@ -18,19 +18,20 @@ abstract final class PcmFormat {
   static const int bytesPerFrame = channels * (bitsPerSample ~/ 8);
   static const int bytesPerSecond = sampleRate * bytesPerFrame;
 
-  static const String description = '16 kHz · 单声道 · PCM 16-bit';
+  static const String description = '16 kHz · 单声道 · 16-bit WAV';
 }
 
 /// A finished push-to-talk capture, held in memory as raw PCM frames.
 @immutable
 class PcmClip {
-  const PcmClip({required this.bytes, this.filePath});
+  const PcmClip({required this.bytes, this.wavPath});
 
-  /// Headerless little-endian PCM frames, ready to hand to an ASR engine.
+  /// Headerless little-endian PCM frames.
   final Uint8List bytes;
 
-  /// Where the raw frames were mirrored on disk, or `null` on web.
-  final String? filePath;
+  /// The WAV rendering of [bytes] in the app's Documents directory. This is
+  /// the path handed to whisper.cpp, which reads audio from a file.
+  final String? wavPath;
 
   int get frameCount => bytes.lengthInBytes ~/ PcmFormat.bytesPerFrame;
 
@@ -42,8 +43,9 @@ class PcmClip {
 
   bool get isEmpty => bytes.isEmpty;
 
-  /// Wraps the frames in a 44-byte RIFF header so a clip can be played back or
-  /// inspected with any audio tool while debugging the pipeline.
+  /// Wraps the frames in a 44-byte RIFF header. Whisper reads a WAV file, and
+  /// building the header here guarantees it advertises exactly 16 kHz / mono /
+  /// 16-bit rather than whatever an encoder decided to write.
   Uint8List toWav() {
     const headerSize = 44;
     final dataSize = bytes.lengthInBytes;
@@ -88,14 +90,15 @@ class RecorderException implements Exception {
 /// Push-to-talk wrapper around [AudioRecorder].
 ///
 /// Recording is driven through `startStream` rather than `start` so the frames
-/// stay in memory: an offline translator wants the buffer, not a file, and
-/// nothing touches the disk unless [mirrorToDisk] asks for it.
+/// arrive in memory while the key is held: that is what feeds the live level
+/// meter, and it lets this class write the WAV header itself instead of
+/// trusting an encoder to produce exactly what whisper.cpp wants.
 class PcmRecorder {
-  PcmRecorder({this.mirrorToDisk = true});
+  PcmRecorder();
 
-  /// Also writes each capture to the documents directory as a `.pcm` file.
-  /// Ignored on web, which has no such directory.
-  final bool mirrorToDisk;
+  /// How many finished captures to keep in Documents. They are debugging
+  /// material, not user data, and 16 kHz mono runs ~32 KB per second.
+  static const int _keepRecentRecordings = 20;
 
   static const RecordConfig _config = RecordConfig(
     encoder: AudioEncoder.pcm16bits,
@@ -105,16 +108,18 @@ class PcmRecorder {
     autoGain: true,
     echoCancel: true,
     noiseSuppress: true,
-    androidConfig: AndroidRecordConfig(
-      // Engine room and bridge noise: the recognition source applies the
-      // platform's speech-tuned front end instead of a flat mic capture.
-      audioSource: AndroidAudioSource.voiceRecognition,
-    ),
     iosConfig: IosRecordConfig(
+      // playAndRecord + defaultToSpeaker so a later playback or alert stage
+      // does not have to tear the session down and back up; allowBluetooth
+      // picks up a headset on the bridge.
       categoryOptions: [
         IosAudioCategoryOption.defaultToSpeaker,
         IosAudioCategoryOption.allowBluetooth,
+        IosAudioCategoryOption.duckOthers,
       ],
+      // An incoming call ringing mid-utterance should not kill the capture;
+      // only the user actually answering does.
+      allowHapticsAndSystemSoundsDuringRecording: true,
     ),
     // ~128 ms per chunk, small enough to drive a responsive level meter.
     streamBufferSize: 4096,
@@ -140,6 +145,30 @@ class PcmRecorder {
 
   /// Prompts for the microphone permission if it has not been granted yet.
   Future<bool> requestPermission() => _recorder.hasPermission();
+
+  /// Applies the app's `AVAudioSession` category before the first capture.
+  ///
+  /// `record` activates the session itself; this only pins the category and
+  /// options so the choice lives in the app rather than in the plugin's
+  /// defaults.
+  Future<void> configureAudioSession() async {
+    final RecordIos? ios = _recorder.ios;
+    if (ios == null) return;
+
+    try {
+      await ios.manageAudioSession(true);
+      await ios.setAudioSessionCategory(
+        category: IosAudioCategory.playAndRecord,
+        options: const [
+          IosAudioCategoryOptions.defaultToSpeaker,
+          IosAudioCategoryOptions.allowBluetooth,
+          IosAudioCategoryOptions.duckOthers,
+        ],
+      );
+    } on Object catch (error) {
+      debugPrint('PcmRecorder: 音频会话配置失败: $error');
+    }
+  }
 
   Future<void> start() async {
     if (_isRecording) return;
@@ -182,7 +211,7 @@ class PcmRecorder {
     );
   }
 
-  /// Stops the capture and returns the frames recorded since [start].
+  /// Stops the capture, writes it to Documents as a WAV, and returns it.
   ///
   /// Returns `null` when no capture was running.
   Future<PcmClip?> stop() async {
@@ -194,9 +223,9 @@ class PcmRecorder {
     _emit(0);
 
     final bytes = buffer?.takeBytes() ?? Uint8List(0);
-    final path = await _writeToDisk(bytes);
+    final clip = PcmClip(bytes: bytes);
 
-    return PcmClip(bytes: bytes, filePath: path);
+    return PcmClip(bytes: bytes, wavPath: await _writeWav(clip));
   }
 
   /// Stops the capture and throws the frames away (press cancelled, app
@@ -242,22 +271,44 @@ class PcmRecorder {
     }
   }
 
-  Future<String?> _writeToDisk(Uint8List bytes) async {
-    if (!mirrorToDisk || kIsWeb || bytes.isEmpty) return null;
+  /// Writes [clip] to `Documents/recordings/` as a 16 kHz mono WAV and returns
+  /// its path, which is what the ASR stage consumes.
+  Future<String?> _writeWav(PcmClip clip) async {
+    if (clip.isEmpty) return null;
 
     try {
       final directory = await getApplicationDocumentsDirectory();
-      final captures = Directory('${directory.path}/captures');
-      await captures.create(recursive: true);
+      final recordings = Directory('${directory.path}/recordings');
+      await recordings.create(recursive: true);
 
       final file = File(
-        '${captures.path}/${DateTime.now().millisecondsSinceEpoch}.pcm',
+        '${recordings.path}/${DateTime.now().millisecondsSinceEpoch}.wav',
       );
-      await file.writeAsBytes(bytes, flush: true);
+      await file.writeAsBytes(clip.toWav(), flush: true);
+
+      unawaited(_pruneRecordings(recordings));
       return file.path;
     } on Object catch (error) {
       debugPrint('PcmRecorder: 无法写入录音文件: $error');
       return null;
+    }
+  }
+
+  Future<void> _pruneRecordings(Directory recordings) async {
+    try {
+      final files = recordings
+          .listSync()
+          .whereType<File>()
+          .where((file) => file.path.endsWith('.wav'))
+          .toList();
+      if (files.length <= _keepRecentRecordings) return;
+
+      files.sort((a, b) => b.path.compareTo(a.path));
+      for (final file in files.skip(_keepRecentRecordings)) {
+        await file.delete();
+      }
+    } on Object catch (error) {
+      debugPrint('PcmRecorder: 清理历史录音失败: $error');
     }
   }
 

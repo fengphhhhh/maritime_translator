@@ -87,8 +87,9 @@ class _PushToTalkButtonState extends State<PushToTalkButton> {
     return Semantics(
       button: true,
       enabled: widget.isEnabled,
-      label: '${widget.direction.buttonLabel}，${widget.direction.routeLabel}',
-      hint: '按住录音，松开翻译',
+      label:
+          '${widget.direction.buttonLabel}，${widget.direction.buttonSubtitle}',
+      hint: '按住录音，松开开始识别',
       child: Listener(
         onPointerDown: _handleDown,
         onPointerUp: _handleUp,
@@ -212,7 +213,7 @@ class _ButtonContent extends StatelessWidget {
           ),
           SizedBox(height: compact ? 3 : 4),
           Text(
-            direction.routeLabel,
+            direction.buttonSubtitle,
             textAlign: TextAlign.center,
             maxLines: 1,
             style: TextStyle(
