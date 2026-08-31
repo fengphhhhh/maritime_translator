@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'llama_ggml'
-  s.version          = '0.1.2'
+  s.version          = '0.1.3'
   s.summary          = 'llama.cpp for Flutter, on Metal.'
   s.description      = <<-DESC
 Minimal Dart FFI plugin over llama.cpp b9700, built with the ggml Metal
@@ -39,7 +39,6 @@ backend so a small instruct model can translate on the iPhone GPU.
   s.frameworks = 'Accelerate', 'Foundation', 'Metal', 'MetalKit'
   s.pod_target_xcconfig = {
     'DEFINES_MODULE' => 'YES',
-    'GCC_SYMBOLS_PRIVATE_EXTERN' => 'YES',
     'USE_HEADERMAP' => 'NO',
     'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386',
     'USER_HEADER_SEARCH_PATHS' => [
@@ -54,7 +53,6 @@ backend so a small instruct model can translate on the iPhone GPU.
     'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) GGML_USE_CPU=1 GGML_USE_ACCELERATE=1 ACCELERATE_NEW_LAPACK=1 ACCELERATE_LAPACK_ILP64=1 GGML_USE_METAL=1 GGML_METAL_EMBED_LIBRARY=1 GGML_VERSION=\"b9700\" GGML_COMMIT=\"b9700\"',
     'OTHER_CFLAGS' => '$(inherited) -fvisibility=hidden -I"$(PODS_TARGET_SRCROOT)/Classes/llama/ggml/ggml-metal"',
     'OTHER_CPLUSPLUSFLAGS' => '$(inherited) -fvisibility=hidden -fvisibility-inlines-hidden',
-    'OTHER_LDFLAGS' => '$(inherited) -Wl,-exported_symbols_list,$(PODS_TARGET_SRCROOT)/Classes/llama_ggml.exports',
     'GCC_OPTIMIZATION_LEVEL' => '3',
   }
   s.swift_version = '5.0'

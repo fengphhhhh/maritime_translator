@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'whisper_ggml'
-  s.version          = '2.6.0-metal.3'
+  s.version          = '2.6.0-metal.4'
   s.summary          = 'whisper.cpp for Flutter, forked to run on Metal.'
   s.description      = <<-DESC
 Fork of whisper_ggml 2.6.0 with the ggml Metal backend vendored in from
@@ -41,7 +41,6 @@ whisper.cpp v1.9.1. Upstream ships only the CPU/Accelerate backend on iOS.
   s.frameworks = 'Accelerate', 'Foundation', 'Metal', 'MetalKit'
   s.pod_target_xcconfig = {
     'DEFINES_MODULE' => 'YES',
-    'GCC_SYMBOLS_PRIVATE_EXTERN' => 'YES',
     'USE_HEADERMAP' => 'NO',
     'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386',
     # User headers are not exported to dependent targets (Runner, other pods).
@@ -57,7 +56,6 @@ whisper.cpp v1.9.1. Upstream ships only the CPU/Accelerate backend on iOS.
     'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) GGML_USE_CPU=1 GGML_USE_ACCELERATE=1 ACCELERATE_NEW_LAPACK=1 ACCELERATE_LAPACK_ILP64=1 GGML_USE_METAL=1 GGML_METAL_EMBED_LIBRARY=1 GGML_VERSION=\"1.9.1\" GGML_COMMIT=\"whisper.cpp-v1.9.1\" WHISPER_VERSION=\"1.9.1\"',
     'OTHER_CFLAGS' => '$(inherited) -fvisibility=hidden -I"$(PODS_TARGET_SRCROOT)/Classes/whisper/ggml/src/ggml-metal"',
     'OTHER_CPLUSPLUSFLAGS' => '$(inherited) -fvisibility=hidden -fvisibility-inlines-hidden',
-    'OTHER_LDFLAGS' => '$(inherited) -Wl,-exported_symbols_list,$(PODS_TARGET_SRCROOT)/Classes/whisper_ggml.exports',
     'GCC_OPTIMIZATION_LEVEL' => '3',
   }
   s.swift_version = '5.0'

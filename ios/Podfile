@@ -27,6 +27,43 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 
 flutter_ios_podfile_setup
 
+# Dart FFI resolves these via dlsym on the Runner executable. Static pods +
+# -dead_strip drop symbols that no native code references unless we force-link
+# (-u) and export them (-exported_symbol) on the app target.
+RUNNER_FFI_LDFLAGS = [
+  '-Wl,-u,_request',
+  '-Wl,-exported_symbol,_request',
+  '-Wl,-u,_stream_start',
+  '-Wl,-exported_symbol,_stream_start',
+  '-Wl,-u,_stream_feed',
+  '-Wl,-exported_symbol,_stream_feed',
+  '-Wl,-u,_stream_stop',
+  '-Wl,-exported_symbol,_stream_stop',
+  '-Wl,-u,_llama_ggml_load',
+  '-Wl,-exported_symbol,_llama_ggml_load',
+  '-Wl,-u,_llama_ggml_generate',
+  '-Wl,-exported_symbol,_llama_ggml_generate',
+  '-Wl,-u,_llama_ggml_release',
+  '-Wl,-exported_symbol,_llama_ggml_release',
+  '-Wl,-u,_llama_ggml_string_free',
+  '-Wl,-exported_symbol,_llama_ggml_string_free',
+  '-Wl,-u,_llama_ggml_last_error',
+  '-Wl,-exported_symbol,_llama_ggml_last_error',
+  '-Wl,-u,_llama_ggml_devices',
+  '-Wl,-exported_symbol,_llama_ggml_devices',
+].freeze
+
+def append_ldflags!(config, extra_flags)
+  existing = config.build_settings['OTHER_LDFLAGS']
+  if existing.is_a?(Array)
+    config.build_settings['OTHER_LDFLAGS'] = existing + extra_flags
+  elsif existing.nil? || existing.to_s.strip.empty?
+    config.build_settings['OTHER_LDFLAGS'] = ['$(inherited)', *extra_flags]
+  else
+    config.build_settings['OTHER_LDFLAGS'] = "#{existing} #{extra_flags.join(' ')}"
+  end
+end
+
 target 'Runner' do
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 
@@ -52,7 +89,6 @@ post_install do |installer|
 
       next unless ['whisper_ggml', 'llama_ggml'].include?(target.name)
 
-      config.build_settings['GCC_SYMBOLS_PRIVATE_EXTERN'] = 'YES'
       config.build_settings['USE_HEADERMAP'] = 'NO'
       config.build_settings['OTHER_CFLAGS'] ||= '$(inherited)'
       config.build_settings['OTHER_CFLAGS'] = [
@@ -66,34 +102,29 @@ post_install do |installer|
         '-fvisibility-inlines-hidden',
       ].join(' ')
 
-      if target.name == 'whisper_ggml'
-        config.build_settings['OTHER_LDFLAGS'] ||= '$(inherited)'
-        config.build_settings['OTHER_LDFLAGS'] = [
-          '$(inherited)',
-          '-Wl,-exported_symbols_list,${PODS_TARGET_SRCROOT}/Classes/whisper_ggml.exports',
-        ].join(' ')
+      ffi_bridge = case target.name
+                   when 'whisper_ggml' then 'whisper_flutter_plus.cpp'
+                   when 'llama_ggml' then 'llama_ggml.cpp'
+                   end
 
-        target.source_build_phase.files.each do |build_file|
-          path = build_file.file_ref&.path
-          next unless path&.end_with?('whisper_flutter_plus.cpp')
+      target.source_build_phase.files.each do |build_file|
+        path = build_file.file_ref&.path
+        next unless path&.end_with?(ffi_bridge)
 
-          # Override pod-wide hidden visibility for the FFI bridge only.
-          build_file.settings = { 'COMPILER_FLAGS' => '-fvisibility=default' }
-        end
-      elsif target.name == 'llama_ggml'
-        config.build_settings['OTHER_LDFLAGS'] ||= '$(inherited)'
-        config.build_settings['OTHER_LDFLAGS'] = [
-          '$(inherited)',
-          '-Wl,-exported_symbols_list,${PODS_TARGET_SRCROOT}/Classes/llama_ggml.exports',
-        ].join(' ')
-
-        target.source_build_phase.files.each do |build_file|
-          path = build_file.file_ref&.path
-          next unless path&.end_with?('llama_ggml.cpp')
-
-          build_file.settings = { 'COMPILER_FLAGS' => '-fvisibility=default' }
-        end
+        # FFI entry points need default visibility for dlsym on the app binary.
+        build_file.settings = { 'COMPILER_FLAGS' => '-fvisibility=default' }
       end
     end
+  end
+
+  installer.aggregate_targets.each do |aggregate_target|
+    aggregate_target.user_project.native_targets.each do |native_target|
+      next unless native_target.name == 'Runner'
+
+      native_target.build_configurations.each do |config|
+        append_ldflags!(config, RUNNER_FFI_LDFLAGS)
+      end
+    end
+    aggregate_target.user_project.save
   end
 end
