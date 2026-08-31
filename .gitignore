@@ -39,10 +39,17 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
-# Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
-
 # Widget Preview related
 .widget_preview/
+
+# CocoaPods
+/ios/Pods/
+/ios/Podfile.lock
+/ios/.symlinks/
+
+# Offline ggml models are hundreds of megabytes; fetch them per
+# assets/models/README.md instead of committing them.
+assets/models/*.bin
+
+# Captured audio, written at runtime into the app sandbox
+/ios/Runner/recordings/
