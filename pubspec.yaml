@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   record: ^7.1.1
   path_provider: ^2.1.6
+  shared_preferences: ^2.5.3
 
   # Fork of whisper_ggml 2.6.0. The published package builds whisper.cpp
   # CPU-only on iOS; this copy vendors in the ggml Metal backend so

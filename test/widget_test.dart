@@ -70,6 +70,8 @@ void main() {
       expect(find.text('按住说英文'), findsOneWidget);
       expect(find.text('按住说中文'), findsOneWidget);
       expect(find.text('按住下方按键开始对讲'), findsOneWidget);
+      expect(find.textContaining('离线 · 16 kHz · 单声道'), findsOneWidget);
+      expect(find.byIcon(Icons.history_rounded), findsOneWidget);
 
       for (final button in tester.widgetList<PushToTalkButton>(
         find.byType(PushToTalkButton),
@@ -152,6 +154,21 @@ void main() {
       );
       expect(result.style?.fontSize, TranscriptStage.resultFontSize);
       expect(TranscriptStage.resultFontSize, 32);
+    });
+
+    testWidgets('原文以更大字号呈现', (tester) async {
+      const source = 'Vessel on my port bow, what are your intentions?';
+      await pumpStage(
+        tester,
+        status: SessionStatus.done,
+        turn: buildTurn(source: source),
+      );
+
+      final sourceText = tester.widget<SelectableText>(
+        find.widgetWithText(SelectableText, source),
+      );
+      expect(sourceText.style?.fontSize, TranscriptStage.sourceFontSize);
+      expect(TranscriptStage.sourceFontSize, greaterThanOrEqualTo(20));
     });
 
     testWidgets('底部显示 ASR 与 LLM 耗时', (tester) async {

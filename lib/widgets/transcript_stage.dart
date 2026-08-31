@@ -6,9 +6,10 @@ import '../models/session_status.dart';
 import '../models/speech_direction.dart';
 import '../services/pcm_recorder.dart';
 import '../theme/night_theme.dart';
+import 'marine_card.dart';
 
-/// The centre of the screen. Whatever it shows, the translation is the
-/// largest thing on the display at 32pt.
+/// The centre of the screen. Translation stays at 32pt; source text is larger
+/// for quick reference during bridge-to-bridge calls.
 class TranscriptStage extends StatelessWidget {
   const TranscriptStage({
     super.key,
@@ -25,6 +26,7 @@ class TranscriptStage extends StatelessWidget {
   });
 
   static const double resultFontSize = 32;
+  static const double sourceFontSize = 21;
   static const double timingFontSize = 10;
 
   final SessionStatus status;
@@ -32,17 +34,9 @@ class TranscriptStage extends StatelessWidget {
   final SpeechDirection? activeDirection;
   final Duration elapsed;
   final double level;
-
-  /// Whisper's progress, 0–100, or `null` before the first report.
   final int? progress;
-
-  /// Recognised text shown while [status] is [SessionStatus.translating].
   final String? sourceText;
-
-  /// When true during translation, the source is shown at 32pt before the
-  /// spinner takes over.
   final bool showSourceFlash;
-
   final String? errorMessage;
   final VoidCallback onDismissError;
 
@@ -89,43 +83,55 @@ class _IdleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          width: 76,
-          height: 76,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: NightPalette.outline, width: 1.5),
+    return MarineCard(
+      accent: NightPalette.accentGlow,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 76,
+            height: 76,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: NightPalette.accentGlow.withValues(alpha: 0.35),
+                width: 1.5,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: NightPalette.accentGlow.withValues(alpha: 0.12),
+                  blurRadius: 20,
+                ),
+              ],
+            ),
+            child: const Icon(
+              Icons.record_voice_over_outlined,
+              size: 34,
+              color: NightPalette.textMuted,
+            ),
           ),
-          child: const Icon(
-            Icons.record_voice_over_outlined,
-            size: 34,
-            color: NightPalette.textMuted,
+          const SizedBox(height: 24),
+          const Text(
+            '按住下方按键开始对讲',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 21,
+              fontWeight: FontWeight.w600,
+              color: NightPalette.textSecondary,
+            ),
           ),
-        ),
-        const SizedBox(height: 24),
-        const Text(
-          '按住下方按键开始对讲',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 21,
-            fontWeight: FontWeight.w600,
-            color: NightPalette.textSecondary,
+          const SizedBox(height: 10),
+          const Text(
+            '识别与翻译均在本机运行，无需网络。',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 14,
+              height: 1.5,
+              color: NightPalette.textMuted,
+            ),
           ),
-        ),
-        const SizedBox(height: 10),
-        const Text(
-          '识别与翻译均在本机运行，无需网络。',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 14,
-            height: 1.5,
-            color: NightPalette.textMuted,
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -146,36 +152,39 @@ class _ListeningView extends StatelessWidget {
   Widget build(BuildContext context) {
     final accent = direction.accent;
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _PulseRing(color: accent, level: level),
-        const SizedBox(height: 28),
-        Text(
-          direction.listeningLabel,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 26,
-            fontWeight: FontWeight.w700,
-            letterSpacing: 1,
-            color: accent,
+    return MarineCard(
+      accent: accent,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _PulseRing(color: accent, level: level),
+          const SizedBox(height: 28),
+          Text(
+            direction.listeningLabel,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 26,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 1,
+              color: accent,
+            ),
           ),
-        ),
-        const SizedBox(height: 12),
-        Text(
-          formatDuration(elapsed),
-          style: const TextStyle(
-            fontSize: 17,
-            fontFeatures: [FontFeature.tabularFigures()],
-            color: NightPalette.textSecondary,
+          const SizedBox(height: 12),
+          Text(
+            formatDuration(elapsed),
+            style: const TextStyle(
+              fontSize: 17,
+              fontFeatures: [FontFeature.tabularFigures()],
+              color: NightPalette.textSecondary,
+            ),
           ),
-        ),
-        const SizedBox(height: 10),
-        const Text(
-          '松开按键即开始识别',
-          style: TextStyle(fontSize: 14, color: NightPalette.textMuted),
-        ),
-      ],
+          const SizedBox(height: 10),
+          const Text(
+            '松开按键即开始识别',
+            style: TextStyle(fontSize: 14, color: NightPalette.textMuted),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -229,9 +238,6 @@ class _PulseRing extends StatelessWidget {
   }
 }
 
-/// Shown between key release and transcript. A turbo-class model on the phone's
-/// CPU takes seconds, so this state carries a real percentage rather than an
-/// indeterminate spinner.
 class _RecognizingView extends StatelessWidget {
   const _RecognizingView({
     super.key,
@@ -247,57 +253,59 @@ class _RecognizingView extends StatelessWidget {
     final accent = direction.accent;
     final percent = progress;
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SizedBox(
-          width: 60,
-          height: 60,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              SizedBox.expand(
-                child: CircularProgressIndicator(
-                  strokeWidth: 3,
-                  value: percent == null ? null : percent / 100,
-                  color: accent,
-                  backgroundColor: NightPalette.outline,
-                ),
-              ),
-              if (percent != null)
-                Text(
-                  '$percent',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    fontFeatures: const [FontFeature.tabularFigures()],
+    return MarineCard(
+      accent: accent,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 60,
+            height: 60,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                SizedBox.expand(
+                  child: CircularProgressIndicator(
+                    strokeWidth: 3,
+                    value: percent == null ? null : percent / 100,
                     color: accent,
+                    backgroundColor: NightPalette.outline,
                   ),
                 ),
-            ],
+                if (percent != null)
+                  Text(
+                    '$percent',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      fontFeatures: const [FontFeature.tabularFigures()],
+                      color: accent,
+                    ),
+                  ),
+              ],
+            ),
           ),
-        ),
-        const SizedBox(height: 26),
-        const Text(
-          '正在识别中...',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w600,
-            letterSpacing: 1,
-            color: NightPalette.textSecondary,
+          const SizedBox(height: 26),
+          const Text(
+            '正在识别中...',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 1,
+              color: NightPalette.textSecondary,
+            ),
           ),
-        ),
-        const SizedBox(height: 10),
-        Text(
-          '本机 Whisper 模型 · ${direction.buttonSubtitle}',
-          style: const TextStyle(fontSize: 14, color: NightPalette.textMuted),
-        ),
-      ],
+          const SizedBox(height: 10),
+          Text(
+            '本机 Whisper 模型 · ${direction.buttonSubtitle}',
+            style: const TextStyle(fontSize: 14, color: NightPalette.textMuted),
+          ),
+        ],
+      ),
     );
   }
 }
 
-/// Briefly flashes the recognised source, then shows the translation spinner.
 class _TranslatingView extends StatelessWidget {
   const _TranslatingView({
     super.key,
@@ -315,77 +323,84 @@ class _TranslatingView extends StatelessWidget {
     final accent = direction.accent;
 
     if (showSourceFlash && sourceText.isNotEmpty) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: _RoutePill(direction: direction, label: '识别原文'),
-          ),
-          const SizedBox(height: 18),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Text(
-                sourceText,
-                style: TextStyle(
-                  fontSize: TranscriptStage.resultFontSize,
-                  height: 1.38,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0.2,
-                  color: accent.withValues(alpha: 0.92),
+      return MarineCard(
+        accent: accent,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: _RoutePill(direction: direction, label: '识别原文'),
+            ),
+            const SizedBox(height: 18),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Text(
+                  sourceText,
+                  style: TextStyle(
+                    fontSize: TranscriptStage.sourceFontSize,
+                    height: 1.45,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 0.2,
+                    color: accent.withValues(alpha: 0.95),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
     }
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SizedBox(
-          width: 60,
-          height: 60,
-          child: CircularProgressIndicator(
-            strokeWidth: 3,
-            color: accent,
-            backgroundColor: NightPalette.outline,
-          ),
-        ),
-        const SizedBox(height: 26),
-        const Text(
-          '正在翻译...',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w600,
-            letterSpacing: 1,
-            color: NightPalette.textSecondary,
-          ),
-        ),
-        const SizedBox(height: 10),
-        Text(
-          '本机 Qwen 模型 · ${direction.resultLabel}',
-          style: const TextStyle(fontSize: 14, color: NightPalette.textMuted),
-        ),
-        if (sourceText.isNotEmpty) ...[
-          const SizedBox(height: 18),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Text(
-              sourceText,
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontSize: 14,
-                height: 1.4,
-                color: NightPalette.textMuted,
-              ),
+    return MarineCard(
+      accent: accent,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 60,
+            height: 60,
+            child: CircularProgressIndicator(
+              strokeWidth: 3,
+              color: accent,
+              backgroundColor: NightPalette.outline,
             ),
           ),
+          const SizedBox(height: 26),
+          const Text(
+            '正在翻译...',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 1,
+              color: NightPalette.textSecondary,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            '本机 Qwen 模型 · ${direction.resultLabel}',
+            style: const TextStyle(fontSize: 14, color: NightPalette.textMuted),
+          ),
+          if (sourceText.isNotEmpty) ...[
+            const SizedBox(height: 18),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                sourceText,
+                textAlign: TextAlign.center,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: TranscriptStage.sourceFontSize,
+                  height: 1.4,
+                  fontWeight: FontWeight.w600,
+                  color: accent.withValues(alpha: 0.85),
+                ),
+              ),
+            ),
+          ],
         ],
-      ],
+      ),
     );
   }
 }
@@ -399,71 +414,99 @@ class _ResultView extends StatelessWidget {
   Widget build(BuildContext context) {
     final headline = turn.displayText;
     final hasHeadline = headline.isNotEmpty;
+    final accent = turn.direction.accent;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: _RoutePill(direction: turn.direction),
-        ),
-        const SizedBox(height: 18),
-        Expanded(
-          child: SingleChildScrollView(
-            child: SelectableText(
-              hasHeadline ? headline : '没有识别到语音内容',
+    return MarineCard(
+      accent: accent,
+      padding: const EdgeInsets.fromLTRB(20, 18, 20, 14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: _RoutePill(direction: turn.direction),
+          ),
+          if (turn.hasTranslation && turn.sourceText.isNotEmpty) ...[
+            const SizedBox(height: 16),
+            const Text(
+              '原文',
               style: TextStyle(
-                fontSize: TranscriptStage.resultFontSize,
-                height: 1.38,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0.2,
-                color: hasHeadline
-                    ? NightPalette.textPrimary
-                    : NightPalette.textMuted,
+                fontSize: 11.5,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 0.8,
+                color: NightPalette.textMuted,
+              ),
+            ),
+            const SizedBox(height: 6),
+            SelectableText(
+              turn.sourceText,
+              style: TextStyle(
+                fontSize: TranscriptStage.sourceFontSize,
+                height: 1.45,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 0.15,
+                color: accent.withValues(alpha: 0.95),
+              ),
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              '译文',
+              style: TextStyle(
+                fontSize: 11.5,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 0.8,
+                color: NightPalette.textMuted,
+              ),
+            ),
+            const SizedBox(height: 6),
+          ] else
+            const SizedBox(height: 16),
+          Expanded(
+            child: SingleChildScrollView(
+              child: SelectableText(
+                hasHeadline ? headline : '没有识别到语音内容',
+                style: TextStyle(
+                  fontSize: TranscriptStage.resultFontSize,
+                  height: 1.38,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.2,
+                  color: hasHeadline
+                      ? NightPalette.textPrimary
+                      : NightPalette.textMuted,
+                ),
               ),
             ),
           ),
-        ),
-        if (turn.hasTranslation && turn.sourceText.isNotEmpty) ...[
-          const SizedBox(height: 12),
-          Text(
-            turn.sourceText,
-            style: const TextStyle(
-              fontSize: 14,
-              height: 1.45,
-              color: NightPalette.textMuted,
-            ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'ASR: ${formatSeconds(turn.asrTime)} | '
+                  'LLM: ${formatSeconds(turn.llmTime)} · '
+                  '${PcmFormat.description}',
+                  style: const TextStyle(
+                    fontSize: TranscriptStage.timingFontSize,
+                    color: NightPalette.textMuted,
+                  ),
+                ),
+              ),
+              if (hasHeadline)
+                TextButton.icon(
+                  onPressed: () async {
+                    await Clipboard.setData(ClipboardData(text: headline));
+                  },
+                  icon: const Icon(Icons.copy_rounded, size: 16),
+                  label: const Text('复制'),
+                  style: TextButton.styleFrom(
+                    foregroundColor: NightPalette.textSecondary,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                  ),
+                ),
+            ],
           ),
         ],
-        const SizedBox(height: 10),
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                'ASR: ${formatSeconds(turn.asrTime)} | '
-                'LLM: ${formatSeconds(turn.llmTime)} · '
-                '${PcmFormat.description}',
-                style: const TextStyle(
-                  fontSize: TranscriptStage.timingFontSize,
-                  color: NightPalette.textMuted,
-                ),
-              ),
-            ),
-            if (hasHeadline)
-              TextButton.icon(
-                onPressed: () async {
-                  await Clipboard.setData(ClipboardData(text: headline));
-                },
-                icon: const Icon(Icons.copy_rounded, size: 16),
-                label: const Text('复制'),
-                style: TextButton.styleFrom(
-                  foregroundColor: NightPalette.textSecondary,
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                ),
-              ),
-          ],
-        ),
-      ],
+      ),
     );
   }
 }
@@ -483,13 +526,19 @@ class _RoutePill extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(999),
         color: accent.withValues(alpha: 0.12),
-        border: Border.all(color: accent.withValues(alpha: 0.35)),
+        border: Border.all(color: accent.withValues(alpha: 0.40), width: 1.1),
+        boxShadow: [
+          BoxShadow(
+            color: accent.withValues(alpha: 0.10),
+            blurRadius: 8,
+          ),
+        ],
       ),
       child: Text(
         label ?? direction.resultLabel,
         style: TextStyle(
           fontSize: 12.5,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w700,
           letterSpacing: 0.5,
           color: accent,
         ),
@@ -508,15 +557,8 @@ class _ErrorView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(22),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: NightPalette.danger.withValues(alpha: 0.08),
-            border: Border.all(
-              color: NightPalette.danger.withValues(alpha: 0.4),
-            ),
-          ),
+        child: MarineCard(
+          accent: NightPalette.danger,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

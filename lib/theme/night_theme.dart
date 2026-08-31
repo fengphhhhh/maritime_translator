@@ -5,23 +5,26 @@ import 'package:flutter/services.dart';
 /// screen does not wash out night vision, and only two saturated accents so the
 /// two talk directions stay distinguishable at a glance.
 abstract final class NightPalette {
-  static const Color background = Color(0xFF05070C);
-  static const Color surface = Color(0xFF0C1219);
-  static const Color surfaceRaised = Color(0xFF141D28);
-  static const Color outline = Color(0xFF223040);
+  static const Color background = Color(0xFF040812);
+  static const Color surface = Color(0xFF0A101C);
+  static const Color surfaceRaised = Color(0xFF121B2A);
+  static const Color outline = Color(0xFF1E2D42);
 
-  static const Color textPrimary = Color(0xFFE9EFF7);
-  static const Color textSecondary = Color(0xFF93A3B8);
-  static const Color textMuted = Color(0xFF5C6B7F);
+  static const Color textPrimary = Color(0xFFEAF2FC);
+  static const Color textSecondary = Color(0xFF8FA3BC);
+  static const Color textMuted = Color(0xFF5A6D84);
 
   /// English side (crew speaking English).
-  static const Color english = Color(0xFF3DA9FC);
+  static const Color english = Color(0xFF38BDF8);
 
   /// Chinese side (crew speaking Mandarin).
-  static const Color chinese = Color(0xFFFFB020);
+  static const Color chinese = Color(0xFFFBBF24);
 
-  static const Color online = Color(0xFF35D07F);
-  static const Color danger = Color(0xFFFF5F63);
+  /// Subtle cyan glow for borders and chrome.
+  static const Color accentGlow = Color(0xFF22D3EE);
+
+  static const Color online = Color(0xFF34D399);
+  static const Color danger = Color(0xFFF87171);
 }
 
 abstract final class NightTheme {
@@ -70,6 +73,12 @@ abstract final class NightTheme {
         backgroundColor: NightPalette.surfaceRaised,
         contentTextStyle: TextStyle(color: NightPalette.textPrimary),
         behavior: SnackBarBehavior.floating,
+      ),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: NightPalette.background,
+        foregroundColor: NightPalette.textPrimary,
+        elevation: 0,
+        centerTitle: false,
       ),
     );
   }

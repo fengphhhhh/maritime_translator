@@ -11,8 +11,10 @@ import 'services/documents_bootstrap.dart';
 import 'services/llm_service.dart';
 import 'services/pcm_recorder.dart';
 import 'services/resident_model.dart';
+import 'services/translation_history_service.dart';
 import 'theme/night_theme.dart';
 import 'widgets/bridge_status_bar.dart';
+import 'widgets/history_page.dart';
 import 'widgets/push_to_talk_button.dart';
 import 'widgets/transcript_stage.dart';
 
@@ -56,10 +58,12 @@ class TranslatorHomePage extends StatefulWidget {
     super.key,
     this.asrService,
     this.llmService,
+    this.historyService,
   });
 
   final AsrService? asrService;
   final LlmService? llmService;
+  final TranslationHistoryService? historyService;
 
   @override
   State<TranslatorHomePage> createState() => _TranslatorHomePageState();
@@ -76,6 +80,8 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
   final PcmRecorder _recorder = PcmRecorder();
   late final AsrService _asr = widget.asrService ?? AsrService();
   late final LlmService _llm = widget.llmService ?? LlmService();
+  late final TranslationHistoryService _history =
+      widget.historyService ?? TranslationHistoryService();
   late final ResidentModels _residentModels =
       ResidentModels(<ResidentModel>[_asr, _llm]);
 
@@ -331,6 +337,7 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
         _pendingSource = null;
         _showSourceFlash = false;
       });
+      unawaited(_history.appendFromTurn(_turn!));
     } on AsrException catch (error) {
       if (error.isModelMissing && mounted) {
         setState(() => _isAsrModelReady = false);
@@ -400,6 +407,16 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
       ..showSnackBar(SnackBar(content: Text(message)));
   }
 
+  void _openHistory() {
+    unawaited(
+      Navigator.of(context).push<void>(
+        MaterialPageRoute<void>(
+          builder: (_) => HistoryPage(historyService: _history),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -429,6 +446,7 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
                           isAsrModelReady: _isAsrModelReady,
                           isLlmModelReady: _isLlmModelReady,
                           onRequestPermission: _requestPermission,
+                          onOpenHistory: _openHistory,
                         ),
                         const SizedBox(height: 20),
                         Expanded(

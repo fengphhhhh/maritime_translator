@@ -5,11 +5,6 @@ import '../models/speech_direction.dart';
 import '../theme/night_theme.dart';
 
 /// One of the two oversized bottom keys.
-///
-/// Deliberately driven by [Listener] rather than a button widget: the key must
-/// arm the moment a finger lands and disarm the moment it leaves, including
-/// when the gesture is cancelled by a scroll, a call, or a glove slipping off
-/// the glass.
 class PushToTalkButton extends StatefulWidget {
   const PushToTalkButton({
     super.key,
@@ -24,35 +19,47 @@ class PushToTalkButton extends StatefulWidget {
   });
 
   final SpeechDirection direction;
-
-  /// This key is the one currently recording.
   final bool isActive;
-
-  /// Pressing is allowed (the other key is idle and no turn is being decoded).
   final bool isEnabled;
-
-  /// Microphone loudness, `0..1`, used for the meter and the glow.
   final double level;
-
   final VoidCallback onPressStart;
   final VoidCallback onPressEnd;
   final VoidCallback onPressCancel;
-
   final double height;
 
   @override
   State<PushToTalkButton> createState() => _PushToTalkButtonState();
 }
 
-class _PushToTalkButtonState extends State<PushToTalkButton> {
+class _PushToTalkButtonState extends State<PushToTalkButton>
+    with SingleTickerProviderStateMixin {
   int? _pointer;
+  late final AnimationController _rippleController;
 
   bool get _isPressed => _pointer != null;
+
+  @override
+  void initState() {
+    super.initState();
+    _rippleController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 520),
+    );
+  }
+
+  @override
+  void dispose() {
+    _rippleController.dispose();
+    super.dispose();
+  }
 
   void _handleDown(PointerDownEvent event) {
     if (!widget.isEnabled || _isPressed) return;
     setState(() => _pointer = event.pointer);
     HapticFeedback.mediumImpact();
+    _rippleController
+      ..reset()
+      ..forward();
     widget.onPressStart();
   }
 
@@ -72,8 +79,6 @@ class _PushToTalkButtonState extends State<PushToTalkButton> {
   @override
   void didUpdateWidget(covariant PushToTalkButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // The parent can veto a press (permission denied, engine busy); drop the
-    // local pressed state so the key does not stay lit.
     if (_isPressed && !widget.isEnabled && !widget.isActive) {
       _pointer = null;
     }
@@ -83,6 +88,8 @@ class _PushToTalkButtonState extends State<PushToTalkButton> {
   Widget build(BuildContext context) {
     final accent = widget.direction.accent;
     final dimmed = !widget.isEnabled && !widget.isActive;
+    final pressed = _isPressed || widget.isActive;
+    final scale = pressed ? 0.93 : 1.0;
 
     return Semantics(
       button: true,
@@ -96,63 +103,107 @@ class _PushToTalkButtonState extends State<PushToTalkButton> {
         onPointerCancel: _handleCancel,
         behavior: HitTestBehavior.opaque,
         child: AnimatedScale(
-          scale: widget.isActive ? 0.98 : 1,
-          duration: const Duration(milliseconds: 110),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 160),
-            curve: Curves.easeOut,
+          scale: scale,
+          duration: const Duration(milliseconds: 140),
+          curve: Curves.easeOutCubic,
+          child: SizedBox(
             height: widget.height,
-            decoration: BoxDecoration(
+            child: ClipRRect(
               borderRadius: BorderRadius.circular(26),
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: widget.isActive
-                    ? [
-                        Color.alphaBlend(
-                          accent.withValues(alpha: 0.32),
-                          NightPalette.surfaceRaised,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 180),
+                  curve: Curves.easeOut,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(26),
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: pressed
+                          ? [
+                              Color.alphaBlend(
+                                accent.withValues(alpha: 0.36),
+                                NightPalette.surfaceRaised,
+                              ),
+                              Color.alphaBlend(
+                                accent.withValues(alpha: 0.16),
+                                NightPalette.surface,
+                              ),
+                            ]
+                          : const [
+                              NightPalette.surfaceRaised,
+                              NightPalette.surface,
+                            ],
+                    ),
+                    border: Border.all(
+                      color: pressed
+                          ? accent
+                          : accent.withValues(alpha: dimmed ? 0.16 : 0.42),
+                      width: pressed ? 2.5 : 1.4,
+                    ),
+                    boxShadow: pressed
+                        ? [
+                            BoxShadow(
+                              color: accent.withValues(
+                                alpha: 0.22 + 0.24 * widget.level,
+                              ),
+                              blurRadius: 32 + 28 * widget.level,
+                              spreadRadius: 1,
+                            ),
+                          ]
+                        : [
+                            BoxShadow(
+                              color: accent.withValues(alpha: 0.08),
+                              blurRadius: 14,
+                              offset: const Offset(0, 6),
+                            ),
+                          ],
+                  ),
+                ),
+                AnimatedBuilder(
+                  animation: _rippleController,
+                  builder: (context, child) {
+                    if (_rippleController.value == 0 && !pressed) {
+                      return const SizedBox.shrink();
+                    }
+
+                    final ripple = pressed
+                        ? 0.35 + 0.25 * (1 - _rippleController.value)
+                        : 0;
+
+                    return Center(
+                      child: Container(
+                        width: widget.height * (0.55 + 0.35 * ripple),
+                        height: widget.height * (0.55 + 0.35 * ripple),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: accent.withValues(alpha: 0.10 * ripple),
+                          border: Border.all(
+                            color: accent.withValues(alpha: 0.22 * ripple),
+                            width: 1.5,
+                          ),
                         ),
-                        Color.alphaBlend(
-                          accent.withValues(alpha: 0.14),
-                          NightPalette.surface,
-                        ),
-                      ]
-                    : const [
-                        NightPalette.surfaceRaised,
-                        NightPalette.surface,
-                      ],
-              ),
-              border: Border.all(
-                color: widget.isActive
-                    ? accent
-                    : accent.withValues(alpha: dimmed ? 0.14 : 0.38),
-                width: widget.isActive ? 2.5 : 1.5,
-              ),
-              boxShadow: widget.isActive
-                  ? [
-                      BoxShadow(
-                        color: accent.withValues(
-                          alpha: 0.18 + 0.22 * widget.level,
-                        ),
-                        blurRadius: 28 + 26 * widget.level,
-                        spreadRadius: 1,
                       ),
-                    ]
-                  : null,
-            ),
-            child: Opacity(
-              opacity: dimmed ? 0.42 : 1,
-              child: _ButtonContent(
-                direction: widget.direction,
-                isActive: widget.isActive,
-                level: widget.level,
-                compact: widget.height <= 140,
-              ),
+                    );
+                  },
+                ),
+                Opacity(
+                  opacity: dimmed ? 0.42 : 1,
+                  child: _ButtonContent(
+                    direction: widget.direction,
+                    isActive: widget.isActive,
+                    level: widget.level,
+                    compact: widget.height <= 140,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
       ),
+    ),
     );
   }
 }
@@ -191,6 +242,14 @@ class _ButtonContent extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: isActive ? accent : accent.withValues(alpha: 0.14),
+              boxShadow: isActive
+                  ? [
+                      BoxShadow(
+                        color: accent.withValues(alpha: 0.45),
+                        blurRadius: 16,
+                      ),
+                    ]
+                  : null,
             ),
             child: Icon(
               isActive ? Icons.graphic_eq_rounded : Icons.mic_none_rounded,
@@ -236,8 +295,6 @@ class _ButtonContent extends StatelessWidget {
   }
 }
 
-/// Segmented loudness meter: bars light up as the incoming PCM gets louder, so
-/// the user can tell the mic is live without watching the transcript.
 class _LevelMeter extends StatelessWidget {
   const _LevelMeter({required this.level, required this.color});
 
