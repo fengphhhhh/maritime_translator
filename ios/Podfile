@@ -67,6 +67,35 @@ post_install do |installer|
         '-fvisibility=hidden',
         '-fvisibility-inlines-hidden',
       ].join(' ')
+
+      if target.name == 'whisper_ggml'
+        config.build_settings['OTHER_LDFLAGS'] ||= '$(inherited)'
+        config.build_settings['OTHER_LDFLAGS'] = [
+          '$(inherited)',
+          '-Wl,-exported_symbols_list,${PODS_TARGET_SRCROOT}/Classes/whisper_ggml.exports',
+        ].join(' ')
+
+        target.source_build_phase.files.each do |build_file|
+          path = build_file.file_ref&.path
+          next unless path&.end_with?('whisper_flutter_plus.cpp')
+
+          # Override pod-wide hidden visibility for the FFI bridge only.
+          build_file.settings = { 'COMPILER_FLAGS' => '-fvisibility=default' }
+        end
+      elsif target.name == 'llama_ggml'
+        config.build_settings['OTHER_LDFLAGS'] ||= '$(inherited)'
+        config.build_settings['OTHER_LDFLAGS'] = [
+          '$(inherited)',
+          '-Wl,-exported_symbols_list,${PODS_TARGET_SRCROOT}/Classes/llama_ggml.exports',
+        ].join(' ')
+
+        target.source_build_phase.files.each do |build_file|
+          path = build_file.file_ref&.path
+          next unless path&.end_with?('llama_ggml.cpp')
+
+          build_file.settings = { 'COMPILER_FLAGS' => '-fvisibility=default' }
+        end
+      end
     end
   end
 end

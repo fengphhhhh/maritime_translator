@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'llama_ggml'
-  s.version          = '0.1.1'
+  s.version          = '0.1.2'
   s.summary          = 'llama.cpp for Flutter, on Metal.'
   s.description      = <<-DESC
 Minimal Dart FFI plugin over llama.cpp b9700, built with the ggml Metal
@@ -20,7 +20,7 @@ backend so a small instruct model can translate on the iPhone GPU.
     'Classes/llama/ggml/ggml-cpu/**/*.{c,cpp}',
     'Classes/llama/ggml/ggml-metal/*.{cpp,m,S}',
   ].join(', ')
-  s.preserve_paths = 'Classes/llama/ggml/ggml-metal/*.metal'
+  s.preserve_paths = 'Classes/llama/ggml/ggml-metal/*.metal', 'Classes/llama_ggml.exports'
 
   # Only the C ABI bridge is public; the vendored ggml tree must stay private.
   s.public_header_files = 'Classes/llama_ggml.h'
@@ -54,6 +54,7 @@ backend so a small instruct model can translate on the iPhone GPU.
     'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) GGML_USE_CPU=1 GGML_USE_ACCELERATE=1 ACCELERATE_NEW_LAPACK=1 ACCELERATE_LAPACK_ILP64=1 GGML_USE_METAL=1 GGML_METAL_EMBED_LIBRARY=1 GGML_VERSION=\"b9700\" GGML_COMMIT=\"b9700\"',
     'OTHER_CFLAGS' => '$(inherited) -fvisibility=hidden -I"$(PODS_TARGET_SRCROOT)/Classes/llama/ggml/ggml-metal"',
     'OTHER_CPLUSPLUSFLAGS' => '$(inherited) -fvisibility=hidden -fvisibility-inlines-hidden',
+    'OTHER_LDFLAGS' => '$(inherited) -Wl,-exported_symbols_list,$(PODS_TARGET_SRCROOT)/Classes/llama_ggml.exports',
     'GCC_OPTIMIZATION_LEVEL' => '3',
   }
   s.swift_version = '5.0'

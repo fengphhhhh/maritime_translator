@@ -1,3 +1,5 @@
+#include "whisper_ggml_ffi.h"
+
 #include "whisper/include/whisper.h"
 
 #define DR_WAV_IMPLEMENTATION
@@ -18,10 +20,6 @@
 #include <stdio.h>
 
 using json = nlohmann::json;
-
-// Exported to Dart via DynamicLibrary.process(). Default visibility is required
-// because the pod hides all other symbols (GCC_SYMBOLS_PRIVATE_EXTERN).
-#define WHISPER_GGML_FFI_API __attribute__((visibility("default"))) __attribute__((used))
 
 void print(std::string value)
 {

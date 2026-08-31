@@ -61,12 +61,26 @@ class LlamaBindings {
 }
 
 DynamicLibrary _openLibrary() {
-  // On iOS the plugin is linked into the app, so its symbols are already in
-  // the process image. The override exists so this FFI layer can be exercised
-  // against a desktop build of the same sources.
   final String? override = Platform.environment['LLAMA_GGML_LIBRARY'];
   if (override != null && override.isNotEmpty) {
     return DynamicLibrary.open(override);
+  }
+  if (Platform.isIOS) {
+    const paths = [
+      'llama_ggml.framework/llama_ggml',
+      'Frameworks/llama_ggml.framework/llama_ggml',
+    ];
+    Object? lastError;
+    for (final path in paths) {
+      try {
+        return DynamicLibrary.open(path);
+      } on Object catch (error) {
+        lastError = error;
+      }
+    }
+    throw ArgumentError(
+      'Could not open llama_ggml.framework on iOS: $lastError',
+    );
   }
   return DynamicLibrary.process();
 }

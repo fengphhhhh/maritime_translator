@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'whisper_ggml'
-  s.version          = '2.6.0-metal.2'
+  s.version          = '2.6.0-metal.3'
   s.summary          = 'whisper.cpp for Flutter, forked to run on Metal.'
   s.description      = <<-DESC
 Fork of whisper_ggml 2.6.0 with the ggml Metal backend vendored in from
@@ -23,11 +23,9 @@ whisper.cpp v1.9.1. Upstream ships only the CPU/Accelerate backend on iOS.
     'Classes/whisper/ggml/src/ggml-cpu/**/*.{c,cpp}',
     'Classes/whisper/ggml/src/ggml-metal/*.{cpp,m,S}',
   ].join(', ')
-  s.preserve_paths = 'Classes/whisper/ggml/src/ggml-metal/*.metal'
-
-  # FFI plugin: Dart resolves symbols at runtime. Do not publish whisper.h or
-  # any ggml header — they would collide with llama_ggml in the Pods header map.
-  s.public_header_files = []
+  # Only the FFI bridge header is public; ggml stays private.
+  s.public_header_files = 'Classes/whisper_ggml_ffi.h'
+  s.preserve_paths = 'Classes/whisper/ggml/src/ggml-metal/*.metal', 'Classes/whisper_ggml.exports'
   s.static_framework = false
 
   s.platform = :ios, '15.6'
@@ -59,6 +57,7 @@ whisper.cpp v1.9.1. Upstream ships only the CPU/Accelerate backend on iOS.
     'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) GGML_USE_CPU=1 GGML_USE_ACCELERATE=1 ACCELERATE_NEW_LAPACK=1 ACCELERATE_LAPACK_ILP64=1 GGML_USE_METAL=1 GGML_METAL_EMBED_LIBRARY=1 GGML_VERSION=\"1.9.1\" GGML_COMMIT=\"whisper.cpp-v1.9.1\" WHISPER_VERSION=\"1.9.1\"',
     'OTHER_CFLAGS' => '$(inherited) -fvisibility=hidden -I"$(PODS_TARGET_SRCROOT)/Classes/whisper/ggml/src/ggml-metal"',
     'OTHER_CPLUSPLUSFLAGS' => '$(inherited) -fvisibility=hidden -fvisibility-inlines-hidden',
+    'OTHER_LDFLAGS' => '$(inherited) -Wl,-exported_symbols_list,$(PODS_TARGET_SRCROOT)/Classes/whisper_ggml.exports',
     'GCC_OPTIMIZATION_LEVEL' => '3',
   }
   s.swift_version = '5.0'

@@ -64,7 +64,9 @@ char * to_heap(const std::string & text) {
 
 } // namespace
 
-int64_t llama_ggml_load(const char * model_path, int32_t n_ctx, int32_t n_gpu_layers, int32_t n_threads) {
+extern "C" {
+
+LLAMA_GGML_API int64_t llama_ggml_load(const char * model_path, int32_t n_ctx, int32_t n_gpu_layers, int32_t n_threads) {
     t_last_error.clear();
 
     if (model_path == nullptr || *model_path == '\0') {
@@ -107,7 +109,7 @@ int64_t llama_ggml_load(const char * model_path, int32_t n_ctx, int32_t n_gpu_la
     return static_cast<int64_t>(reinterpret_cast<intptr_t>(s));
 }
 
-char * llama_ggml_generate(
+LLAMA_GGML_API char * llama_ggml_generate(
     int64_t      handle,
     const char * prompt,
     int32_t      max_tokens,
@@ -198,7 +200,7 @@ char * llama_ggml_generate(
     return result;
 }
 
-void llama_ggml_release(int64_t handle) {
+LLAMA_GGML_API void llama_ggml_release(int64_t handle) {
     session * s = as_session(handle);
     if (s == nullptr) {
         return;
@@ -214,15 +216,15 @@ void llama_ggml_release(int64_t handle) {
     delete s;
 }
 
-void llama_ggml_string_free(char * text) {
+LLAMA_GGML_API void llama_ggml_string_free(char * text) {
     std::free(text);
 }
 
-const char * llama_ggml_last_error(void) {
+LLAMA_GGML_API const char * llama_ggml_last_error(void) {
     return t_last_error.c_str();
 }
 
-const char * llama_ggml_devices(void) {
+LLAMA_GGML_API const char * llama_ggml_devices(void) {
     static std::mutex  mutex;
     static std::string cached;
 
@@ -250,3 +252,5 @@ const char * llama_ggml_devices(void) {
     }
     return cached.c_str();
 }
+
+} // extern "C"

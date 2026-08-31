@@ -5,7 +5,7 @@ import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
-import 'package:universal_io/io.dart';
+import 'package:whisper_ggml/src/native_library.dart';
 
 /// Native streaming bindings.
 typedef _StreamStartNative = Pointer<Utf8> Function(Pointer<Utf8> body);
@@ -168,17 +168,7 @@ Future<WhisperLiveSession> startWhisperLiveSession({
 /// model decodes slower than real time, the mailbox and the native window
 /// grow and partial latency drifts behind the audio. If that becomes a
 /// target, cap the window or surface an "audio seconds behind" metric.
-DynamicLibrary _openLib() {
-  if (Platform.isAndroid) {
-    return DynamicLibrary.open('libwhisper.so');
-  } else if (Platform.isWindows) {
-    return DynamicLibrary.open('whisper_ggml.dll');
-  } else if (Platform.isLinux) {
-    return DynamicLibrary.open('libwhisper_ggml.so');
-  } else {
-    return DynamicLibrary.process();
-  }
-}
+DynamicLibrary _openLib() => openWhisperGgmlLibrary();
 
 void _liveWorker(SendPort toMain) {
   final DynamicLibrary lib = _openLib();
