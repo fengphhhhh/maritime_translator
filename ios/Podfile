@@ -28,7 +28,10 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 flutter_ios_podfile_setup
 
 target 'Runner' do
-  use_frameworks!
+  # Dynamic frameworks keep whisper_ggml and llama_ggml as separate images so
+  # each vendored ggml copy stays inside its own dylib instead of colliding at
+  # static link time.
+  use_frameworks! :linkage => :dynamic
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 
@@ -42,14 +45,28 @@ post_install do |installer|
     flutter_additional_ios_build_settings(target)
 
     target.build_configurations.each do |config|
-      # Pods inherit their own (lower) minimum; pin them all to the highest one
-      # in the graph so the linker does not warn about mismatched targets.
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.6'
 
       # Do not set GCC_PREPROCESSOR_DEFINITIONS here. Assigning it at target
       # level shadows the pod's own xcconfig, and whisper_ggml carries
       # GGML_USE_METAL there — losing it would quietly drop inference back to
       # the CPU rather than fail the build.
+
+      next unless ['whisper_ggml', 'llama_ggml'].include?(target.name)
+
+      config.build_settings['GCC_SYMBOLS_PRIVATE_EXTERN'] = 'YES'
+      config.build_settings['USE_HEADERMAP'] = 'NO'
+      config.build_settings['OTHER_CFLAGS'] ||= '$(inherited)'
+      config.build_settings['OTHER_CFLAGS'] = [
+        '$(inherited)',
+        '-fvisibility=hidden',
+      ].join(' ')
+      config.build_settings['OTHER_CPLUSPLUSFLAGS'] ||= '$(inherited)'
+      config.build_settings['OTHER_CPLUSPLUSFLAGS'] = [
+        '$(inherited)',
+        '-fvisibility=hidden',
+        '-fvisibility-inlines-hidden',
+      ].join(' ')
     end
   end
 end

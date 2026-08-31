@@ -19,6 +19,10 @@
 
 using json = nlohmann::json;
 
+// Exported to Dart via DynamicLibrary.process(). Default visibility is required
+// because the pod hides all other symbols (GCC_SYMBOLS_PRIVATE_EXTERN).
+#define WHISPER_GGML_FFI_API __attribute__((visibility("default"))) __attribute__((used))
+
 void print(std::string value)
 {
     std::cout << value << std::endl;
@@ -518,7 +522,7 @@ json transcribe(json jsonBody)
 
 extern "C"
 {
-    char *request(char *body)
+    WHISPER_GGML_FFI_API char *request(char *body)
     {
         json jsonBody = json::parse(body);
         json jsonResult;
@@ -704,7 +708,7 @@ extern "C"
     // body: {"model": path, "language": "en", "threads": 4,
     //        "is_translate": false, "initial_prompt": "...",
     //        "keep_model_loaded": false}
-    char *stream_start(char *body)
+    WHISPER_GGML_FFI_API char *stream_start(char *body)
     {
         std::lock_guard<std::mutex> lock(g_stream.mutex);
         json jsonResult;
@@ -788,7 +792,7 @@ extern "C"
     }
 
     // pcm: 16 kHz mono float32 samples in [-1, 1].
-    char *stream_feed(const float *pcm, int32_t n_samples)
+    WHISPER_GGML_FFI_API char *stream_feed(const float *pcm, int32_t n_samples)
     {
         std::lock_guard<std::mutex> lock(g_stream.mutex);
         json jsonResult;
@@ -836,7 +840,7 @@ extern "C"
         return jsonToChar(jsonResult);
     }
 
-    char *stream_stop()
+    WHISPER_GGML_FFI_API char *stream_stop()
     {
         std::lock_guard<std::mutex> lock(g_stream.mutex);
         json jsonResult;
