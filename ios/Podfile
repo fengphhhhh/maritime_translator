@@ -59,18 +59,6 @@ def append_ldflags!(config, extra_flags)
   end
 end
 
-def patch_pods_runner_xcconfigs!(aggregate_target)
-  return unless aggregate_target.name == 'Pods-Runner'
-
-  aggregate_target.xcconfigs.each do |_config_name, config_file|
-    xcconfig = Xcodeproj::Config.new(config_file)
-    ldflags = xcconfig.attributes['OTHER_LDFLAGS'] || '$(inherited)'
-    xcconfig.attributes['OTHER_LDFLAGS'] =
-      "#{ldflags} #{POD_FORCE_LOAD_FLAGS.join(' ')}"
-    xcconfig.save_as(config_file)
-  end
-end
-
 target 'Runner' do
   use_frameworks! :linkage => :static
 
@@ -127,13 +115,11 @@ post_install do |installer|
   end
 
   installer.aggregate_targets.each do |aggregate_target|
-    patch_pods_runner_xcconfigs!(aggregate_target)
-
     aggregate_target.user_project.native_targets.each do |native_target|
       next unless native_target.name == 'Runner'
 
       native_target.build_configurations.each do |config|
-        append_ldflags!(config, RUNNER_FFI_EXPORTS)
+        append_ldflags!(config, POD_FORCE_LOAD_FLAGS + RUNNER_FFI_EXPORTS)
       end
     end
     aggregate_target.user_project.save
