@@ -4,14 +4,11 @@ import '../services/asr_service.dart';
 import '../theme/night_theme.dart';
 
 /// Which language the crew speaks into a push-to-talk key.
-///
-/// The names describe the eventual translation direction; for now only the
-/// spoken side is used, to tell whisper which language to decode.
 enum SpeechDirection {
-  /// Crew speaks English.
+  /// Crew speaks English; translation is Chinese.
   englishToChinese,
 
-  /// Crew speaks Mandarin.
+  /// Crew speaks Mandarin; translation is English.
   chineseToEnglish;
 
   String get buttonLabel => switch (this) {
@@ -30,11 +27,14 @@ enum SpeechDirection {
     SpeechDirection.chineseToEnglish => '正在聆听中文',
   };
 
-  /// Pill above the transcript.
+  /// Pill above the translation.
   String get resultLabel => switch (this) {
-    SpeechDirection.englishToChinese => '英文识别结果',
-    SpeechDirection.chineseToEnglish => '中文识别结果',
+    SpeechDirection.englishToChinese => '英译中',
+    SpeechDirection.chineseToEnglish => '中译英',
   };
+
+  /// Whether the crew spoke English on this key.
+  bool get isEnglishToChinese => this == SpeechDirection.englishToChinese;
 
   /// The language whisper decodes for this key.
   AsrLanguage get asrLanguage => switch (this) {

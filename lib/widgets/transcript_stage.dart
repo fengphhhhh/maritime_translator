@@ -7,7 +7,7 @@ import '../models/speech_direction.dart';
 import '../services/pcm_recorder.dart';
 import '../theme/night_theme.dart';
 
-/// The centre of the screen. Whatever it shows, the recognised text is the
+/// The centre of the screen. Whatever it shows, the translation is the
 /// largest thing on the display at 32pt.
 class TranscriptStage extends StatelessWidget {
   const TranscriptStage({
@@ -18,11 +18,14 @@ class TranscriptStage extends StatelessWidget {
     required this.elapsed,
     required this.level,
     required this.progress,
+    required this.sourceText,
+    required this.showSourceFlash,
     required this.errorMessage,
     required this.onDismissError,
   });
 
   static const double resultFontSize = 32;
+  static const double timingFontSize = 10;
 
   final SessionStatus status;
   final RecognitionTurn? turn;
@@ -32,6 +35,13 @@ class TranscriptStage extends StatelessWidget {
 
   /// Whisper's progress, 0–100, or `null` before the first report.
   final int? progress;
+
+  /// Recognised text shown while [status] is [SessionStatus.translating].
+  final String? sourceText;
+
+  /// When true during translation, the source is shown at 32pt before the
+  /// spinner takes over.
+  final bool showSourceFlash;
 
   final String? errorMessage;
   final VoidCallback onDismissError;
@@ -52,6 +62,12 @@ class TranscriptStage extends StatelessWidget {
           key: const ValueKey('recognizing'),
           direction: activeDirection ?? SpeechDirection.englishToChinese,
           progress: progress,
+        ),
+        SessionStatus.translating => _TranslatingView(
+          key: ValueKey('translating-$showSourceFlash'),
+          direction: activeDirection ?? SpeechDirection.englishToChinese,
+          sourceText: sourceText ?? '',
+          showSourceFlash: showSourceFlash,
         ),
         SessionStatus.failed => _ErrorView(
           key: const ValueKey('failed'),
@@ -101,7 +117,7 @@ class _IdleView extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         const Text(
-          '语音识别在本机 Whisper 模型上运行，无需网络。',
+          '识别与翻译均在本机运行，无需网络。',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 14,
@@ -281,6 +297,99 @@ class _RecognizingView extends StatelessWidget {
   }
 }
 
+/// Briefly flashes the recognised source, then shows the translation spinner.
+class _TranslatingView extends StatelessWidget {
+  const _TranslatingView({
+    super.key,
+    required this.direction,
+    required this.sourceText,
+    required this.showSourceFlash,
+  });
+
+  final SpeechDirection direction;
+  final String sourceText;
+  final bool showSourceFlash;
+
+  @override
+  Widget build(BuildContext context) {
+    final accent = direction.accent;
+
+    if (showSourceFlash && sourceText.isNotEmpty) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: _RoutePill(direction: direction, label: '识别原文'),
+          ),
+          const SizedBox(height: 18),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Text(
+                sourceText,
+                style: TextStyle(
+                  fontSize: TranscriptStage.resultFontSize,
+                  height: 1.38,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.2,
+                  color: accent.withValues(alpha: 0.92),
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(
+          width: 60,
+          height: 60,
+          child: CircularProgressIndicator(
+            strokeWidth: 3,
+            color: accent,
+            backgroundColor: NightPalette.outline,
+          ),
+        ),
+        const SizedBox(height: 26),
+        const Text(
+          '正在翻译...',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 1,
+            color: NightPalette.textSecondary,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          '本机 Qwen 模型 · ${direction.resultLabel}',
+          style: const TextStyle(fontSize: 14, color: NightPalette.textMuted),
+        ),
+        if (sourceText.isNotEmpty) ...[
+          const SizedBox(height: 18),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Text(
+              sourceText,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontSize: 14,
+                height: 1.4,
+                color: NightPalette.textMuted,
+              ),
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
 class _ResultView extends StatelessWidget {
   const _ResultView({super.key, required this.turn});
 
@@ -288,7 +397,8 @@ class _ResultView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasText = turn.text.isNotEmpty;
+    final headline = turn.displayText;
+    final hasHeadline = headline.isNotEmpty;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -301,37 +411,48 @@ class _ResultView extends StatelessWidget {
         Expanded(
           child: SingleChildScrollView(
             child: SelectableText(
-              hasText ? turn.text : '没有识别到语音内容',
+              hasHeadline ? headline : '没有识别到语音内容',
               style: TextStyle(
                 fontSize: TranscriptStage.resultFontSize,
                 height: 1.38,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 0.2,
-                color: hasText
+                color: hasHeadline
                     ? NightPalette.textPrimary
                     : NightPalette.textMuted,
               ),
             ),
           ),
         ),
-        const SizedBox(height: 14),
+        if (turn.hasTranslation && turn.sourceText.isNotEmpty) ...[
+          const SizedBox(height: 12),
+          Text(
+            turn.sourceText,
+            style: const TextStyle(
+              fontSize: 14,
+              height: 1.45,
+              color: NightPalette.textMuted,
+            ),
+          ),
+        ],
+        const SizedBox(height: 10),
         Row(
           children: [
             Expanded(
               child: Text(
-                '录音 ${formatDuration(turn.audioDuration)} · '
-                '识别 ${formatDuration(turn.inferenceTime)} · '
+                'ASR: ${formatSeconds(turn.asrTime)} | '
+                'LLM: ${formatSeconds(turn.llmTime)} · '
                 '${PcmFormat.description}',
                 style: const TextStyle(
-                  fontSize: 12,
+                  fontSize: TranscriptStage.timingFontSize,
                   color: NightPalette.textMuted,
                 ),
               ),
             ),
-            if (hasText)
+            if (hasHeadline)
               TextButton.icon(
                 onPressed: () async {
-                  await Clipboard.setData(ClipboardData(text: turn.text));
+                  await Clipboard.setData(ClipboardData(text: headline));
                 },
                 icon: const Icon(Icons.copy_rounded, size: 16),
                 label: const Text('复制'),
@@ -348,9 +469,10 @@ class _ResultView extends StatelessWidget {
 }
 
 class _RoutePill extends StatelessWidget {
-  const _RoutePill({required this.direction});
+  const _RoutePill({required this.direction, this.label});
 
   final SpeechDirection direction;
+  final String? label;
 
   @override
   Widget build(BuildContext context) {
@@ -364,7 +486,7 @@ class _RoutePill extends StatelessWidget {
         border: Border.all(color: accent.withValues(alpha: 0.35)),
       ),
       child: Text(
-        direction.resultLabel,
+        label ?? direction.resultLabel,
         style: TextStyle(
           fontSize: 12.5,
           fontWeight: FontWeight.w600,
@@ -436,4 +558,9 @@ String formatDuration(Duration duration) {
   final minutes = duration.inMinutes;
   final remainder = duration.inSeconds % 60;
   return '$minutes 分 ${remainder.toString().padLeft(2, '0')} 秒';
+}
+
+String formatSeconds(Duration duration) {
+  final seconds = duration.inMilliseconds / 1000;
+  return '${seconds.toStringAsFixed(1)}s';
 }

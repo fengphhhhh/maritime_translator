@@ -2,32 +2,45 @@ import 'package:flutter/foundation.dart';
 
 import 'speech_direction.dart';
 
-/// One completed push-to-talk exchange, after whisper has had its say.
+/// One completed push-to-talk exchange, after whisper and the translator have
+/// both run.
 @immutable
 class RecognitionTurn {
   const RecognitionTurn({
     required this.direction,
-    required this.text,
+    required this.sourceText,
+    required this.translation,
     required this.audioDuration,
-    required this.inferenceTime,
+    required this.asrTime,
+    required this.llmTime,
     required this.createdAt,
     this.audioPath,
   });
 
   final SpeechDirection direction;
 
-  /// The transcript, in the language that was spoken. This is the 32pt
-  /// headline; the translation stage will sit on top of it later.
-  final String text;
+  /// What whisper heard, in the language that was spoken.
+  final String sourceText;
+
+  /// The ChatML translator's output, in the target language.
+  final String translation;
 
   final Duration audioDuration;
 
-  /// How long whisper took. Worth showing: a turbo-class model on CPU is not
-  /// instant, and the number tells the user whether the model is warm.
-  final Duration inferenceTime;
+  /// How long whisper took.
+  final Duration asrTime;
+
+  /// How long Qwen took.
+  final Duration llmTime;
 
   final DateTime createdAt;
 
-  /// The WAV in Documents this transcript came from.
+  /// The WAV in Documents this turn came from.
   final String? audioPath;
+
+  /// The 32pt headline: the translation when present, otherwise the source.
+  String get displayText =>
+      translation.isNotEmpty ? translation : sourceText;
+
+  bool get hasTranslation => translation.isNotEmpty;
 }

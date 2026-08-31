@@ -43,6 +43,11 @@ dependencies:
   whisper_ggml:
     path: local_plugins/whisper_ggml
 
+  # Minimal llama.cpp FFI plugin, also built with the ggml Metal backend.
+  # See local_plugins/llama_ggml.
+  llama_ggml:
+    path: local_plugins/llama_ggml
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

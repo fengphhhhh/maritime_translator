@@ -9,7 +9,10 @@ enum SessionStatus {
   /// The key was released; whisper is transcribing the clip.
   recognizing,
 
-  /// A transcript is on screen.
+  /// Whisper finished; the source text is flashing and the LLM is translating.
+  translating,
+
+  /// A translation is on screen.
   done,
 
   /// The turn failed (permission, mic, model, or inference).

@@ -1,0 +1,25 @@
+name: llama_ggml
+description: Minimal Dart FFI plugin over llama.cpp, built with the ggml Metal backend.
+version: 0.1.0
+publish_to: 'none'
+
+environment:
+  sdk: ^3.13.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  ffi: ^2.1.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  plugin:
+    platforms:
+      # iOS only, like the rest of this app. The vendored llama.cpp tree has
+      # been trimmed to the CPU and Metal backends.
+      ios:
+        ffiPlugin: true

@@ -7,7 +7,9 @@ import 'models/recognition_turn.dart';
 import 'models/session_status.dart';
 import 'models/speech_direction.dart';
 import 'services/asr_service.dart';
+import 'services/llm_service.dart';
 import 'services/pcm_recorder.dart';
+import 'services/resident_model.dart';
 import 'theme/night_theme.dart';
 import 'widgets/bridge_status_bar.dart';
 import 'widgets/push_to_talk_button.dart';
@@ -20,10 +22,15 @@ void main() {
 }
 
 class MarineVoiceApp extends StatelessWidget {
-  const MarineVoiceApp({super.key, this.asrService});
+  const MarineVoiceApp({
+    super.key,
+    this.asrService,
+    this.llmService,
+  });
 
-  /// Injection point for tests; production builds create the real service.
+  /// Injection points for tests; production builds create the real services.
   final AsrService? asrService;
+  final LlmService? llmService;
 
   @override
   Widget build(BuildContext context) {
@@ -34,15 +41,23 @@ class MarineVoiceApp extends StatelessWidget {
       // The bridge is dark at night and the app has no light palette to fall
       // back to, so the OS theme setting is deliberately ignored.
       themeMode: ThemeMode.dark,
-      home: TranslatorHomePage(asrService: asrService),
+      home: TranslatorHomePage(
+        asrService: asrService,
+        llmService: llmService,
+      ),
     );
   }
 }
 
 class TranslatorHomePage extends StatefulWidget {
-  const TranslatorHomePage({super.key, this.asrService});
+  const TranslatorHomePage({
+    super.key,
+    this.asrService,
+    this.llmService,
+  });
 
   final AsrService? asrService;
+  final LlmService? llmService;
 
   @override
   State<TranslatorHomePage> createState() => _TranslatorHomePageState();
@@ -53,8 +68,14 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
   /// Anything shorter than this is a mis-tap, not speech.
   static const Duration _minimumUtterance = Duration(milliseconds: 400);
 
+  /// How long the recognised source stays on screen before translation starts.
+  static const Duration _sourceFlashDuration = Duration(milliseconds: 700);
+
   final PcmRecorder _recorder = PcmRecorder();
   late final AsrService _asr = widget.asrService ?? AsrService();
+  late final LlmService _llm = widget.llmService ?? LlmService();
+  late final ResidentModels _residentModels =
+      ResidentModels(<ResidentModel>[_asr, _llm]);
 
   StreamSubscription<double>? _levelSubscription;
   Timer? _elapsedTicker;
@@ -64,14 +85,19 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
   SpeechDirection? _activeDirection;
   RecognitionTurn? _turn;
   String? _errorMessage;
+  String? _pendingSource;
+  bool _showSourceFlash = false;
   Duration _elapsed = Duration.zero;
   double _level = 0;
   int? _progress;
   bool _hasMicPermission = false;
-  bool? _isModelReady;
+  bool? _isAsrModelReady;
+  bool? _isLlmModelReady;
 
   bool get _isBusy =>
-      _status == SessionStatus.listening || _status == SessionStatus.recognizing;
+      _status == SessionStatus.listening ||
+      _status == SessionStatus.recognizing ||
+      _status == SessionStatus.translating;
 
   @override
   void initState() {
@@ -83,7 +109,7 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
     });
 
     unawaited(_refreshPermission());
-    unawaited(_prepareModel());
+    unawaited(_prepareModels());
     unawaited(_recorder.configureAudioSession());
   }
 
@@ -93,7 +119,7 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
     _elapsedTicker?.cancel();
     unawaited(_levelSubscription?.cancel());
     unawaited(_recorder.dispose());
-    unawaited(_asr.release());
+    unawaited(_residentModels.releaseAll());
     super.dispose();
   }
 
@@ -102,21 +128,29 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
     // Losing the foreground mid-utterance means the capture is unusable, so
     // drop it rather than transcribing a truncated clip.
     if (state != AppLifecycleState.resumed &&
-        _status == SessionStatus.listening) {
+        (_status == SessionStatus.listening ||
+            _status == SessionStatus.recognizing ||
+            _status == SessionStatus.translating)) {
       unawaited(_abortRecording());
     }
 
-    // A parked large model holds gigabytes; iOS will kill a backgrounded app
+    // Parked large models hold gigabytes; iOS will kill a backgrounded app
     // that keeps them. Give them back and pay the reload on return.
     if (state == AppLifecycleState.paused) {
-      unawaited(_asr.release());
+      unawaited(_residentModels.releaseAll());
     }
   }
 
-  Future<void> _prepareModel() async {
-    final ready = await _asr.prepare();
+  Future<void> _prepareModels() async {
+    final results = await Future.wait<bool>([
+      _asr.prepare(),
+      _llm.prepare(),
+    ]);
     if (!mounted) return;
-    setState(() => _isModelReady = ready);
+    setState(() {
+      _isAsrModelReady = results[0];
+      _isLlmModelReady = results[1];
+    });
   }
 
   Future<void> _refreshPermission() async {
@@ -150,6 +184,8 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
       _status = SessionStatus.listening;
       _activeDirection = direction;
       _errorMessage = null;
+      _pendingSource = null;
+      _showSourceFlash = false;
       _elapsed = Duration.zero;
       _level = 0;
       _progress = null;
@@ -215,18 +251,18 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
       return;
     }
 
-    await _recognize(clip, wavPath, direction);
+    await _recognizeAndTranslate(clip, wavPath, direction);
   }
 
-  Future<void> _recognize(
+  Future<void> _recognizeAndTranslate(
     PcmClip clip,
     String wavPath,
     SpeechDirection direction,
   ) async {
-    final stopwatch = Stopwatch()..start();
+    final asrStopwatch = Stopwatch()..start();
 
     try {
-      final text = await _asr.transcribe(
+      final sourceText = await _asr.transcribe(
         wavPath,
         language: direction.asrLanguage,
         onProgress: (percent) {
@@ -235,29 +271,76 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
           }
         },
       );
-      stopwatch.stop();
+      asrStopwatch.stop();
+      if (!mounted) return;
+
+      if (sourceText.isEmpty) {
+        setState(() {
+          _turn = RecognitionTurn(
+            direction: direction,
+            sourceText: '',
+            translation: '',
+            audioDuration: clip.duration,
+            asrTime: asrStopwatch.elapsed,
+            llmTime: Duration.zero,
+            createdAt: DateTime.now(),
+            audioPath: wavPath,
+          );
+          _status = SessionStatus.done;
+          _activeDirection = null;
+          _progress = null;
+        });
+        return;
+      }
+
+      setState(() {
+        _status = SessionStatus.translating;
+        _pendingSource = sourceText;
+        _showSourceFlash = true;
+        _progress = null;
+      });
+
+      await Future<void>.delayed(_sourceFlashDuration);
+      if (!mounted || _status != SessionStatus.translating) return;
+
+      setState(() => _showSourceFlash = false);
+
+      final llmStopwatch = Stopwatch()..start();
+      final translation = await _llm.translate(
+        text: sourceText,
+        isEnglishToChinese: direction.isEnglishToChinese,
+      );
+      llmStopwatch.stop();
       if (!mounted) return;
 
       setState(() {
         _turn = RecognitionTurn(
           direction: direction,
-          text: text,
+          sourceText: sourceText,
+          translation: translation,
           audioDuration: clip.duration,
-          inferenceTime: stopwatch.elapsed,
+          asrTime: asrStopwatch.elapsed,
+          llmTime: llmStopwatch.elapsed,
           createdAt: DateTime.now(),
           audioPath: wavPath,
         );
         _status = SessionStatus.done;
         _activeDirection = null;
-        _progress = null;
+        _pendingSource = null;
+        _showSourceFlash = false;
       });
     } on AsrException catch (error) {
       if (error.isModelMissing && mounted) {
-        setState(() => _isModelReady = false);
+        setState(() => _isAsrModelReady = false);
+      }
+      _failTurn(error.message);
+    } on TranslationException catch (error) {
+      if (error.isModelMissing && mounted) {
+        setState(() => _isLlmModelReady = false);
       }
       _failTurn(error.message);
     } on Object catch (error) {
-      _failTurn('语音识别失败：$error');
+      _failTurn('处理失败：$error');
     }
   }
 
@@ -273,6 +356,8 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
     setState(() {
       _status = _turn == null ? SessionStatus.idle : SessionStatus.done;
       _activeDirection = null;
+      _pendingSource = null;
+      _showSourceFlash = false;
       _level = 0;
       _progress = null;
     });
@@ -283,6 +368,8 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
     setState(() {
       _status = SessionStatus.failed;
       _activeDirection = null;
+      _pendingSource = null;
+      _showSourceFlash = false;
       _errorMessage = message;
       _level = 0;
       _progress = null;
@@ -337,7 +424,8 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
                       children: [
                         BridgeStatusBar(
                           hasMicPermission: _hasMicPermission,
-                          isModelReady: _isModelReady,
+                          isAsrModelReady: _isAsrModelReady,
+                          isLlmModelReady: _isLlmModelReady,
                           onRequestPermission: _requestPermission,
                         ),
                         const SizedBox(height: 20),
@@ -349,6 +437,8 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
                             elapsed: _elapsed,
                             level: _level,
                             progress: _progress,
+                            sourceText: _pendingSource,
+                            showSourceFlash: _showSourceFlash,
                             errorMessage: _errorMessage,
                             onDismissError: _resetToLastResult,
                           ),

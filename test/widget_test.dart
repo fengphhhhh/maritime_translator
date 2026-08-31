@@ -9,6 +9,7 @@ import 'package:marine_voice_translator/models/session_status.dart';
 import 'package:marine_voice_translator/models/speech_direction.dart';
 import 'package:marine_voice_translator/services/asr_service.dart';
 import 'package:marine_voice_translator/services/pcm_recorder.dart';
+import 'package:marine_voice_translator/services/translation_prompt.dart';
 import 'package:marine_voice_translator/theme/night_theme.dart';
 import 'package:marine_voice_translator/widgets/push_to_talk_button.dart';
 import 'package:marine_voice_translator/widgets/transcript_stage.dart';
@@ -22,6 +23,8 @@ Future<void> pumpStage(
   RecognitionTurn? turn,
   SpeechDirection? activeDirection,
   int? progress,
+  String? sourceText,
+  bool showSourceFlash = false,
   String? errorMessage,
 }) {
   return tester.pumpWidget(
@@ -35,6 +38,8 @@ Future<void> pumpStage(
           elapsed: const Duration(seconds: 2),
           level: 0.5,
           progress: progress,
+          sourceText: sourceText,
+          showSourceFlash: showSourceFlash,
           errorMessage: errorMessage,
           onDismissError: () {},
         ),
@@ -43,11 +48,16 @@ Future<void> pumpStage(
   );
 }
 
-RecognitionTurn buildTurn(String text) => RecognitionTurn(
+RecognitionTurn buildTurn({
+  String source = 'Vessel on my port bow, what are your intentions?',
+  String translation = '我船左舷首有船，你船意图如何？',
+}) => RecognitionTurn(
   direction: SpeechDirection.englishToChinese,
-  text: text,
+  sourceText: source,
+  translation: translation,
   audioDuration: const Duration(seconds: 3),
-  inferenceTime: const Duration(milliseconds: 1800),
+  asrTime: const Duration(milliseconds: 1800),
+  llmTime: const Duration(milliseconds: 2200),
   createdAt: DateTime(2026),
 );
 
@@ -103,26 +113,62 @@ void main() {
       expect(indicator.value, closeTo(0.42, 0.001));
     });
 
-    testWidgets('识别结果以 32pt 呈现', (tester) async {
-      const transcript = 'Vessel on my port bow, what are your intentions?';
+    testWidgets('翻译阶段先闪过原文再显示“正在翻译...”', (tester) async {
+      const source = 'Vessel on my port bow';
+
+      await pumpStage(
+        tester,
+        status: SessionStatus.translating,
+        activeDirection: SpeechDirection.englishToChinese,
+        sourceText: source,
+        showSourceFlash: true,
+      );
+
+      expect(find.text(source), findsOneWidget);
+      expect(find.text('正在翻译...'), findsNothing);
+
+      await pumpStage(
+        tester,
+        status: SessionStatus.translating,
+        activeDirection: SpeechDirection.englishToChinese,
+        sourceText: source,
+        showSourceFlash: false,
+      );
+
+      expect(find.text('正在翻译...'), findsOneWidget);
+    });
+
+    testWidgets('翻译结果以 32pt 呈现', (tester) async {
+      const translation = '我船左舷首有船，你船意图如何？';
       await pumpStage(
         tester,
         status: SessionStatus.done,
-        turn: buildTurn(transcript),
+        turn: buildTurn(translation: translation),
       );
 
       final result = tester.widget<SelectableText>(
-        find.widgetWithText(SelectableText, transcript),
+        find.widgetWithText(SelectableText, translation),
       );
       expect(result.style?.fontSize, TranscriptStage.resultFontSize);
       expect(TranscriptStage.resultFontSize, 32);
+    });
+
+    testWidgets('底部显示 ASR 与 LLM 耗时', (tester) async {
+      await pumpStage(
+        tester,
+        status: SessionStatus.done,
+        turn: buildTurn(),
+      );
+
+      expect(find.textContaining('ASR: 1.8s'), findsOneWidget);
+      expect(find.textContaining('LLM: 2.2s'), findsOneWidget);
     });
 
     testWidgets('空转写结果给出提示而不是空白', (tester) async {
       await pumpStage(
         tester,
         status: SessionStatus.done,
-        turn: buildTurn(''),
+        turn: buildTurn(source: '', translation: ''),
       );
 
       expect(find.text('没有识别到语音内容'), findsOneWidget);
@@ -179,6 +225,33 @@ void main() {
     test('模型文件名由资源路径推导', () {
       expect(MaritimeConfig.modelFileName, 'ggml-large-v3-turbo-q5_0.bin');
       expect(MaritimeConfig.modelAssetPath, startsWith('assets/models/'));
+      expect(
+        MaritimeConfig.llmModelFileName,
+        'qwen2.5-1.5b-instruct-q4_k_m.gguf',
+      );
+    });
+  });
+
+  group('翻译提示词', () {
+    test('英译中时术语对照方向正确', () {
+      final prompt = TranslationPrompt.build(
+        'port bow',
+        TranslationTarget.chinese,
+      );
+
+      expect(prompt, contains('port bow=左舷首'));
+      expect(prompt, contains('starboard=右舷'));
+      expect(prompt, isNot(contains('右舷=starboard')));
+    });
+
+    test('输出端强制替换术语', () {
+      final polished = TranslationPrompt.polish(
+        'Port bow clear.',
+        TranslationTarget.chinese,
+      );
+
+      expect(polished, contains('左舷首'));
+      expect(polished.toLowerCase(), isNot(contains('port bow')));
     });
   });
 

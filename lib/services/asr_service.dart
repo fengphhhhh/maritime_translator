@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:path_provider/path_provider.dart';
 import 'package:whisper_ggml/whisper_ggml.dart';
 
 import '../config/maritime_config.dart';
+import 'model_locator.dart';
+import 'resident_model.dart';
 
 /// Languages the bridge crew speaks, in whisper.cpp's two-letter codes.
 enum AsrLanguage {
@@ -37,7 +37,7 @@ class AsrException implements Exception {
 /// inference runs in a background isolate via the `whisper_ggml` FFI plugin,
 /// on the GPU through ggml's Metal backend. No audio and no text ever leaves
 /// the phone.
-class AsrService {
+class AsrService implements ResidentModel {
   AsrService();
 
   /// `whisper_ggml` still wants an enum here, but [Whisper.transcribe] loads
@@ -49,6 +49,12 @@ class AsrService {
   Future<String>? _pendingModelPath;
   bool _isTranscribing = false;
   bool _modelIsParked = false;
+
+  @override
+  String get residentModelName => '识别';
+
+  @override
+  bool get isResident => _modelIsParked;
 
   /// Absolute path of the model in use, once [prepare] has run.
   String? get modelPath => _modelPath;
@@ -147,6 +153,7 @@ class AsrService {
 
   /// Frees the model parked in native memory (several GB for the large
   /// models). Call it when recognition is done for a while.
+  @override
   Future<void> release() async {
     if (!_modelIsParked) return;
     _modelIsParked = false;
@@ -157,10 +164,6 @@ class AsrService {
       debugPrint('AsrService.release: $error');
     }
   }
-
-  // ---------------------------------------------------------------------------
-  // Model location
-  // ---------------------------------------------------------------------------
 
   Future<String> _resolveModelPath() {
     final String? resolved = _modelPath;
@@ -176,67 +179,16 @@ class AsrService {
         .whenComplete(() => _pendingModelPath = null);
   }
 
-  /// Finds the ggml model, in order of preference:
-  ///
-  /// 1. `Documents/models/` — a file dropped in over iTunes/Files sharing,
-  ///    which lets a fine-tuned model replace the bundled one without a
-  ///    rebuild.
-  /// 2. The asset inside the installed `.app` bundle, read in place. A
-  ///    turbo-class model is hundreds of megabytes, so avoiding a second copy
-  ///    on disk is worth the path arithmetic.
-  /// 3. A copy extracted from the Flutter asset bundle into Application
-  ///    Support, for when the bundle layout is not what step 2 expects.
   Future<String> _locateModel() async {
-    final String fileName = MaritimeConfig.modelFileName;
-
-    final Directory documents = await getApplicationDocumentsDirectory();
-    final File override = File('${documents.path}/models/$fileName');
-    if (override.existsSync()) return override.path;
-
-    final File inBundle = File(_bundleAssetPath(MaritimeConfig.modelAssetPath));
-    if (inBundle.existsSync()) return inBundle.path;
-
-    return _extractFromAssets(fileName);
-  }
-
-  /// Path of a Flutter asset inside the installed app bundle.
-  ///
-  /// On iOS `Platform.resolvedExecutable` is `…/Runner.app/Runner`, and the
-  /// asset bundle sits at `Runner.app/Frameworks/App.framework/flutter_assets`.
-  String _bundleAssetPath(String assetKey) {
-    final String appDirectory = File(Platform.resolvedExecutable).parent.path;
-    return '$appDirectory/Frameworks/App.framework/flutter_assets/$assetKey';
-  }
-
-  Future<String> _extractFromAssets(String fileName) async {
-    final Directory support = await getApplicationSupportDirectory();
-    final Directory models = Directory('${support.path}/models');
-    await models.create(recursive: true);
-
-    final File destination = File('${models.path}/$fileName');
-    if (destination.existsSync() && await destination.length() > 0) {
-      return destination.path;
-    }
-
-    final ByteData data;
     try {
-      data = await rootBundle.load(MaritimeConfig.modelAssetPath);
-    } on FlutterError {
+      return await ModelLocator.locate(MaritimeConfig.modelAssetPath);
+    } on ModelMissingException catch (error) {
       throw AsrException(
-        '离线模型 $fileName 未随应用一起打包。\n'
+        '离线模型 ${error.fileName} 未随应用一起打包。\n'
         '请将模型文件放入 assets/models/ 后重新构建，'
         '或通过「文件」App 拷贝到本应用的 Documents/models/ 目录。',
         isModelMissing: true,
       );
     }
-
-    await destination.writeAsBytes(
-      data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes),
-      flush: true,
-    );
-    // The asset cache would otherwise hold the whole model in memory.
-    rootBundle.evict(MaritimeConfig.modelAssetPath);
-
-    return destination.path;
   }
 }

@@ -4,20 +4,24 @@ import '../services/pcm_recorder.dart';
 import '../theme/night_theme.dart';
 
 /// Header strip: what the app is, that it is offline on purpose, and whether
-/// the two things recognition needs — the microphone and the model — are
+/// the two things the pipeline needs — the microphone and both models — are
 /// actually there.
 class BridgeStatusBar extends StatelessWidget {
   const BridgeStatusBar({
     super.key,
     required this.hasMicPermission,
-    required this.isModelReady,
+    required this.isAsrModelReady,
+    required this.isLlmModelReady,
     required this.onRequestPermission,
   });
 
   final bool hasMicPermission;
 
-  /// `null` while the model file is still being located.
-  final bool? isModelReady;
+  /// `null` while the ASR model file is still being located.
+  final bool? isAsrModelReady;
+
+  /// `null` while the translation model file is still being located.
+  final bool? isLlmModelReady;
 
   final VoidCallback onRequestPermission;
 
@@ -50,7 +54,9 @@ class BridgeStatusBar extends StatelessWidget {
             ],
           ),
         ),
-        _modelChip(),
+        _modelChip(label: 'ASR', ready: isAsrModelReady),
+        const SizedBox(width: 6),
+        _modelChip(label: 'LLM', ready: isLlmModelReady),
         const SizedBox(width: 8),
         if (hasMicPermission)
           const _StatusChip(
@@ -69,21 +75,21 @@ class BridgeStatusBar extends StatelessWidget {
     );
   }
 
-  Widget _modelChip() {
-    return switch (isModelReady) {
-      true => const _StatusChip(
+  Widget _modelChip({required String label, required bool? ready}) {
+    return switch (ready) {
+      true => _StatusChip(
         icon: Icons.memory_rounded,
-        label: '模型就绪',
+        label: '$label 就绪',
         color: NightPalette.online,
       ),
-      false => const _StatusChip(
+      false => _StatusChip(
         icon: Icons.error_outline_rounded,
-        label: '模型缺失',
+        label: '$label 缺失',
         color: NightPalette.danger,
       ),
-      null => const _StatusChip(
+      null => _StatusChip(
         icon: Icons.hourglass_empty_rounded,
-        label: '模型检查中',
+        label: '$label 检查中',
         color: NightPalette.textMuted,
       ),
     };
