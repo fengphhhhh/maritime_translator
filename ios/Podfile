@@ -46,11 +46,10 @@ post_install do |installer|
       # in the graph so the linker does not warn about mismatched targets.
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.6'
 
-      # The microphone is the only sensitive API this app touches.
-      config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
-        '$(inherited)',
-        'PERMISSION_MICROPHONE=1',
-      ]
+      # Do not set GCC_PREPROCESSOR_DEFINITIONS here. Assigning it at target
+      # level shadows the pod's own xcconfig, and whisper_ggml carries
+      # GGML_USE_METAL there — losing it would quietly drop inference back to
+      # the CPU rather than fail the build.
     end
   end
 end
