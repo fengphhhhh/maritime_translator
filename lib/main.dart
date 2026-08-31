@@ -7,6 +7,7 @@ import 'models/recognition_turn.dart';
 import 'models/session_status.dart';
 import 'models/speech_direction.dart';
 import 'services/asr_service.dart';
+import 'services/documents_bootstrap.dart';
 import 'services/llm_service.dart';
 import 'services/pcm_recorder.dart';
 import 'services/resident_model.dart';
@@ -18,6 +19,7 @@ import 'widgets/transcript_stage.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(NightTheme.overlayStyle);
+  unawaited(DocumentsBootstrap.ensureSharedFolders());
   runApp(const MarineVoiceApp());
 }
 
