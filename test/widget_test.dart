@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:marine_voice_translator/config/maritime_config.dart';
+import 'package:marine_voice_translator/config/maritime_vocabulary.dart';
 import 'package:marine_voice_translator/main.dart';
 import 'package:marine_voice_translator/models/recognition_turn.dart';
 import 'package:marine_voice_translator/models/session_status.dart';
@@ -217,9 +218,20 @@ void main() {
           'Master',
           'Chief Officer',
           'Second Mate',
+          'Third Officer',
           'Dredger',
+          'EPIRB',
+          'Mayday',
         ]),
       );
+      expect(MaritimeConfig.hotwords.length, lessThanOrEqualTo(90));
+    });
+
+    test('术语表包含运行时注入条目', () {
+      expect(MaritimeConfig.glossary['port bow'], '左舷首');
+      expect(MaritimeConfig.glossary['stand by engine'], '主机备车');
+      expect(MaritimeVocabulary.vhfCorePhrases.length, 100);
+      expect(MaritimeVocabulary.wordGlossary.length, greaterThan(300));
     });
 
     test('模型文件名由资源路径推导', () {

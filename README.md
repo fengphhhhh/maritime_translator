@@ -85,13 +85,21 @@ local_plugins/
 
 ## 配置
 
-想调整专业词汇或换模型，改 `lib/config/maritime_config.dart`：
+想调整专业词汇或换模型，改 `lib/config/maritime_config.dart`；词汇数据在 `lib/config/maritime_vocabulary.dart`：
 
-- `hotwords` / `initialPrompt` — whisper 热词
-- `glossary` — 翻译术语对照表
-- `modelAssetPath` — Whisper 模型
-- `llmModelAssetPath` — Qwen 模型
+- `hotwords` / `initialPrompt` — Whisper 热词（90 条，受 224 token 限制）
+- `glossary` — 翻译术语对照表（110 条运行时注入）
+- `vhfCorePhrases` / `vtsPhrases` — 566 条中英句对（参考库，默认不全部注入 LLM）
+- `wordGlossary` — 359 个航海单词（完整词典）
+- `modelAssetPath` / `llmModelAssetPath` — 双模型路径
 - `useMetal` — 是否启用 Metal GPU
+
+原始资料在 `tool/sources/`，重新整理词汇：
+
+```bash
+pip install olefile pdfplumber
+python3 tool/extract_maritime_vocab.py
+```
 
 ## 内存管理
 
