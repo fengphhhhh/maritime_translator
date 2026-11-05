@@ -4,13 +4,21 @@ on:
   push:
     branches: [ "main", "codex/offline-maritime-accuracy" ]
   workflow_dispatch:
+    inputs:
+      runner:
+        description: Mac build runner
+        type: choice
+        default: macos-latest
+        options:
+          - macos-latest
+          - macos-15-intel
 
 permissions:
   contents: read
 
 jobs:
   build-ios:
-    runs-on: macos-latest
+    runs-on: ${{ inputs.runner || 'macos-latest' }}
     timeout-minutes: 60
 
     steps:
