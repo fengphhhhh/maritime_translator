@@ -34,7 +34,7 @@ flutter test
 dart tool/offline_regression.dart
 ```
 
-最终 IPA 检查会核对新增 JSON 与源码一致，并拒绝包含两个模型权重的安装包。不新增云服务、语义向量模型或运行时网络调用。
+最终 IPA 检查会核对新增 JSON 与源码一致，并拒绝包含两个模型权重的安装包。补译句库本身不产生联网调用，也不需要语义向量模型；当前 App 另有可手动选择的豆包在线模式，见 ONLINE_MODE.md。
 
 ## 来源
 

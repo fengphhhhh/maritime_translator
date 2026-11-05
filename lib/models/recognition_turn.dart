@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import 'speech_direction.dart';
+import 'translation_mode.dart';
 
 /// One completed push-to-talk exchange, after whisper and the translator have
 /// both run.
@@ -15,9 +16,13 @@ class RecognitionTurn {
     required this.llmTime,
     required this.createdAt,
     this.audioPath,
+    this.mode = TranslationMode.offline,
+    this.onlineTime = Duration.zero,
   });
 
   final SpeechDirection direction;
+  final TranslationMode mode;
+  final Duration onlineTime;
 
   /// What whisper heard, in the language that was spoken.
   final String sourceText;
@@ -39,8 +44,7 @@ class RecognitionTurn {
   final String? audioPath;
 
   /// The 32pt headline: the translation when present, otherwise the source.
-  String get displayText =>
-      translation.isNotEmpty ? translation : sourceText;
+  String get displayText => translation.isNotEmpty ? translation : sourceText;
 
   bool get hasTranslation => translation.isNotEmpty;
 }

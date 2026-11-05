@@ -10,10 +10,7 @@ import 'marine_card.dart';
 
 /// Scrollable log of past bridge translations.
 class HistoryPage extends StatefulWidget {
-  const HistoryPage({
-    super.key,
-    this.historyService,
-  });
+  const HistoryPage({super.key, this.historyService});
 
   final TranslationHistoryService? historyService;
 
@@ -181,7 +178,10 @@ class _HistoryTile extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  _DirectionChip(label: entry.directionLabel, accent: accent),
+                  _DirectionChip(
+                    label: '${entry.directionLabel} · ${entry.mode.label}',
+                    accent: accent,
+                  ),
                   const Spacer(),
                   Text(
                     entry.timestamp,

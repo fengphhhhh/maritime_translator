@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/night_theme.dart';
+import '../models/translation_mode.dart';
 
 /// Header strip: app identity, offline capture format, and pipeline readiness.
 class BridgeStatusBar extends StatelessWidget {
@@ -11,6 +12,8 @@ class BridgeStatusBar extends StatelessWidget {
     required this.isLlmModelReady,
     required this.onRequestPermission,
     this.onOpenHistory,
+    this.mode = TranslationMode.offline,
+    this.hasApiKey = false,
   });
 
   final bool hasMicPermission;
@@ -18,6 +21,8 @@ class BridgeStatusBar extends StatelessWidget {
   final bool? isLlmModelReady;
   final VoidCallback onRequestPermission;
   final VoidCallback? onOpenHistory;
+  final TranslationMode mode;
+  final bool hasApiKey;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +52,9 @@ class BridgeStatusBar extends StatelessWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          '离线 · 16 kHz · 单声道',
+                          mode == TranslationMode.offline
+                              ? '离线 · 16 kHz · 单声道'
+                              : '在线 · 豆包同声传译 2.0',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -61,7 +68,9 @@ class BridgeStatusBar extends StatelessWidget {
                       ),
                       const SizedBox(width: 8),
                       Icon(
-                        Icons.wifi_off_rounded,
+                        mode == TranslationMode.offline
+                            ? Icons.wifi_off_rounded
+                            : Icons.cloud_outlined,
                         size: 13,
                         color: NightPalette.accentGlow.withValues(alpha: 0.75),
                       ),
@@ -82,8 +91,15 @@ class BridgeStatusBar extends StatelessWidget {
           runSpacing: 8,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            _modelChip(label: 'ASR', ready: isAsrModelReady),
-            _modelChip(label: 'LLM', ready: isLlmModelReady),
+            if (mode == TranslationMode.offline) ...[
+              _modelChip(label: 'ASR', ready: isAsrModelReady),
+              _modelChip(label: 'LLM', ready: isLlmModelReady),
+            ] else
+              _StatusChip(
+                icon: Icons.key_outlined,
+                label: hasApiKey ? '密钥已保存' : '待设置密钥',
+                color: hasApiKey ? NightPalette.online : NightPalette.danger,
+              ),
             if (hasMicPermission)
               const _StatusChip(
                 icon: Icons.mic_rounded,
@@ -189,7 +205,10 @@ class _StatusChip extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(999),
             color: color.withValues(alpha: 0.10),
-            border: Border.all(color: color.withValues(alpha: 0.36), width: 1.1),
+            border: Border.all(
+              color: color.withValues(alpha: 0.36),
+              width: 1.1,
+            ),
             boxShadow: [
               BoxShadow(
                 color: color.withValues(alpha: 0.08),

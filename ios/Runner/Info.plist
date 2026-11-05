@@ -27,7 +27,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>需要使用麦克风录制您的语音，以便在本机离线完成中英互译。录音不会离开本设备。</string>
+	<string>使用麦克风录制语音。离线模式在本机处理；您选择在线模式时，录音将发送至豆包完成中英语音翻译。</string>
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>

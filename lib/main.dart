@@ -6,16 +6,20 @@ import 'package:flutter/services.dart';
 import 'models/recognition_turn.dart';
 import 'models/session_status.dart';
 import 'models/speech_direction.dart';
+import 'models/translation_mode.dart';
 import 'services/asr_service.dart';
 import 'services/audio_quality.dart';
 import 'services/documents_bootstrap.dart';
+import 'services/doubao_s2t_service.dart';
 import 'services/llm_service.dart';
 import 'services/pcm_recorder.dart';
 import 'services/resident_model.dart';
 import 'services/translation_history_service.dart';
+import 'services/translation_settings.dart';
 import 'theme/night_theme.dart';
 import 'widgets/bridge_status_bar.dart';
 import 'widgets/history_page.dart';
+import 'widgets/online_settings_page.dart';
 import 'widgets/push_to_talk_button.dart';
 import 'widgets/transcript_stage.dart';
 
@@ -53,11 +57,19 @@ class TranslatorHomePage extends StatefulWidget {
     this.asrService,
     this.llmService,
     this.historyService,
+    this.onlineService,
+    this.keyStore,
+    this.settings,
+    this.recorder,
   });
 
   final AsrService? asrService;
   final LlmService? llmService;
   final TranslationHistoryService? historyService;
+  final DoubaoS2tService? onlineService;
+  final ApiKeyStore? keyStore;
+  final TranslationSettings? settings;
+  final PcmRecorder? recorder;
 
   @override
   State<TranslatorHomePage> createState() => _TranslatorHomePageState();
@@ -71,7 +83,12 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
   /// How long the recognised source stays on screen before translation starts.
   static const Duration _sourceFlashDuration = Duration(milliseconds: 700);
 
-  final PcmRecorder _recorder = PcmRecorder();
+  late final PcmRecorder _recorder = widget.recorder ?? PcmRecorder();
+  late final DoubaoS2tService _online =
+      widget.onlineService ?? DoubaoS2tService();
+  late final ApiKeyStore _keyStore = widget.keyStore ?? ApiKeyStore();
+  late final TranslationSettings _settings =
+      widget.settings ?? TranslationSettings();
   late final AsrService _asr = widget.asrService ?? AsrService();
   late final LlmService _llm = widget.llmService ?? LlmService();
   late final TranslationHistoryService _history =
@@ -98,6 +115,10 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
   bool _hasMicPermission = false;
   bool? _isAsrModelReady;
   bool? _isLlmModelReady;
+  TranslationMode _mode = TranslationMode.offline;
+  bool _configurationReady = false;
+  bool _hasApiKey = false;
+  String _onlineSource = '', _onlineTranslation = '';
 
   bool get _isBusy =>
       _status == SessionStatus.listening ||
@@ -115,6 +136,7 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
 
     unawaited(_refreshPermission());
     unawaited(_prepareModels());
+    unawaited(_loadConfiguration());
     unawaited(_recorder.configureAudioSession());
   }
 
@@ -125,6 +147,7 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
     unawaited(_levelSubscription?.cancel());
     unawaited(_recorder.dispose());
     unawaited(_residentModels.releaseAll());
+    _online.cancel();
     super.dispose();
   }
 
@@ -155,6 +178,64 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
     });
   }
 
+  Future<void> _loadConfiguration() async {
+    var mode = TranslationMode.offline;
+    var hasKey = false;
+    try {
+      mode = await _settings.loadMode();
+    } on Object {
+      /* Keep offline default. */
+    }
+    try {
+      hasKey = (await _keyStore.read())?.isNotEmpty ?? false;
+    } on Object {
+      /* No credential available. */
+    }
+    if (!mounted) return;
+    setState(() {
+      _mode = mode;
+      _hasApiKey = hasKey;
+      _configurationReady = true;
+    });
+  }
+
+  Future<void> _changeMode(TranslationMode mode) async {
+    if (_isBusy || !_configurationReady || _mode == mode) return;
+    ++_turnGeneration;
+    setState(() {
+      _mode = mode;
+      _onlineSource = '';
+      _onlineTranslation = '';
+    });
+    if (mode == TranslationMode.online) {
+      unawaited(_residentModels.releaseAll());
+    } else {
+      unawaited(_prepareModels());
+    }
+    try {
+      await _settings.saveMode(mode);
+    } on Object {
+      if (mounted) _showSnack('模式已切换，但未能记住设置。');
+    }
+  }
+
+  Future<void> _openOnlineSettings() async {
+    if (_isBusy) return;
+    await Navigator.of(context).push<bool>(
+      MaterialPageRoute(
+        builder: (_) =>
+            OnlineSettingsPage(keyStore: _keyStore, settings: _settings),
+      ),
+    );
+    if (!mounted) return;
+    try {
+      final hasKey = (await _keyStore.read())?.isNotEmpty ?? false;
+      if (mounted) setState(() => _hasApiKey = hasKey);
+    } on Object {
+      if (mounted) _showSnack('无法读取密钥，请解锁手机后重试。');
+    }
+  }
+
   Future<void> _refreshPermission() async {
     final granted = await _recorder.hasPermission().catchError((Object error) {
       debugPrint('读取麦克风权限失败: $error');
@@ -181,6 +262,15 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
 
   Future<void> _startRecording(SpeechDirection direction) async {
     if (_isBusy) return;
+    if (!_configurationReady) {
+      _showSnack('正在读取模式设置，请稍候。');
+      return;
+    }
+    if (_mode == TranslationMode.online && !_hasApiKey) {
+      _showSnack('请先设置豆包 API Key。');
+      await _openOnlineSettings();
+      return;
+    }
     final generation = ++_turnGeneration;
 
     setState(() {
@@ -192,6 +282,8 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
       _elapsed = Duration.zero;
       _level = 0;
       _progress = null;
+      _onlineSource = '';
+      _onlineTranslation = '';
     });
 
     try {
@@ -265,7 +357,69 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
       return;
     }
 
-    await _recognizeAndTranslate(clip, wavPath, direction, generation);
+    if (_mode == TranslationMode.online) {
+      await _translateOnline(clip, direction, generation);
+    } else {
+      await _recognizeAndTranslate(clip, wavPath, direction, generation);
+    }
+  }
+
+  Future<void> _translateOnline(
+    PcmClip clip,
+    SpeechDirection direction,
+    int generation,
+  ) async {
+    final stopwatch = Stopwatch()..start();
+    setState(() => _status = SessionStatus.translating);
+    try {
+      final apiKey = await _keyStore.read();
+      final vocabulary = await _settings.loadVocabulary();
+      vocabulary.validate();
+      if (!mounted || generation != _turnGeneration) return;
+      if (apiKey == null || apiKey.isEmpty) {
+        throw const OnlineTranslationException('未找到豆包 API Key，请在在线设置中添加。');
+      }
+      final result = await _online.translate(
+        wav: clip.toWav(),
+        apiKey: apiKey,
+        englishSource: direction.isEnglishToChinese,
+        hotwordTableId: vocabulary.hotwordTableId.trim(),
+        glossaryTableId: vocabulary.glossaryTableId.trim(),
+        onUpdate: (partial) {
+          if (!mounted || generation != _turnGeneration) return;
+          setState(() {
+            _onlineSource = partial.source;
+            _onlineTranslation = partial.translation;
+            _pendingSource = partial.source;
+          });
+        },
+      );
+      if (!mounted || generation != _turnGeneration) return;
+      setState(() {
+        _turn = RecognitionTurn(
+          direction: direction,
+          sourceText: result.source,
+          translation: result.translation,
+          audioDuration: clip.duration,
+          asrTime: Duration.zero,
+          llmTime: Duration.zero,
+          onlineTime: stopwatch.elapsed,
+          mode: TranslationMode.online,
+          createdAt: DateTime.now(),
+          audioPath: clip.wavPath,
+        );
+        _status = SessionStatus.done;
+        _activeDirection = null;
+        _pendingSource = null;
+        _onlineSource = '';
+        _onlineTranslation = '';
+      });
+      unawaited(_history.appendFromTurn(_turn!));
+    } on OnlineTranslationException catch (error) {
+      if (generation == _turnGeneration) _failTurn(error.message);
+    } on Object {
+      if (generation == _turnGeneration) _failTurn('无法进行在线翻译，请检查密钥设置或手动切换离线。');
+    }
   }
 
   Future<void> _recognizeAndTranslate(
@@ -379,6 +533,7 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
 
   Future<void> _abortRecording() async {
     final generation = ++_turnGeneration;
+    _online.cancel();
     _stopTicker();
     await _recorder.cancel();
     if (!mounted || generation != _turnGeneration) return;
@@ -394,6 +549,8 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
       _showSourceFlash = false;
       _level = 0;
       _progress = null;
+      _onlineSource = '';
+      _onlineTranslation = '';
     });
   }
 
@@ -475,8 +632,43 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
                           isLlmModelReady: _isLlmModelReady,
                           onRequestPermission: _requestPermission,
                           onOpenHistory: _openHistory,
+                          mode: _mode,
+                          hasApiKey: _hasApiKey,
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: SegmentedButton<TranslationMode>(
+                                segments: const [
+                                  ButtonSegment(
+                                    value: TranslationMode.offline,
+                                    label: Text('离线'),
+                                    icon: Icon(Icons.wifi_off),
+                                  ),
+                                  ButtonSegment(
+                                    value: TranslationMode.online,
+                                    label: Text('在线'),
+                                    icon: Icon(Icons.cloud_outlined),
+                                  ),
+                                ],
+                                selected: {_mode},
+                                onSelectionChanged:
+                                    !_isBusy && _configurationReady
+                                    ? (modes) =>
+                                          unawaited(_changeMode(modes.single))
+                                    : null,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            IconButton(
+                              tooltip: '在线设置',
+                              onPressed: _isBusy ? null : _openOnlineSettings,
+                              icon: const Icon(Icons.settings_outlined),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
                         Expanded(
                           child: TranscriptStage(
                             status: _status,
@@ -489,6 +681,9 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
                             showSourceFlash: _showSourceFlash,
                             errorMessage: _errorMessage,
                             onDismissError: _resetToLastResult,
+                            mode: _mode,
+                            onlineSource: _onlineSource,
+                            onlineTranslation: _onlineTranslation,
                           ),
                         ),
                         const SizedBox(height: 20),

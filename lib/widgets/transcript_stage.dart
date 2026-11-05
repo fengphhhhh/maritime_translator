@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../models/recognition_turn.dart';
 import '../models/session_status.dart';
 import '../models/speech_direction.dart';
+import '../models/translation_mode.dart';
 import '../services/pcm_recorder.dart';
 import '../theme/night_theme.dart';
 import 'marine_card.dart';
@@ -23,6 +24,9 @@ class TranscriptStage extends StatelessWidget {
     required this.showSourceFlash,
     required this.errorMessage,
     required this.onDismissError,
+    this.mode = TranslationMode.offline,
+    this.onlineSource = '',
+    this.onlineTranslation = '',
   });
 
   static const double resultFontSize = 32;
@@ -39,9 +43,19 @@ class TranscriptStage extends StatelessWidget {
   final bool showSourceFlash;
   final String? errorMessage;
   final VoidCallback onDismissError;
+  final TranslationMode mode;
+  final String onlineSource, onlineTranslation;
 
   @override
   Widget build(BuildContext context) {
+    if (mode == TranslationMode.online &&
+        (status == SessionStatus.recognizing ||
+            status == SessionStatus.translating)) {
+      return _OnlineProcessingView(
+        source: onlineSource,
+        translation: onlineTranslation,
+      );
+    }
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 220),
       switchInCurve: Curves.easeOut,
@@ -72,14 +86,73 @@ class TranscriptStage extends StatelessWidget {
           key: const ValueKey('done'),
           turn: turn!,
         ),
-        _ => const _IdleView(key: ValueKey('idle')),
+        _ => _IdleView(key: ValueKey('idle-${mode.name}'), mode: mode),
       },
     );
   }
 }
 
+class _OnlineProcessingView extends StatelessWidget {
+  const _OnlineProcessingView({
+    required this.source,
+    required this.translation,
+  });
+  final String source, translation;
+  @override
+  Widget build(BuildContext context) => MarineCard(
+    accent: NightPalette.accentGlow,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          '豆包在线翻译中…',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+        ),
+        const SizedBox(height: 8),
+        const LinearProgressIndicator(),
+        const SizedBox(height: 16),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (source.isNotEmpty) ...[
+                  const Text('原文 · 接收中'),
+                  const SizedBox(height: 6),
+                  SelectableText(
+                    source,
+                    style: const TextStyle(
+                      fontSize: TranscriptStage.sourceFontSize,
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+                ],
+                if (translation.isNotEmpty) ...[
+                  const Text('译文 · 临时字幕'),
+                  const SizedBox(height: 6),
+                  SelectableText(
+                    translation,
+                    style: const TextStyle(
+                      fontSize: TranscriptStage.resultFontSize,
+                      height: 1.4,
+                    ),
+                  ),
+                ] else
+                  const Text('正在发送录音并等待译文…'),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        const Text('本段完成后显示最终结果并保存到本机。', style: TextStyle(fontSize: 12)),
+      ],
+    ),
+  );
+}
+
 class _IdleView extends StatelessWidget {
-  const _IdleView({super.key});
+  const _IdleView({super.key, required this.mode});
+  final TranslationMode mode;
 
   @override
   Widget build(BuildContext context) {
@@ -121,10 +194,12 @@ class _IdleView extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          const Text(
-            '识别与翻译均在本机运行，无需网络。',
+          Text(
+            mode == TranslationMode.offline
+                ? '识别与翻译均在本机运行，无需网络。'
+                : '松开后，录音发送至豆包进行翻译。需联网，按服务计费。',
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 14,
               height: 1.5,
               color: NightPalette.textMuted,
@@ -426,54 +501,59 @@ class _ResultView extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: _RoutePill(direction: turn.direction),
           ),
-          if (turn.hasTranslation && turn.sourceText.isNotEmpty) ...[
-            const SizedBox(height: 16),
-            const Text(
-              '原文',
-              style: TextStyle(
-                fontSize: 11.5,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 0.8,
-                color: NightPalette.textMuted,
-              ),
-            ),
-            const SizedBox(height: 6),
-            SelectableText(
-              turn.sourceText,
-              style: TextStyle(
-                fontSize: TranscriptStage.sourceFontSize,
-                height: 1.45,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 0.15,
-                color: accent.withValues(alpha: 0.95),
-              ),
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              '译文',
-              style: TextStyle(
-                fontSize: 11.5,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 0.8,
-                color: NightPalette.textMuted,
-              ),
-            ),
-            const SizedBox(height: 6),
-          ] else
-            const SizedBox(height: 16),
+          const SizedBox(height: 16),
           Expanded(
             child: SingleChildScrollView(
-              child: SelectableText(
-                hasHeadline ? headline : '没有识别到语音内容',
-                style: TextStyle(
-                  fontSize: TranscriptStage.resultFontSize,
-                  height: 1.38,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0.2,
-                  color: hasHeadline
-                      ? NightPalette.textPrimary
-                      : NightPalette.textMuted,
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (turn.hasTranslation && turn.sourceText.isNotEmpty) ...[
+                    const Text(
+                      '原文',
+                      style: TextStyle(
+                        fontSize: 11.5,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 0.8,
+                        color: NightPalette.textMuted,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    SelectableText(
+                      turn.sourceText,
+                      style: TextStyle(
+                        fontSize: TranscriptStage.sourceFontSize,
+                        height: 1.45,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 0.15,
+                        color: accent.withValues(alpha: 0.95),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      '译文',
+                      style: TextStyle(
+                        fontSize: 11.5,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 0.8,
+                        color: NightPalette.textMuted,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                  ] else
+                    const SizedBox(height: 16),
+                  SelectableText(
+                    hasHeadline ? headline : '没有识别到语音内容',
+                    style: TextStyle(
+                      fontSize: TranscriptStage.resultFontSize,
+                      height: 1.38,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 0.2,
+                      color: hasHeadline
+                          ? NightPalette.textPrimary
+                          : NightPalette.textMuted,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -482,9 +562,10 @@ class _ResultView extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'ASR: ${formatSeconds(turn.asrTime)} | '
-                  'LLM: ${formatSeconds(turn.llmTime)} · '
-                  '${PcmFormat.description}',
+                  turn.mode == TranslationMode.online
+                      ? '豆包 S2T · 在线 ${formatSeconds(turn.onlineTime)}'
+                      : 'ASR: ${formatSeconds(turn.asrTime)} | '
+                            'LLM: ${formatSeconds(turn.llmTime)} · ${PcmFormat.description}',
                   style: const TextStyle(
                     fontSize: TranscriptStage.timingFontSize,
                     color: NightPalette.textMuted,
@@ -528,10 +609,7 @@ class _RoutePill extends StatelessWidget {
         color: accent.withValues(alpha: 0.12),
         border: Border.all(color: accent.withValues(alpha: 0.40), width: 1.1),
         boxShadow: [
-          BoxShadow(
-            color: accent.withValues(alpha: 0.10),
-            blurRadius: 8,
-          ),
+          BoxShadow(color: accent.withValues(alpha: 0.10), blurRadius: 8),
         ],
       ),
       child: Text(

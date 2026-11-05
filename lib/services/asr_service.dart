@@ -33,7 +33,7 @@ class AsrException implements Exception {
 
 /// Offline speech recognition through whisper.cpp.
 ///
-/// Everything happens on device: the model is read from the app bundle and
+/// Everything happens on device: the model is read from a local model file and
 /// inference runs in a background isolate via the `whisper_ggml` FFI plugin,
 /// on the GPU through ggml's Metal backend. No audio and no text ever leaves
 /// the phone.

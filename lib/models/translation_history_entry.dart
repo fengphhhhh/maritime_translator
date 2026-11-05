@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import 'speech_direction.dart';
+import 'translation_mode.dart';
 
 /// One saved translation exchange for the on-device history log.
 @immutable
@@ -11,12 +12,14 @@ class TranslationHistoryEntry {
     required this.translationText,
     required this.direction,
     required this.timestamp,
+    this.mode = TranslationMode.offline,
   });
 
   final String id;
   final String sourceText;
   final String translationText;
   final SpeechDirection direction;
+  final TranslationMode mode;
 
   /// Formatted as `yyyy-MM-dd HH:mm:ss`.
   final String timestamp;
@@ -29,6 +32,7 @@ class TranslationHistoryEntry {
     'translationText': translationText,
     'direction': direction.name,
     'timestamp': timestamp,
+    'mode': mode.name,
   };
 
   factory TranslationHistoryEntry.fromJson(Map<String, dynamic> json) {
@@ -38,6 +42,9 @@ class TranslationHistoryEntry {
       translationText: json['translationText'] as String,
       direction: SpeechDirection.values.byName(json['direction'] as String),
       timestamp: json['timestamp'] as String,
+      mode: json['mode'] == 'online'
+          ? TranslationMode.online
+          : TranslationMode.offline,
     );
   }
 
