@@ -39,6 +39,7 @@ class LocalAst {
   final requests = <Map<int, Object>>[];
   final audio = BytesBuilder();
   final started = Completer<void>();
+  final peerClosed = Completer<void>();
   Map<String, String> headers = {};
   bool accepted = false, prematureAudio = false;
 
@@ -57,61 +58,68 @@ class LocalAst {
     final socket = await WebSocketTransformer.upgrade(request);
     sockets.add(socket);
     var session = '';
-    socket.listen((dynamic data) {
-      final fields = ProtoReader(Uint8List.fromList(data as List<int>))
-          .fields();
-      requests.add(fields);
-      final meta = ProtoReader(fields[1]! as Uint8List).fields();
-      session = utf8.decode(meta[6]! as Uint8List);
-      switch (fields[2]) {
-        case 100:
-          if (behavior == 'timeout') return;
-          if (behavior == 'rejected') {
-            socket.add(reply(153, session, '', 45000001));
-            return;
-          }
-          if (behavior == 'malformed') {
-            socket.add([0]);
-            return;
-          }
-          Timer(const Duration(milliseconds: 10), () {
-            accepted = true;
-            socket.add(reply(150, session));
-            if (!started.isCompleted) started.complete();
-            if (behavior == 'disconnect') unawaited(socket.close());
-          });
-        case 200:
-          prematureAudio |= !accepted;
-          final block = ProtoReader(fields[4]! as Uint8List).fields();
-          audio.add(block[14]! as Uint8List);
-        case 102:
-          if (behavior == 'wait') return;
-          final source = behavior == 'reverse'
-              ? '我船需要引航员。'
-              : behavior == 'number'
-              ? 'Course one-zero-seven degrees.'
-              : 'Port engines half astern.';
-          final target = behavior == 'reverse'
-              ? 'I require a pilot.'
-              : behavior == 'number'
-              ? '航向170度。'
-              : '左舷主机半速后退。';
-          socket.add(reply(650, session));
-          socket.add(reply(651, session, source.substring(0, 3)));
-          socket.add(reply(652, session, source));
-          socket.add(reply(653, session));
-          socket.add(reply(654, session, target.substring(0, 3)));
-          if (behavior != 'unfinished') socket.add(reply(655, session, target));
-          if (behavior == 'multi') {
+    socket.listen(
+      (dynamic data) {
+        final fields = ProtoReader(Uint8List.fromList(data as List<int>))
+            .fields();
+        requests.add(fields);
+        final meta = ProtoReader(fields[1]! as Uint8List).fields();
+        session = utf8.decode(meta[6]! as Uint8List);
+        switch (fields[2]) {
+          case 100:
+            if (behavior == 'timeout') return;
+            if (behavior == 'rejected') {
+              socket.add(reply(153, session, '', 45000001));
+              return;
+            }
+            if (behavior == 'malformed') {
+              socket.add([0]);
+              return;
+            }
+            Timer(const Duration(milliseconds: 10), () {
+              accepted = true;
+              socket.add(reply(150, session));
+              if (!started.isCompleted) started.complete();
+              if (behavior == 'disconnect') unawaited(socket.close());
+            });
+          case 200:
+            prematureAudio |= !accepted;
+            final block = ProtoReader(fields[4]! as Uint8List).fields();
+            audio.add(block[14]! as Uint8List);
+          case 102:
+            if (behavior == 'wait') return;
+            final source = behavior == 'reverse'
+                ? '我船需要引航员。'
+                : behavior == 'number'
+                ? 'Course one-zero-seven degrees.'
+                : 'Port engines half astern.';
+            final target = behavior == 'reverse'
+                ? 'I require a pilot.'
+                : behavior == 'number'
+                ? '航向170度。'
+                : '左舷主机半速后退。';
             socket.add(reply(650, session));
-            socket.add(reply(652, session, 'Keep clear of me.'));
+            socket.add(reply(651, session, source.substring(0, 3)));
+            socket.add(reply(652, session, source));
             socket.add(reply(653, session));
-            socket.add(reply(654, session, '请避让'));
-            socket.add(reply(655, session, '请避让我船。'));
-          }
-          socket.add(reply(152, session));
-      }
-    }, onError: (Object _) {});
+            socket.add(reply(654, session, target.substring(0, 3)));
+            if (behavior != 'unfinished')
+              socket.add(reply(655, session, target));
+            if (behavior == 'multi') {
+              socket.add(reply(650, session));
+              socket.add(reply(652, session, 'Keep clear of me.'));
+              socket.add(reply(653, session));
+              socket.add(reply(654, session, '请避让'));
+              socket.add(reply(655, session, '请避让我船。'));
+            }
+            socket.add(reply(152, session));
+        }
+      },
+      onError: (Object _) {},
+      onDone: () {
+        if (!peerClosed.isCompleted) peerClosed.complete();
+      },
+    );
   }
 
   DoubaoS2tService service({Duration timeout = const Duration(seconds: 2)}) =>
@@ -288,6 +296,7 @@ void main() {
       await ast.started.future;
       service.cancel();
       await expectation;
+      await ast.peerClosed.future.timeout(const Duration(seconds: 3));
       expect(ast.sockets.first.readyState, isNot(WebSocket.open));
       ast.behavior = 'multi';
       final next = await service.translate(
