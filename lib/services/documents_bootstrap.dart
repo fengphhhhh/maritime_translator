@@ -12,22 +12,21 @@ abstract final class DocumentsBootstrap {
 航海英语语音翻译 — 模型目录
 ========================
 
-将 Whisper / Qwen 模型文件放在本目录（Documents/models/）：
+安装包不包含模型。请将手机里已有的 Whisper / Qwen 模型文件拷贝到本目录：
 
   ggml-large-v3-turbo-q5_0.bin
   qwen2.5-1.5b-instruct-q4_k_m.gguf
 
-App 会优先使用此处的文件，无需重新安装 IPA。
+文件名必须与上面一致，且内容须为对应的完整兼容模型，不能只改其他模型的名称。
+拷贝完成后重新打开 App，即可离线识别和翻译，无需重新安装 IPA。
 录音文件在 Documents/recordings/。
 ''';
 
   static Future<void> ensureSharedFolders() async {
     try {
       final Directory documents = await getApplicationDocumentsDirectory();
-      final Directory models =
-          Directory('${documents.path}/models');
-      final Directory recordings =
-          Directory('${documents.path}/recordings');
+      final Directory models = Directory('${documents.path}/models');
+      final Directory recordings = Directory('${documents.path}/recordings');
 
       await models.create(recursive: true);
       await recordings.create(recursive: true);

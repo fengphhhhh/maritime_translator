@@ -72,9 +72,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    # The ggml model whisper.cpp loads. The .bin itself is gitignored (hundreds
-    # of megabytes); see assets/models/README.md for how to fetch it.
-    - assets/models/
+    # Models are imported through iOS Files into Documents/models, not bundled.
     - assets/corpus/
 
   # An image asset can refer to one or more resolution-specific "variants", see

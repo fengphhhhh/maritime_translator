@@ -118,7 +118,9 @@ class LlmService implements ResidentModel {
         throw const TranslationException('译文中的数字与原文不一致，请核对识别原文后重试。');
       }
       if (!TranslationChecks.preservesCriticalMeaning(source, translated)) {
-        throw const TranslationException('译文的左右舷、车钟、通过位置或否定指令可能不一致，请核对识别原文后重试。');
+        throw const TranslationException(
+          '译文的左右舷、车钟、通过位置或否定指令可能不一致，请核对识别原文后重试。',
+        );
       }
       return translated;
     } on TranslationException {
@@ -127,9 +129,9 @@ class LlmService implements ResidentModel {
       throw TranslationException(error.toString(), isModelMissing: true);
     } on ModelMissingException catch (error) {
       throw TranslationException(
-        '翻译模型 ${error.fileName} 未随应用一起打包。\n'
-        '请将模型文件放入 assets/models/ 后重新构建，'
-        '或通过「文件」App 拷贝到本应用的 Documents/models/ 目录。',
+        '尚未添加翻译模型：${error.fileName}\n'
+        '请打开「文件」App →「我的 iPhone」→「Marine Voice Translator」'
+        '→ models，拷贝模型文件后重新打开本应用。',
         isModelMissing: true,
       );
     } on Object catch (error) {

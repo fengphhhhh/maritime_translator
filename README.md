@@ -21,18 +21,11 @@
 ```bash
 flutter pub get
 
-# 模型不在仓库里，先下载（Whisper 约 547 MB + Qwen 约 1.1 GB）
-curl -L -o assets/models/ggml-large-v3-turbo-q5_0.bin \
-  https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large-v3-turbo-q5_0.bin
-
-curl -L -o assets/models/qwen2.5-1.5b-instruct-q4_k_m.gguf \
-  https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF/resolve/main/qwen2.5-1.5b-instruct-q4_k_m.gguf
-
 cd ios && pod install && cd ..
 flutter run -d <你的 iPhone>
 ```
 
-模型缺失时 App 仍会启动，顶部状态条分别显示 ASR / LLM 是否就绪，按下按键会给出安装指引。详见 [`assets/models/README.md`](assets/models/README.md)。
+IPA 不包含两个模型。先打开 App 一次，再在「文件」→「我的 iPhone」→「Marine Voice Translator」→ `models` 中拷贝手机已有的 `ggml-large-v3-turbo-q5_0.bin` 和 `qwen2.5-1.5b-instruct-q4_k_m.gguf`，然后重新打开 App。须使用对应格式和架构的完整模型，不能只更改其他模型的文件名。模型缺失时仍能启动，按键会给出添加指引。详见 [`assets/models/README.md`](assets/models/README.md)。
 
 校验：
 
@@ -117,7 +110,7 @@ Whisper turbo + Qwen 1.5B q4 同时常驻约 1.6 GB 权重。App 在退到后台
 
 ## 已知限制
 
-- **双模型体积大。** IPA 约 1.6 GB；上架通常改为首次启动按需下载。
+- **需本机模型。** IPA 不包含两个模型，用户通过「文件」App 导入；运行时不联网下载。两个默认模型仍占用手机约 1.69 GB 存储。
 - **首次加载慢。** Metal 着色器按设备编译，每个进程一次；之后模型常驻直到退后台。
 - **仅 iOS。** Linux 环境无法 `flutter build ios`；桌面端只能跑 `flutter test` 与 `tool/prompt_smoke_test.dart`。
 

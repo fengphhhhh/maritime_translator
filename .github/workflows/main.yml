@@ -32,13 +32,6 @@ jobs:
           flutter analyze
           flutter test
 
-      - name: Fetch pinned offline models and verify SHA-256
-        shell: pwsh
-        run: ./tool/download_models.ps1
-
-      - name: Require bundled offline models
-        run: dart tool/check_offline_models.dart
-
       - name: Build iOS (No Codesign)
         run: flutter build ios --release --no-codesign
 
@@ -49,7 +42,7 @@ jobs:
           cd build/ios/iphoneos
           zip -r app.ipa Payload
 
-      - name: Verify models and reviewed corpus inside IPA
+      - name: Verify model-free IPA and reviewed corpus
         run: python3 tool/check_ipa.py build/ios/iphoneos/app.ipa
 
       - name: Upload IPA Artifact

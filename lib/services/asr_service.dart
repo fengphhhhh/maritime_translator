@@ -196,9 +196,9 @@ class AsrService implements ResidentModel {
       throw AsrException(error.toString(), isModelMissing: true);
     } on ModelMissingException catch (error) {
       throw AsrException(
-        '离线模型 ${error.fileName} 未随应用一起打包。\n'
-        '请将模型文件放入 assets/models/ 后重新构建，'
-        '或通过「文件」App 拷贝到本应用的 Documents/models/ 目录。',
+        '尚未添加语音识别模型：${error.fileName}\n'
+        '请打开「文件」App →「我的 iPhone」→「Marine Voice Translator」'
+        '→ models，拷贝模型文件后重新打开本应用。',
         isModelMissing: true,
       );
     }
