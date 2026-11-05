@@ -12,11 +12,24 @@ abstract final class TranslationChecks {
   static Set<String> _sides(String text) {
     final s = text.toLowerCase();
     final result = <String>{};
+    // Radio shorthand omits 舷: 左对左 / 右对右 carries the same passing
+    // side as 左舷对左舷 / 右舷对右舷. Keep both sides for mixed expressions
+    // so 左对右 must not become a same-side passing agreement unnoticed.
+    for (final passing in RegExp(
+      r'([左右])\s*(?:舷\s*)?对\s*([左右])(?:\s*舷)?',
+    ).allMatches(s)) {
+      result.add(passing[1] == '左' ? 'left' : 'right');
+      result.add(passing[2] == '左' ? 'left' : 'right');
+    }
     for (final side in ['port', 'starboard']) {
+      final passing = '$side(?:\\s+side)?[- ]+to[- ]+$side(?:\\s+side)?';
       if (RegExp(
             '\\b$side\\s+(side|bow|beam|quarter|anchors?|engines?|cables?|wing|capstan|alongside)\\b',
           ).hasMatch(s) ||
-          RegExp('\\bpass(?:ing)?\\s+$side[- ]to[- ]$side\\b').hasMatch(s) ||
+          RegExp('\\bpass(?:ing|ed)?\\s+(?:each other\\s+)?$passing\\b')
+              .hasMatch(s) ||
+          RegExp('\\b$passing\\s+passing\\b').hasMatch(s) ||
+          RegExp('^\\W*$passing\\W*\$').hasMatch(s) ||
           RegExp('\\bhard(?:-a-|\\s+(?:to\\s+)?)$side\\b').hasMatch(s) ||
           RegExp('\\b(?:hard(?:-a-)?|course|turn)\\s+(?:to\\s+)?$side\\b')
               .hasMatch(s) ||

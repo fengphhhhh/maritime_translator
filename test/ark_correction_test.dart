@@ -258,6 +258,27 @@ void main() {
     });
   }
 
+  for (final wording in [
+    ['我们左对左过。', '我们右舷对右舷通过。', 'We will pass starboard to starboard.'],
+    ['我们右对右过。', '我们左舷对左舷通过。', 'We will pass port to port.'],
+    ['我们左对左过。', '我们左舷对左舷通过。', 'We will pass starboard to starboard.'],
+    ['我们右对右过。', '我们右舷对右舷通过。', 'We will pass port to port.'],
+  ]) {
+    test(
+      'opposite passing side is still rejected: ${wording[0]} ${wording[2]}',
+      () async {
+        final server = await ChatServer.open();
+        addTearDown(server.close);
+        server.source = wording[1];
+        server.translation = wording[2];
+        await expectLater(
+          correct(server, text: wording[0], english: false),
+          throwsA(isA<OnlineTranslationException>()),
+        );
+      },
+    );
+  }
+
   test('equivalent radio digits and ICAO spelling normalize without changing values', () async {
     final server = await ChatServer.open();
     addTearDown(server.close);
@@ -289,6 +310,28 @@ void main() {
     final result = await correct(server, text: 'Port ten.');
     expect(result.translation, '左舵10度。');
   });
+
+  for (final wording in [
+    ['我们左对左过。', '我们左舷对左舷通过。', 'We will pass port to port.'],
+    ['我们右对右过。', '我们右舷对右舷通过。', 'We will pass starboard to starboard.'],
+    ['我们左对左过。', '我们左对左过。', 'We will pass port-to-port.'],
+    ['我们左对左过。', '我们左舷对左舷通过。', 'Port-to-port passing.'],
+    ['我们右对右过。', '我们右对右过。', 'We will pass starboard-to-starboard.'],
+  ]) {
+    test(
+      'colloquial passing agreement produces a final translation: ${wording[0]} ${wording[1]}',
+      () async {
+        final server = await ChatServer.open();
+        addTearDown(server.close);
+        server.source = wording[1];
+        server.translation = wording[2];
+        final result = await correct(server, text: wording[0], english: false);
+        expect(result.source, wording[1]);
+        expect(result.translation, wording[2]);
+        expect(result.transcript, wording[0]);
+      },
+    );
+  }
 
   test('timeout closes transport and reports no final result', () async {
     final server = await ChatServer.open();
