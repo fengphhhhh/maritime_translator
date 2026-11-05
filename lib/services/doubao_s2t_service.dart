@@ -15,8 +15,9 @@ class OnlineTranslationException implements Exception {
 }
 
 class OnlineTranslation {
-  const OnlineTranslation(this.source, this.translation);
+  const OnlineTranslation(this.source, this.translation, {this.transcript});
   final String source, translation;
+  final String? transcript;
 }
 
 typedef DoubaoConnector = Future<WebSocket> Function(
@@ -30,10 +31,15 @@ class DoubaoS2tService {
     this.connector,
     this.responseTimeout = const Duration(seconds: 30),
     this.packetInterval = const Duration(milliseconds: 80),
+    this.transcriptOnly = false,
   });
 
   final DoubaoConnector? connector;
   final Duration responseTimeout, packetInterval;
+
+  /// The chained pipeline needs the final ASR text even if AST's translation
+  /// is missing or inaccurate. Standalone S2T keeps its existing validation.
+  final bool transcriptOnly;
   _OnlineOperation? _active;
 
   Future<OnlineTranslation> translate({
@@ -217,7 +223,9 @@ class DoubaoS2tService {
           throw const FormatException('Too many subtitle messages');
         }
         if (response.event == 152) {
-          if (!finishSent || !source.isFinal || !target.isFinal) {
+          if (!finishSent ||
+              !source.isFinal ||
+              (!transcriptOnly && !target.isFinal)) {
             throw const OnlineTranslationException('豆包未返回完整的原文和译文，请重试。');
           }
           break;
@@ -247,19 +255,22 @@ class DoubaoS2tService {
       if (sendError != null) throw sendError!;
       checkActive();
       final result = OnlineTranslation(source.text.trim(), target.text.trim());
-      if (result.source.isEmpty || result.translation.isEmpty) {
+      if (result.source.isEmpty ||
+          (!transcriptOnly && result.translation.isEmpty)) {
         throw const OnlineTranslationException('没有收到完整语音翻译结果，请重新说话。');
       }
-      if (!TranslationChecks.preservesNumbers(
-        result.source,
-        result.translation,
-      )) {
+      if (!transcriptOnly &&
+          !TranslationChecks.preservesNumbers(
+            result.source,
+            result.translation,
+          )) {
         throw const OnlineTranslationException('在线译文的数字与原文不一致，请核对原文后重试。');
       }
-      if (!TranslationChecks.preservesCriticalMeaning(
-        result.source,
-        result.translation,
-      )) {
+      if (!transcriptOnly &&
+          !TranslationChecks.preservesCriticalMeaning(
+            result.source,
+            result.translation,
+          )) {
         throw const OnlineTranslationException('在线译文的左右舷、车钟或否定指令需核对，请重试。');
       }
       return result;

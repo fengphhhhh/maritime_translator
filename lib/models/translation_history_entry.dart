@@ -13,6 +13,7 @@ class TranslationHistoryEntry {
     required this.direction,
     required this.timestamp,
     this.mode = TranslationMode.offline,
+    this.originalTranscript,
   });
 
   final String id;
@@ -20,6 +21,7 @@ class TranslationHistoryEntry {
   final String translationText;
   final SpeechDirection direction;
   final TranslationMode mode;
+  final String? originalTranscript;
 
   /// Formatted as `yyyy-MM-dd HH:mm:ss`.
   final String timestamp;
@@ -33,6 +35,7 @@ class TranslationHistoryEntry {
     'direction': direction.name,
     'timestamp': timestamp,
     'mode': mode.name,
+    'originalTranscript': ?originalTranscript,
   };
 
   factory TranslationHistoryEntry.fromJson(Map<String, dynamic> json) {
@@ -42,6 +45,7 @@ class TranslationHistoryEntry {
       translationText: json['translationText'] as String,
       direction: SpeechDirection.values.byName(json['direction'] as String),
       timestamp: json['timestamp'] as String,
+      originalTranscript: json['originalTranscript'] as String?,
       mode: json['mode'] == 'online'
           ? TranslationMode.online
           : TranslationMode.offline,

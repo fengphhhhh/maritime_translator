@@ -18,11 +18,15 @@ class RecognitionTurn {
     this.audioPath,
     this.mode = TranslationMode.offline,
     this.onlineTime = Duration.zero,
+    this.originalTranscript,
   });
 
   final SpeechDirection direction;
   final TranslationMode mode;
   final Duration onlineTime;
+
+  /// Uncorrected cloud recognition, retained for comparison with sourceText.
+  final String? originalTranscript;
 
   /// What whisper heard, in the language that was spoken.
   final String sourceText;

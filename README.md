@@ -2,7 +2,7 @@
 
 航海英语对讲 App，提供可选择的离线、豆包在线 S2T 模式，**仅面向 iPhone / iOS**，使用 Flutter 开发。面向夜间驾驶台场景：全程暗黑配色，翻译结果以 32pt 超大字号居中显示，底部两个巨大的独立按键分别对应「按住说英文」和「按住说中文」。
 
-离线模式由本机 whisper.cpp 识别、Qwen2.5-1.5B-Instruct（llama.cpp）翻译，不发送录音。选择在线模式后，松开按键将本段录音发送至豆包同声传译 2.0，使用 S2T 返回原文及译文。API Key 在 App 的在线设置中填写，保存在 iOS 钥匙串；不提交到仓库。使用说明和验证边界见 [ONLINE_MODE.md](ONLINE_MODE.md)。
+离线模式由本机 whisper.cpp 识别、Qwen2.5-1.5B-Instruct（llama.cpp）翻译，不发送录音。在线模式无需后端：松开按键后将录音发送至豆包 AST S2T，再将完整识别原文交给方舟 Doubao-Seed-2.1-pro 进行海事文本校正和翻译，显式关闭深度思考。两个服务的 API Key 分别在 App 在线设置中填写并保存在 iOS 钥匙串，不提交到仓库。使用说明和验证边界见 [ONLINE_MODE.md](ONLINE_MODE.md)。
 
 ## 全量语料增强
 

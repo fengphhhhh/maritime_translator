@@ -125,15 +125,16 @@ class LocalAst {
     );
   }
 
-  DoubaoS2tService service({Duration timeout = const Duration(seconds: 2)}) =>
-      DoubaoS2tService(
-        responseTimeout: timeout,
-        packetInterval: Duration.zero,
-        connector: (headers) => WebSocket.connect(
-          'ws://127.0.0.1:${server.port}',
-          headers: headers,
-        ),
-      );
+  DoubaoS2tService service({
+    Duration timeout = const Duration(seconds: 2),
+    bool transcriptOnly = false,
+  }) => DoubaoS2tService(
+    transcriptOnly: transcriptOnly,
+    responseTimeout: timeout,
+    packetInterval: Duration.zero,
+    connector: (headers) =>
+        WebSocket.connect('ws://127.0.0.1:${server.port}', headers: headers),
+  );
   Future<void> close() async {
     for (final socket in sockets) {
       await socket.close();
@@ -147,6 +148,27 @@ void main() {
   final fixture = jsonDecode(
     File('test/fixtures/doubao_ast_v2_golden.json').readAsStringSync(),
   ) as Map<String, dynamic>;
+
+  test('chained mode accepts completed transcript despite inaccurate AST translation', () async {
+    final ast = await LocalAst.open('number');
+    addTearDown(ast.close);
+    final result = await ast
+        .service(transcriptOnly: true)
+        .translate(wav: wav, apiKey: 'key', englishSource: true);
+    expect(result.source, 'Course one-zero-seven degrees.');
+  });
+
+  test(
+    'chained mode requires only a final source and session finish',
+    () async {
+      final ast = await LocalAst.open('unfinished');
+      addTearDown(ast.close);
+      final result = await ast
+          .service(transcriptOnly: true)
+          .translate(wav: wav, apiKey: 'key', englishSource: true);
+      expect(result.source, 'Port engines half astern.');
+    },
+  );
 
   test(
     'Dart requests exactly match independently generated official protobuf',

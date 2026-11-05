@@ -16,13 +16,18 @@ class OnlineSettingsPage extends StatefulWidget {
 
 class _OnlineSettingsPageState extends State<OnlineSettingsPage> {
   final _key = TextEditingController();
+  final _arkKey = TextEditingController();
+  final _model = TextEditingController(
+    text: TranslationSettings.defaultArkModel,
+  );
   final _hotword = TextEditingController(
     text: OnlineVocabulary.defaultHotwordId,
   );
   final _glossary = TextEditingController(
     text: OnlineVocabulary.defaultGlossaryId,
   );
-  bool _busy = false, _visible = false, _saved = false;
+  bool _busy = false, _visible = false, _saved = false, _arkSaved = false;
+  bool _loading = true;
   String? _error;
 
   @override
@@ -34,24 +39,36 @@ class _OnlineSettingsPageState extends State<OnlineSettingsPage> {
   Future<void> _checkSaved() async {
     try {
       final value = await widget.keyStore.read();
-      if (mounted) setState(() => _saved = value?.isNotEmpty ?? false);
+      final ark = await widget.keyStore.readArk();
+      if (mounted) {
+        setState(() {
+          _saved = value?.isNotEmpty ?? false;
+          _arkSaved = ark?.isNotEmpty ?? false;
+        });
+      }
     } on Object {
       if (mounted) setState(() => _error = '无法读取密钥状态，请解锁手机后重试。');
     }
     try {
       final terms = await widget.settings.loadVocabulary();
+      final model = await widget.settings.loadArkModel();
       if (mounted) {
         _hotword.text = terms.hotwordTableId;
         _glossary.text = terms.glossaryTableId;
+        _model.text = model;
       }
     } on Object {
       if (mounted) setState(() => _error = '词表设置读取失败，请重新填写后保存。');
+    } finally {
+      if (mounted) setState(() => _loading = false);
     }
   }
 
   @override
   void dispose() {
     _key.dispose();
+    _arkKey.dispose();
+    _model.dispose();
     _hotword.dispose();
     _glossary.dispose();
     super.dispose();
@@ -65,23 +82,32 @@ class _OnlineSettingsPageState extends State<OnlineSettingsPage> {
     try {
       if (delete) {
         await widget.keyStore.delete();
+        await widget.keyStore.deleteArk();
       } else {
         final terms = OnlineVocabulary(
           hotwordTableId: _hotword.text.trim(),
           glossaryTableId: _glossary.text.trim(),
         );
         terms.validate();
+        TranslationSettings.validateArkModel(_model.text.trim());
+        if ((_key.text.trim().isEmpty && !_saved) ||
+            (_arkKey.text.trim().isEmpty && !_arkSaved)) {
+          throw const FormatException('Both credentials required');
+        }
         if (_key.text.trim().isNotEmpty) {
           await widget.keyStore.save(_key.text);
-        } else if (!_saved) {
-          throw const FormatException('Missing API key');
+        }
+        if (_arkKey.text.trim().isNotEmpty) {
+          await widget.keyStore.saveArk(_arkKey.text);
         }
         await widget.settings.saveVocabulary(terms);
+        await widget.settings.saveArkModel(_model.text);
       }
       _key.clear();
+      _arkKey.clear();
       if (mounted) Navigator.pop(context, true);
     } on FormatException {
-      if (mounted) setState(() => _error = '请检查 API Key 和词表 ID 的格式。');
+      if (mounted) setState(() => _error = '请填写两个服务的密钥，并检查模型 ID 和词表 ID。');
     } on Object {
       if (mounted) setState(() => _error = '密钥保存失败，请解锁手机后重试。');
     } finally {
@@ -97,30 +123,34 @@ class _OnlineSettingsPageState extends State<OnlineSettingsPage> {
         padding: const EdgeInsets.all(20),
         children: [
           const Text(
-            '同声传译 2.0 · 语音到文本',
+            'AST 识别 + 方舟海事校正',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 16),
-          const Text('在线模式下，松开按键后会把本段录音发送至豆包，返回原文和译文。需要网络，使用量按你的火山引擎账户计费。'),
+          const Text(
+            '松开按键后，App 直接把录音发送至 AST，再把识别文本交给 Doubao-Seed-2.1-pro 校正并翻译。无需后端；两个服务分别按你的账户计费。',
+          ),
           const SizedBox(height: 12),
           const Text(
-            '请使用已开通豆包同声传译 2.0 服务的 API Key。密钥只保存在本机钥匙串；删除密钥可在此操作。离线模式不发送录音。',
+            'AST 和方舟使用各自已开通服务的 API Key，通常不是同一个密钥。密钥只保存在本机钥匙串，不随安装包分发。离线模式不发送录音或文本。',
           ),
           const SizedBox(height: 24),
-          if (_saved) ...[
-            const Text('已保存密钥。填写新值可以替换；留空不会显示或修改现有密钥。'),
+          if (_saved || _arkSaved) ...[
+            Text(
+              'AST 密钥${_saved ? "已保存" : "未设置"}；方舟密钥${_arkSaved ? "已保存" : "未设置"}。已保存的密钥留空可保留，填写新值可替换。',
+            ),
             const SizedBox(height: 12),
           ],
           TextField(
             controller: _key,
-            enabled: !_busy,
+            enabled: !_busy && !_loading,
             obscureText: !_visible,
             autocorrect: false,
             enableSuggestions: false,
             keyboardType: TextInputType.visiblePassword,
             textCapitalization: TextCapitalization.none,
             decoration: InputDecoration(
-              labelText: 'API Key',
+              labelText: 'AST API Key',
               hintText: _saved ? '输入新密钥以替换' : '粘贴你的 API Key',
               border: const OutlineInputBorder(),
               suffixIcon: IconButton(
@@ -132,8 +162,34 @@ class _OnlineSettingsPageState extends State<OnlineSettingsPage> {
           ),
           const SizedBox(height: 18),
           TextField(
+            controller: _arkKey,
+            enabled: !_busy && !_loading,
+            obscureText: !_visible,
+            autocorrect: false,
+            enableSuggestions: false,
+            keyboardType: TextInputType.visiblePassword,
+            decoration: InputDecoration(
+              labelText: '方舟 API Key',
+              hintText: _arkSaved ? '留空保留已保存密钥' : '粘贴方舟 API Key',
+              border: const OutlineInputBorder(),
+            ),
+          ),
+          const SizedBox(height: 18),
+          TextField(
+            controller: _model,
+            enabled: !_busy && !_loading,
+            autocorrect: false,
+            enableSuggestions: false,
+            decoration: const InputDecoration(
+              labelText: '方舟模型 ID / 接入点 ID',
+              helperText: '填写你已开通的 Seed-2.1-pro 模型 ID 或 ep- 接入点',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          const SizedBox(height: 18),
+          TextField(
             controller: _hotword,
-            enabled: !_busy,
+            enabled: !_busy && !_loading,
             autocorrect: false,
             enableSuggestions: false,
             decoration: const InputDecoration(
@@ -144,7 +200,7 @@ class _OnlineSettingsPageState extends State<OnlineSettingsPage> {
           const SizedBox(height: 12),
           TextField(
             controller: _glossary,
-            enabled: !_busy,
+            enabled: !_busy && !_loading,
             autocorrect: false,
             enableSuggestions: false,
             decoration: const InputDecoration(
@@ -164,12 +220,12 @@ class _OnlineSettingsPageState extends State<OnlineSettingsPage> {
             ),
           const SizedBox(height: 20),
           FilledButton(
-            onPressed: _busy ? null : () => _save(),
+            onPressed: _busy || _loading ? null : () => _save(),
             child: Text(_busy ? '正在保存…' : '保存设置'),
           ),
-          if (_saved)
+          if (_saved || _arkSaved)
             TextButton(
-              onPressed: _busy ? null : () => _save(delete: true),
+              onPressed: _busy || _loading ? null : () => _save(delete: true),
               child: const Text('删除本机密钥'),
             ),
           const SizedBox(height: 20),

@@ -40,6 +40,7 @@ class TranslationHistoryService {
       translationText: turn.translation,
       direction: turn.direction,
       mode: turn.mode,
+      originalTranscript: turn.originalTranscript,
       timestamp: TranslationHistoryEntry.formatTimestamp(turn.createdAt),
     );
 

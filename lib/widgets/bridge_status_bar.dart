@@ -54,7 +54,7 @@ class BridgeStatusBar extends StatelessWidget {
                         child: Text(
                           mode == TranslationMode.offline
                               ? '离线 · 16 kHz · 单声道'
-                              : '在线 · 豆包同声传译 2.0',
+                              : '在线 · AST + 方舟海事校正',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(

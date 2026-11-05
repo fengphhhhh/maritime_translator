@@ -12,6 +12,7 @@ import 'services/audio_quality.dart';
 import 'services/documents_bootstrap.dart';
 import 'services/doubao_s2t_service.dart';
 import 'services/llm_service.dart';
+import 'services/maritime_online_service.dart';
 import 'services/pcm_recorder.dart';
 import 'services/resident_model.dart';
 import 'services/translation_history_service.dart';
@@ -85,7 +86,8 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
 
   late final PcmRecorder _recorder = widget.recorder ?? PcmRecorder();
   late final DoubaoS2tService _online =
-      widget.onlineService ?? DoubaoS2tService();
+      widget.onlineService ??
+      MaritimeOnlineService(keyStore: _keyStore, settings: _settings);
   late final ApiKeyStore _keyStore = widget.keyStore ?? ApiKeyStore();
   late final TranslationSettings _settings =
       widget.settings ?? TranslationSettings();
@@ -187,7 +189,7 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
       /* Keep offline default. */
     }
     try {
-      hasKey = (await _keyStore.read())?.isNotEmpty ?? false;
+      hasKey = await _onlineKeysReady();
     } on Object {
       /* No credential available. */
     }
@@ -229,11 +231,17 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
     );
     if (!mounted) return;
     try {
-      final hasKey = (await _keyStore.read())?.isNotEmpty ?? false;
+      final hasKey = await _onlineKeysReady();
       if (mounted) setState(() => _hasApiKey = hasKey);
     } on Object {
       if (mounted) _showSnack('无法读取密钥，请解锁手机后重试。');
     }
+  }
+
+  Future<bool> _onlineKeysReady() async {
+    final ast = await _keyStore.read();
+    final ark = await _keyStore.readArk();
+    return (ast?.isNotEmpty ?? false) && (ark?.isNotEmpty ?? false);
   }
 
   Future<void> _refreshPermission() async {
@@ -267,7 +275,7 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
       return;
     }
     if (_mode == TranslationMode.online && !_hasApiKey) {
-      _showSnack('请先设置豆包 API Key。');
+      _showSnack('请先设置 AST 和方舟两个 API Key。');
       await _openOnlineSettings();
       return;
     }
@@ -399,6 +407,7 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
         _turn = RecognitionTurn(
           direction: direction,
           sourceText: result.source,
+          originalTranscript: result.transcript,
           translation: result.translation,
           audioDuration: clip.duration,
           asrTime: Duration.zero,

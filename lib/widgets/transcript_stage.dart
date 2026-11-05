@@ -105,7 +105,7 @@ class _OnlineProcessingView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const Text(
-          '豆包在线翻译中…',
+          '语音识别与海事校正中…',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
         ),
         const SizedBox(height: 8),
@@ -117,7 +117,7 @@ class _OnlineProcessingView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 if (source.isNotEmpty) ...[
-                  const Text('原文 · 接收中'),
+                  const Text('识别原文 · 待校正'),
                   const SizedBox(height: 6),
                   SelectableText(
                     source,
@@ -138,7 +138,7 @@ class _OnlineProcessingView extends StatelessWidget {
                     ),
                   ),
                 ] else
-                  const Text('正在发送录音并等待译文…'),
+                  const Text('正在识别录音或等待方舟校正…'),
               ],
             ),
           ),
@@ -197,7 +197,7 @@ class _IdleView extends StatelessWidget {
           Text(
             mode == TranslationMode.offline
                 ? '识别与翻译均在本机运行，无需网络。'
-                : '松开后，录音发送至豆包进行翻译。需联网，按服务计费。',
+                : '松开后，录音发送至豆包 AST，识别文本交由方舟校正翻译。需联网，按服务计费。',
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 14,
@@ -508,9 +508,9 @@ class _ResultView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   if (turn.hasTranslation && turn.sourceText.isNotEmpty) ...[
-                    const Text(
-                      '原文',
-                      style: TextStyle(
+                    Text(
+                      turn.originalTranscript != null ? '校正后原文' : '原文',
+                      style: const TextStyle(
                         fontSize: 11.5,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 0.8,
@@ -553,6 +553,17 @@ class _ResultView extends StatelessWidget {
                           : NightPalette.textMuted,
                     ),
                   ),
+                  if (turn.originalTranscript != null) ...[
+                    const SizedBox(height: 14),
+                    ExpansionTile(
+                      tilePadding: EdgeInsets.zero,
+                      title: const Text(
+                        '查看原始识别文本',
+                        style: TextStyle(fontSize: 13),
+                      ),
+                      children: [SelectableText(turn.originalTranscript!)],
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -563,7 +574,7 @@ class _ResultView extends StatelessWidget {
               Expanded(
                 child: Text(
                   turn.mode == TranslationMode.online
-                      ? '豆包 S2T · 在线 ${formatSeconds(turn.onlineTime)}'
+                      ? 'AST + 方舟 · 在线 ${formatSeconds(turn.onlineTime)}'
                       : 'ASR: ${formatSeconds(turn.asrTime)} | '
                             'LLM: ${formatSeconds(turn.llmTime)} · ${PcmFormat.description}',
                   style: const TextStyle(

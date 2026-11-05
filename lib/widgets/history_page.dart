@@ -71,6 +71,9 @@ class _HistoryPageState extends State<HistoryPage> {
       ..writeln('[${entry.directionLabel}] ${entry.timestamp}')
       ..writeln('原文：${entry.sourceText}')
       ..writeln('译文：${entry.translationText}');
+    if (entry.originalTranscript != null) {
+      buffer.writeln('原始识别：${entry.originalTranscript}');
+    }
     await Clipboard.setData(ClipboardData(text: buffer.toString()));
     if (!mounted) return;
     ScaffoldMessenger.of(context)
@@ -213,6 +216,16 @@ class _HistoryTile extends StatelessWidget {
                   color: NightPalette.textPrimary,
                 ),
               ),
+              if (entry.originalTranscript != null) ...[
+                const SizedBox(height: 10),
+                Text(
+                  '原始识别：${entry.originalTranscript}',
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: NightPalette.textMuted,
+                  ),
+                ),
+              ],
               const SizedBox(height: 12),
               Align(
                 alignment: Alignment.centerRight,

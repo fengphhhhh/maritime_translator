@@ -23,6 +23,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 class FakeKeys extends ApiKeyStore {
   FakeKeys([this.value = 'test-key']);
   String? value;
+  String? arkValue = 'test-ark-key';
+  @override
+  Future<String?> readArk() async => arkValue;
+  @override
+  Future<void> saveArk(String key) async {
+    arkValue = key;
+  }
+
+  @override
+  Future<void> deleteArk() async {
+    arkValue = null;
+  }
+
   @override
   Future<String?> read() async => value;
   @override
@@ -186,6 +199,85 @@ void main() {
   }
 
   test(
+    'AST and Ark credentials use separate native entries and never preferences',
+    () async {
+      final secrets = <String, String>{};
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(ApiKeyStore.channel, (call) async {
+            final account = call.method.endsWith('Ark') ? 'ark' : 'ast';
+            if (call.method.startsWith('save')) {
+              secrets[account] = call.arguments as String;
+            }
+            if (call.method.startsWith('delete')) secrets.remove(account);
+            return call.method.startsWith('read') ? secrets[account] : null;
+          });
+      addTearDown(
+        () => TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+            .setMockMethodCallHandler(ApiKeyStore.channel, null),
+      );
+      final store = ApiKeyStore();
+      await store.save('private-ast');
+      await store.saveArk('private-ark');
+      expect(await store.read(), 'private-ast');
+      expect(await store.readArk(), 'private-ark');
+      await store.deleteArk();
+      expect(await store.readArk(), isNull);
+      expect(await store.read(), 'private-ast');
+      expect((await SharedPreferences.getInstance()).getKeys(), isEmpty);
+      await expectLater(store.saveArk('bad\nkey'), throwsFormatException);
+    },
+  );
+
+  testWidgets(
+    'missing Ark key opens settings before recording with saved AST key',
+    (tester) async {
+      final keys = FakeKeys()..arkValue = null;
+      final recorder = FakeRecorder(), online = FakeOnline();
+      await pumpHome(
+        tester,
+        settings: FakeSettings(TranslationMode.online),
+        keys: keys,
+        asr: FakeAsr(),
+        llm: FakeLlm(),
+        online: online,
+        recorder: recorder,
+      );
+      await speak(tester);
+      await tester.pumpAndSettle();
+      expect(find.text('豆包在线设置'), findsOneWidget);
+      expect(recorder.starts, 0);
+      expect(online.calls, 0);
+    },
+  );
+
+  test(
+    'corrected history retains raw recognition and old data remains readable',
+    () async {
+      final history = TranslationHistoryService();
+      await history.appendFromTurn(
+        RecognitionTurn(
+          direction: SpeechDirection.englishToChinese,
+          sourceText: 'I require a pilot.',
+          translation: '我船需要引航员。',
+          originalTranscript: 'I require a pirate.',
+          audioDuration: Duration.zero,
+          asrTime: Duration.zero,
+          llmTime: Duration.zero,
+          createdAt: DateTime(2026),
+          mode: TranslationMode.online,
+        ),
+      );
+      final entry = (await history.loadAll()).single;
+      expect(entry.sourceText, 'I require a pilot.');
+      expect(entry.originalTranscript, 'I require a pirate.');
+      expect(
+        TranslationHistoryEntry.fromJson(entry.toJson()).originalTranscript,
+        entry.originalTranscript,
+      );
+    },
+  );
+
+  test(
     'mode and vocabulary persist, while API key uses only the native channel',
     () async {
       final calls = <MethodCall>[];
@@ -256,7 +348,7 @@ void main() {
       final history = await TranslationHistoryService().loadAll();
       expect(history.single.mode, TranslationMode.online);
       expect(history.single.translationText, '我船需要引航员。');
-      expect(find.textContaining('豆包 S2T · 在线'), findsOneWidget);
+      expect(find.textContaining('AST + 方舟 · 在线'), findsOneWidget);
     },
   );
 
@@ -366,12 +458,18 @@ void main() {
       expect(find.text('old-hidden-test-value'), findsNothing);
       final fields = find.byType(TextField);
       await tester.enterText(fields.at(0), 'new-local-test-value');
-      await tester.enterText(fields.at(1), 'custom-hotword');
-      await tester.enterText(fields.at(2), 'custom-glossary');
+      await tester.enterText(fields.at(1), 'new-ark-test-value');
+      await tester.enterText(fields.at(2), 'ep-seed21-test');
+      await tester.ensureVisible(fields.at(3));
+      await tester.enterText(fields.at(3), 'custom-hotword');
+      await tester.ensureVisible(fields.at(4));
+      await tester.enterText(fields.at(4), 'custom-glossary');
       await tester.ensureVisible(find.text('保存设置'));
       await tester.tap(find.text('保存设置'));
       await tester.pumpAndSettle();
       expect(keys.value, 'new-local-test-value');
+      expect(keys.arkValue, 'new-ark-test-value');
+      expect(await TranslationSettings().loadArkModel(), 'ep-seed21-test');
       final vocabulary = await TranslationSettings().loadVocabulary();
       expect(vocabulary.hotwordTableId, 'custom-hotword');
       expect(vocabulary.glossaryTableId, 'custom-glossary');

@@ -21,10 +21,10 @@ import Security
       let query: [String: Any] = [
         kSecClass as String: kSecClassGenericPassword,
         kSecAttrService as String: (Bundle.main.bundleIdentifier ?? "marine_voice_translator") + ".doubao",
-        kSecAttrAccount as String: "ast-api-key"
+        kSecAttrAccount as String: call.method.hasSuffix("Ark") ? "ark-api-key" : "ast-api-key"
       ]
       switch call.method {
-      case "read":
+      case "read", "readArk":
         var request = query
         request[kSecReturnData as String] = true
         request[kSecMatchLimit as String] = kSecMatchLimitOne
@@ -36,7 +36,7 @@ import Security
           result(FlutterError(code: "KEYCHAIN_READ", message: "无法读取密钥，请解锁手机后重试。", details: nil)); return
         }
         result(value)
-      case "save":
+      case "save", "saveArk":
         guard let value = call.arguments as? String, !value.isEmpty,
               value.utf8.count <= 4096,
               value.rangeOfCharacter(from: .controlCharacters) == nil,
@@ -57,7 +57,7 @@ import Security
           result(FlutterError(code: "KEYCHAIN_SAVE", message: "无法保存密钥，请解锁手机后重试。", details: nil)); return
         }
         result(nil)
-      case "delete":
+      case "delete", "deleteArk":
         let status = SecItemDelete(query as CFDictionary)
         guard status == errSecSuccess || status == errSecItemNotFound else {
           result(FlutterError(code: "KEYCHAIN_DELETE", message: "无法删除密钥，请重试。", details: nil)); return
