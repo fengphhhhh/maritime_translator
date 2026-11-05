@@ -103,8 +103,9 @@ class LocalAst {
             socket.add(reply(652, session, source));
             socket.add(reply(653, session));
             socket.add(reply(654, session, target.substring(0, 3)));
-            if (behavior != 'unfinished')
+            if (behavior != 'unfinished') {
               socket.add(reply(655, session, target));
+            }
             if (behavior == 'multi') {
               socket.add(reply(650, session));
               socket.add(reply(652, session, 'Keep clear of me.'));
@@ -117,7 +118,9 @@ class LocalAst {
       },
       onError: (Object _) {},
       onDone: () {
-        if (!peerClosed.isCompleted) peerClosed.complete();
+        if (!peerClosed.isCompleted) {
+          peerClosed.complete();
+        }
       },
     );
   }
