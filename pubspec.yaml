@@ -75,6 +75,7 @@ flutter:
     # The ggml model whisper.cpp loads. The .bin itself is gitignored (hundreds
     # of megabytes); see assets/models/README.md for how to fetch it.
     - assets/models/
+    - assets/corpus/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

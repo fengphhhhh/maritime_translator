@@ -50,6 +50,9 @@ app.*.map.json
 # Offline ggml models are hundreds of megabytes; fetch them per
 # assets/models/README.md instead of committing them.
 assets/models/*.bin
+assets/models/*.gguf
+assets/models/*.download
+.tools/
 
 # Captured audio, written at runtime into the app sandbox
 /ios/Runner/recordings/

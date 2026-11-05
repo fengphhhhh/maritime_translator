@@ -15,6 +15,13 @@ class ModelMissingException implements Exception {
   String toString() => 'ModelMissingException: $fileName';
 }
 
+class ModelInvalidException implements Exception {
+  const ModelInvalidException(this.fileName);
+  final String fileName;
+  @override
+  String toString() => '模型 $fileName 文件不完整或格式错误，请重新导入完整模型。';
+}
+
 /// Finds the large model files the ASR and translation stages load.
 ///
 /// Both models are hundreds of megabytes to a gigabyte, so the rules are the
@@ -36,12 +43,33 @@ abstract final class ModelLocator {
 
     final Directory documents = await getApplicationDocumentsDirectory();
     final File override = File('${documents.path}/models/$fileName');
-    if (override.existsSync()) return override.path;
+    if (override.existsSync()) return _validate(override);
 
     final File inBundle = File(bundleAssetPath(assetPath));
-    if (inBundle.existsSync()) return inBundle.path;
+    if (inBundle.existsSync()) return _validate(inBundle);
 
-    return _extractFromAssets(assetPath, fileName);
+    return _validate(File(await _extractFromAssets(assetPath, fileName)));
+  }
+
+  static Future<String> _validate(File file) async {
+    final name = file.uri.pathSegments.last;
+    if (await file.length() < 100 * 1024 * 1024) {
+      throw ModelInvalidException(name);
+    }
+    final handle = await file.open();
+    try {
+      final header = await handle.read(4);
+      final expected = name.endsWith('.gguf')
+          ? [71, 71, 85, 70]
+          : [108, 109, 103, 103];
+      if (header.length != 4 ||
+          List.generate(4, (i) => header[i] != expected[i]).any((v) => v)) {
+        throw ModelInvalidException(name);
+      }
+    } finally {
+      await handle.close();
+    }
+    return file.path;
   }
 
   /// Path of a Flutter asset inside the installed app bundle.

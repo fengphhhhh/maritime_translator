@@ -26,6 +26,8 @@ class LlamaSession {
 
   final int _handle;
   bool _released = false;
+  Future<String>? _generation;
+  Future<void>? _releaseFuture;
 
   /// Loads [modelPath] and prepares a context of [contextSize] tokens.
   ///
@@ -57,10 +59,15 @@ class LlamaSession {
     if (_released) {
       throw const LlamaException('session has already been released');
     }
+    if (_generation != null) {
+      throw const LlamaException('session is already generating');
+    }
     final int handle = _handle;
-    return Isolate.run(
+    final work = Isolate.run(
       () => _generateSync(handle, prompt, maxTokens, temperature, seed),
     );
+    _generation = work;
+    return work.whenComplete(() => _generation = null);
   }
 
   /// Frees the model and its context. The session cannot be used afterwards.
@@ -68,9 +75,17 @@ class LlamaSession {
   /// iOS terminates a backgrounded app that is holding on to this much
   /// memory, so callers are expected to release rather than wait for the
   /// process to end.
-  Future<void> release() async {
-    if (_released) return;
+  Future<void> release() => _releaseFuture ??= _releaseAfterGeneration();
+
+  Future<void> _releaseAfterGeneration() async {
     _released = true;
+    // Native generation runs on another isolate. Freeing its handle before it
+    // completes causes a use-after-free when the app goes to the background.
+    try {
+      await _generation;
+    } on Object {
+      // Failed generation still owns the context until its future settles.
+    }
     final int handle = _handle;
     await Isolate.run(() => _releaseSync(handle));
   }

@@ -2,12 +2,16 @@ name: Build iOS IPA
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "codex/offline-maritime-accuracy" ]
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   build-ios:
     runs-on: macos-latest
+    timeout-minutes: 60
 
     steps:
       - name: Checkout repository
@@ -17,9 +21,23 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
+          flutter-version: '3.47.9'
 
       - name: Install dependencies
         run: flutter pub get
+
+      - name: Check offline logic and Flutter application
+        run: |
+          dart tool/offline_regression.dart
+          flutter analyze
+          flutter test
+
+      - name: Fetch pinned offline models and verify SHA-256
+        shell: pwsh
+        run: ./tool/download_models.ps1
+
+      - name: Require bundled offline models
+        run: dart tool/check_offline_models.dart
 
       - name: Build iOS (No Codesign)
         run: flutter build ios --release --no-codesign
@@ -31,8 +49,13 @@ jobs:
           cd build/ios/iphoneos
           zip -r app.ipa Payload
 
+      - name: Verify models and reviewed corpus inside IPA
+        run: python3 tool/check_ipa.py build/ios/iphoneos/app.ipa
+
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Maritime_Translator_App
           path: build/ios/iphoneos/app.ipa
+          if-no-files-found: error
+          compression-level: 0

@@ -38,4 +38,4 @@ curl -L -o assets/models/qwen2.5-1.5b-instruct-q4_k_m.gguf \
 
 两个大模型会让 IPA 显著变大，且同时常驻内存时 iOS 更容易杀后台进程。App 已在退到后台时释放 ASR 与 LLM 权重，并在 `Runner.entitlements` 中申请了 `com.apple.developer.kernel.increased-memory-limit` 以争取更多前台内存。
 
-如果最终要上架，通常的做法是首次启动时按需下载模型到 `Documents/models/`，而不是打进包里。
+本项目要求离线运行，因此发布构建默认将两个模型随包分发，首次启动不依赖下载。开发准备阶段可运行 `./tool/download_models.ps1` 获取固定版本并校验 SHA-256；再运行 `dart tool/check_offline_models.dart` 检查打包条件。

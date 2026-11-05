@@ -49,6 +49,7 @@ class AsrService implements ResidentModel {
   Future<String>? _pendingModelPath;
   bool _isTranscribing = false;
   bool _modelIsParked = false;
+  Completer<void>? _transcriptionDone;
 
   @override
   String get residentModelName => '识别';
@@ -70,6 +71,9 @@ class AsrService implements ResidentModel {
       return true;
     } on AsrException catch (error) {
       debugPrint('AsrService.prepare: ${error.message}');
+      return false;
+    } on Object catch (error) {
+      debugPrint('AsrService.prepare: $error');
       return false;
     }
   }
@@ -94,6 +98,7 @@ class AsrService implements ResidentModel {
     // Claimed before the first await so a second press cannot slip past the
     // check above while the model path is being resolved.
     _isTranscribing = true;
+    _transcriptionDone = Completer<void>();
 
     try {
       final String model = await _resolveModelPath();
@@ -109,7 +114,9 @@ class AsrService implements ResidentModel {
               isNoTimestamps: true,
               // The maritime hotwords. Without this, whisper renders the
               // abbreviations phonetically.
-              initialPrompt: MaritimeConfig.initialPrompt,
+              initialPrompt: language == AsrLanguage.english
+                  ? MaritimeConfig.englishPrompt
+                  : MaritimeConfig.chinesePrompt,
               // Each press is an independent utterance, so no carry-over
               // context: it is the main source of hallucinated repetition on
               // short clips.
@@ -136,6 +143,8 @@ class AsrService implements ResidentModel {
       throw AsrException('语音识别失败：$error');
     } finally {
       _isTranscribing = false;
+      _transcriptionDone?.complete();
+      _transcriptionDone = null;
       // whisper_ggml pipes every input through ffmpeg into "<path>.wav" before
       // decoding. Ours is already 16 kHz mono, so that copy is pure leftover.
       unawaited(_deleteQuietly('$audioPath.wav'));
@@ -155,6 +164,7 @@ class AsrService implements ResidentModel {
   /// models). Call it when recognition is done for a while.
   @override
   Future<void> release() async {
+    await _transcriptionDone?.future;
     if (!_modelIsParked) return;
     _modelIsParked = false;
 
@@ -182,6 +192,8 @@ class AsrService implements ResidentModel {
   Future<String> _locateModel() async {
     try {
       return await ModelLocator.locate(MaritimeConfig.modelAssetPath);
+    } on ModelInvalidException catch (error) {
+      throw AsrException(error.toString(), isModelMissing: true);
     } on ModelMissingException catch (error) {
       throw AsrException(
         '离线模型 ${error.fileName} 未随应用一起打包。\n'

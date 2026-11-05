@@ -4,6 +4,10 @@
 
 语音识别由本机 whisper.cpp 完成，翻译由 Qwen2.5-1.5B-Instruct（llama.cpp）完成。音频与文本都不离开设备，代码中没有任何网络调用。
 
+## 全量语料增强
+
+已完成用户提供的50个主题、1176个条目的校订与离线接入。完整说明见[CORPUS_UPGRADE.md](CORPUS_UPGRADE.md)。
+
 ## 当前进度
 
 - **第一步 · 界面与录音**：夜间暗黑主界面、32pt 主显示区、两个巨型按住说话按键、16 kHz 单声道 PCM 采集。
@@ -12,7 +16,7 @@
 
 ## 运行
 
-需要 Flutter 3.29 以上（开发时使用 3.47.2 / Dart 3.13）、Xcode，以及一台 iOS 15.6 以上的 iPhone。
+需要满足 Dart ^3.13.2 要求的 Flutter、Xcode，以及一台 iOS 15.6 以上的 iPhone。iPhone 17 Pro Max 的编译和验收步骤见 [OFFLINE_BUILD.md](OFFLINE_BUILD.md)。
 
 ```bash
 flutter pub get
@@ -55,10 +59,10 @@ lib/
 │   └── speech_direction.dart        # 英/中两个方向的配色、文案与 whisper 语种
 ├── services/
 │   ├── asr_service.dart             # whisper.cpp：模型定位、transcribe、热词注入
-│   ├── llm_service.dart             # Qwen ChatML 翻译、术语强校、内存释放
+│   ├── llm_service.dart             # Qwen ChatML 翻译、数字校验、内存释放
 │   ├── model_locator.dart           # 双模型共享的文件定位逻辑
 │   ├── resident_model.dart          # 后台统一释放 ASR + LLM 权重
-│   ├── translation_prompt.dart      # ChatML 提示词与输出端术语替换
+│   ├── translation_prompt.dart      # 相关术语 ChatML 提示词与格式清理
 │   └── pcm_recorder.dart            # 录音：AVAudioSession、16 kHz 单声道、WAV 落盘
 ├── theme/night_theme.dart
 └── widgets/
@@ -81,14 +85,14 @@ local_plugins/
 4. **翻译** — Qwen 在 ChatML 提示词中注入 `MaritimeConfig.glossary`，显示「正在翻译...」。
 5. **完成** — 32pt 显示译文，原文以 14pt 附在下方；底部 `ASR: x.xs | LLM: y.ys`。
 
-术语表会**注入 system prompt**（防止左右舷颠倒）并在**输出端做强制替换**（兜底）。
+只把原文相关术语注入 system prompt，输出端仅清理格式。固定指令精确匹配；数字不一致或输出被截断时提示重试。
 
 ## 配置
 
 想调整专业词汇或换模型，改 `lib/config/maritime_config.dart`；词汇数据在 `lib/config/maritime_vocabulary.dart`：
 
-- `hotwords` / `initialPrompt` — Whisper 热词（90 条，受 224 token 限制）
-- `glossary` — 翻译术语对照表（110 条运行时注入）
+- `hotwords` / `initialPrompt` — 参考热词表 / 精简英文提示词；中文使用 chinesePrompt
+- `glossary` — 翻译参考术语表（每句最多注入 16 个相关条目）
 - `vhfCorePhrases` / `vtsPhrases` — 566 条中英句对（参考库，默认不全部注入 LLM）
 - `wordGlossary` — 359 个航海单词（完整词典）
 - `modelAssetPath` / `llmModelAssetPath` — 双模型路径

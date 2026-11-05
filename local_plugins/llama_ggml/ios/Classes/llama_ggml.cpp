@@ -150,8 +150,9 @@ LLAMA_GGML_API char * llama_ggml_generate(
     }
 
     const int32_t n_ctx = static_cast<int32_t>(llama_n_ctx(s->ctx));
-    if (n_prompt >= n_ctx) {
-        set_error("prompt is longer than the context window");
+    const int32_t budget = max_tokens > 0 ? max_tokens : 256;
+    if (n_prompt >= n_ctx || budget >= n_ctx - n_prompt) {
+        set_error("input leaves insufficient context for a complete translation; use shorter sentences");
         return nullptr;
     }
 
@@ -172,13 +173,14 @@ LLAMA_GGML_API char * llama_ggml_generate(
 
     std::string out;
     int32_t     n_decoded = 0;
-    const int32_t budget = max_tokens > 0 ? max_tokens : 256;
-
-    while (n_decoded < budget && n_prompt + n_decoded < n_ctx) {
+    bool complete = false;
+    while (true) {
         const llama_token token = llama_sampler_sample(sampler, s->ctx, -1);
         if (llama_vocab_is_eog(s->vocab, token)) {
+            complete = true;
             break;
         }
+        if (n_decoded >= budget || n_prompt + n_decoded >= n_ctx - 1) break;
 
         out += piece_for(s->vocab, token);
         n_decoded++;
@@ -192,6 +194,11 @@ LLAMA_GGML_API char * llama_ggml_generate(
     }
 
     llama_sampler_free(sampler);
+
+    if (!complete) {
+        set_error("translation was truncated; use shorter sentences");
+        return nullptr;
+    }
 
     char * result = to_heap(out);
     if (result == nullptr) {

@@ -7,6 +7,7 @@ import 'models/recognition_turn.dart';
 import 'models/session_status.dart';
 import 'models/speech_direction.dart';
 import 'services/asr_service.dart';
+import 'services/audio_quality.dart';
 import 'services/documents_bootstrap.dart';
 import 'services/llm_service.dart';
 import 'services/pcm_recorder.dart';
@@ -26,11 +27,7 @@ void main() {
 }
 
 class MarineVoiceApp extends StatelessWidget {
-  const MarineVoiceApp({
-    super.key,
-    this.asrService,
-    this.llmService,
-  });
+  const MarineVoiceApp({super.key, this.asrService, this.llmService});
 
   /// Injection points for tests; production builds create the real services.
   final AsrService? asrService;
@@ -45,10 +42,7 @@ class MarineVoiceApp extends StatelessWidget {
       // The bridge is dark at night and the app has no light palette to fall
       // back to, so the OS theme setting is deliberately ignored.
       themeMode: ThemeMode.dark,
-      home: TranslatorHomePage(
-        asrService: asrService,
-        llmService: llmService,
-      ),
+      home: TranslatorHomePage(asrService: asrService, llmService: llmService),
     );
   }
 }
@@ -82,8 +76,10 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
   late final LlmService _llm = widget.llmService ?? LlmService();
   late final TranslationHistoryService _history =
       widget.historyService ?? TranslationHistoryService();
-  late final ResidentModels _residentModels =
-      ResidentModels(<ResidentModel>[_asr, _llm]);
+  late final ResidentModels _residentModels = ResidentModels(<ResidentModel>[
+    _asr,
+    _llm,
+  ]);
 
   StreamSubscription<double>? _levelSubscription;
   Timer? _elapsedTicker;
@@ -98,6 +94,7 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
   Duration _elapsed = Duration.zero;
   double _level = 0;
   int? _progress;
+  int _turnGeneration = 0;
   bool _hasMicPermission = false;
   bool? _isAsrModelReady;
   bool? _isLlmModelReady;
@@ -150,10 +147,7 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
   }
 
   Future<void> _prepareModels() async {
-    final results = await Future.wait<bool>([
-      _asr.prepare(),
-      _llm.prepare(),
-    ]);
+    final results = await Future.wait<bool>([_asr.prepare(), _llm.prepare()]);
     if (!mounted) return;
     setState(() {
       _isAsrModelReady = results[0];
@@ -187,6 +181,7 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
 
   Future<void> _startRecording(SpeechDirection direction) async {
     if (_isBusy) return;
+    final generation = ++_turnGeneration;
 
     setState(() {
       _status = SessionStatus.listening;
@@ -202,6 +197,7 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
     try {
       await _recorder.start();
     } on RecorderException catch (error) {
+      if (generation != _turnGeneration) return;
       if (!mounted) return;
       setState(() {
         _status = SessionStatus.failed;
@@ -219,7 +215,10 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
 
     // The press may have already been released while `start` was awaiting the
     // platform; in that case the state machine has moved on, so leave it alone.
-    if (_status != SessionStatus.listening) return;
+    if (generation != _turnGeneration || _status != SessionStatus.listening) {
+      await _recorder.cancel();
+      return;
+    }
 
     setState(() => _hasMicPermission = true);
     _startTicker();
@@ -228,6 +227,7 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
   /// Key released: stop the capture, then hand the WAV to whisper.
   Future<void> _stopRecording() async {
     if (_status != SessionStatus.listening) return;
+    final generation = _turnGeneration;
 
     final direction = _activeDirection ?? SpeechDirection.englishToChinese;
     _stopTicker();
@@ -242,10 +242,11 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
     try {
       clip = await _recorder.stop();
     } on RecorderException catch (error) {
+      if (generation != _turnGeneration) return;
       _failTurn(error.message);
       return;
     }
-    if (!mounted) return;
+    if (!mounted || generation != _turnGeneration) return;
 
     if (clip == null || clip.duration < _minimumUtterance) {
       _resetToLastResult();
@@ -253,19 +254,25 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
       return;
     }
 
+    if (!AudioQuality.hasAudibleFrames(clip.bytes)) {
+      _resetToLastResult();
+      _showSnack('录音声音过低，请靠近麦克风后重试。');
+      return;
+    }
     final wavPath = clip.wavPath;
     if (wavPath == null) {
       _failTurn('录音文件写入失败，无法进行识别。');
       return;
     }
 
-    await _recognizeAndTranslate(clip, wavPath, direction);
+    await _recognizeAndTranslate(clip, wavPath, direction, generation);
   }
 
   Future<void> _recognizeAndTranslate(
     PcmClip clip,
     String wavPath,
     SpeechDirection direction,
+    int generation,
   ) async {
     final asrStopwatch = Stopwatch()..start();
 
@@ -274,13 +281,19 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
         wavPath,
         language: direction.asrLanguage,
         onProgress: (percent) {
-          if (mounted && _status == SessionStatus.recognizing) {
+          if (mounted &&
+              generation == _turnGeneration &&
+              _status == SessionStatus.recognizing) {
             setState(() => _progress = percent);
           }
         },
       );
       asrStopwatch.stop();
-      if (!mounted) return;
+      if (!mounted ||
+          generation != _turnGeneration ||
+          _status != SessionStatus.recognizing) {
+        return;
+      }
 
       if (sourceText.isEmpty) {
         setState(() {
@@ -309,7 +322,11 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
       });
 
       await Future<void>.delayed(_sourceFlashDuration);
-      if (!mounted || _status != SessionStatus.translating) return;
+      if (!mounted ||
+          generation != _turnGeneration ||
+          _status != SessionStatus.translating) {
+        return;
+      }
 
       setState(() => _showSourceFlash = false);
 
@@ -319,7 +336,11 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
         isEnglishToChinese: direction.isEnglishToChinese,
       );
       llmStopwatch.stop();
-      if (!mounted) return;
+      if (!mounted ||
+          generation != _turnGeneration ||
+          _status != SessionStatus.translating) {
+        return;
+      }
 
       setState(() {
         _turn = RecognitionTurn(
@@ -339,24 +360,28 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
       });
       unawaited(_history.appendFromTurn(_turn!));
     } on AsrException catch (error) {
+      if (generation != _turnGeneration) return;
       if (error.isModelMissing && mounted) {
         setState(() => _isAsrModelReady = false);
       }
       _failTurn(error.message);
     } on TranslationException catch (error) {
+      if (generation != _turnGeneration) return;
       if (error.isModelMissing && mounted) {
         setState(() => _isLlmModelReady = false);
       }
       _failTurn(error.message);
     } on Object catch (error) {
+      if (generation != _turnGeneration) return;
       _failTurn('处理失败：$error');
     }
   }
 
   Future<void> _abortRecording() async {
+    final generation = ++_turnGeneration;
     _stopTicker();
     await _recorder.cancel();
-    if (!mounted) return;
+    if (!mounted || generation != _turnGeneration) return;
 
     _resetToLastResult();
   }
@@ -374,12 +399,15 @@ class _TranslatorHomePageState extends State<TranslatorHomePage>
 
   void _failTurn(String message) {
     if (!mounted) return;
+    final source = _pendingSource;
     setState(() {
       _status = SessionStatus.failed;
       _activeDirection = null;
       _pendingSource = null;
       _showSourceFlash = false;
-      _errorMessage = message;
+      _errorMessage = source == null || source.isEmpty
+          ? message
+          : '$message\n\n识别原文：$source';
       _level = 0;
       _progress = null;
     });

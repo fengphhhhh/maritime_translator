@@ -172,11 +172,7 @@ void main() {
     });
 
     testWidgets('底部显示 ASR 与 LLM 耗时', (tester) async {
-      await pumpStage(
-        tester,
-        status: SessionStatus.done,
-        turn: buildTurn(),
-      );
+      await pumpStage(tester, status: SessionStatus.done, turn: buildTurn());
 
       expect(find.textContaining('ASR: 1.8s'), findsOneWidget);
       expect(find.textContaining('LLM: 2.2s'), findsOneWidget);
@@ -205,13 +201,15 @@ void main() {
   });
 
   group('航海热词配置', () {
-    test('initial_prompt 包含全部热词', () {
+    test('initial_prompt 精简并区分中英文', () {
       final prompt = MaritimeConfig.initialPrompt;
 
-      for (final word in MaritimeConfig.hotwords) {
+      for (final word in ['VTS', 'CPA', 'UKC', 'Port bow', 'starboard side']) {
         expect(prompt, contains(word));
       }
       expect(prompt, startsWith(MaritimeConfig.promptPreamble));
+      expect(MaritimeConfig.chinesePrompt, contains('左舷'));
+      expect(prompt.length, lessThan(450));
     });
 
     test('热词表覆盖约定的航海缩写', () {
@@ -269,18 +267,17 @@ void main() {
       );
 
       expect(prompt, contains('port bow=左舷首'));
-      expect(prompt, contains('starboard=右舷'));
+      expect(prompt, isNot(contains('starboard=右舷')));
       expect(prompt, isNot(contains('右舷=starboard')));
     });
 
-    test('输出端强制替换术语', () {
+    test('输出端不机械替换多义词', () {
       final polished = TranslationPrompt.polish(
         'Port bow clear.',
         TranslationTarget.chinese,
       );
 
-      expect(polished, contains('左舷首'));
-      expect(polished.toLowerCase(), isNot(contains('port bow')));
+      expect(polished, 'Port bow clear.');
     });
   });
 
@@ -312,14 +309,8 @@ void main() {
 
   group('按键与识别语言', () {
     test('英文键解码英文，中文键解码中文', () {
-      expect(
-        SpeechDirection.englishToChinese.asrLanguage,
-        AsrLanguage.english,
-      );
-      expect(
-        SpeechDirection.chineseToEnglish.asrLanguage,
-        AsrLanguage.chinese,
-      );
+      expect(SpeechDirection.englishToChinese.asrLanguage, AsrLanguage.english);
+      expect(SpeechDirection.chineseToEnglish.asrLanguage, AsrLanguage.chinese);
       expect(AsrLanguage.english.code, 'en');
       expect(AsrLanguage.chinese.code, 'zh');
     });

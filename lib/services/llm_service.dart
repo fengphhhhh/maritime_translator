@@ -8,6 +8,9 @@ import '../config/maritime_config.dart';
 import 'model_locator.dart';
 import 'resident_model.dart';
 import 'translation_prompt.dart';
+import 'translation_checks.dart';
+import 'standard_phrases.dart';
+import 'corpus_service.dart';
 
 class TranslationException implements Exception {
   const TranslationException(this.message, {this.isModelMissing = false});
@@ -25,8 +28,7 @@ class TranslationException implements Exception {
 /// Offline Chinese/English translation through a small instruct model.
 ///
 /// Runs Qwen2.5-1.5B-Instruct on the iPhone GPU via `llama_ggml`. The model is
-/// prompted in ChatML with the maritime glossary inlined, and its output is
-/// forced back onto the glossary afterwards — see [TranslationPrompt].
+/// prompted with relevant maritime terms; fixed commands bypass generation.
 class LlmService implements ResidentModel {
   LlmService();
 
@@ -52,7 +54,9 @@ class LlmService implements ResidentModel {
   /// waits for the first translation.
   Future<bool> prepare() async {
     try {
-      _modelPath ??= await ModelLocator.locate(MaritimeConfig.llmModelAssetPath);
+      _modelPath ??= await ModelLocator.locate(
+        MaritimeConfig.llmModelAssetPath,
+      );
       return true;
     } on ModelMissingException catch (error) {
       debugPrint('LlmService.prepare: 缺少模型 ${error.fileName}');
@@ -75,6 +79,9 @@ class LlmService implements ResidentModel {
     if (source.isEmpty) {
       throw const TranslationException('没有可翻译的内容。');
     }
+    if (source.length > MaritimeConfig.maxTranslationCharacters) {
+      throw const TranslationException('本段内容过长，请分成较短的完整句子。');
+    }
     if (_isTranslating) {
       throw const TranslationException('上一句仍在翻译中，请稍候。');
     }
@@ -88,6 +95,13 @@ class LlmService implements ResidentModel {
         : TranslationTarget.english;
 
     try {
+      final fixed = StandardPhrases.lookup(source, target);
+      if (fixed != null) return fixed;
+      final phrase = CorpusService.lookup(
+        source,
+        englishSource: isEnglishToChinese,
+      );
+      if (phrase != null) return phrase;
       final LlamaSession session = await _resolveSession();
       final String raw = await session.generate(
         TranslationPrompt.build(source, target),
@@ -100,9 +114,17 @@ class LlmService implements ResidentModel {
       if (translated.isEmpty) {
         throw const TranslationException('翻译模型没有输出内容。');
       }
+      if (!TranslationChecks.preservesNumbers(source, translated)) {
+        throw const TranslationException('译文中的数字与原文不一致，请核对识别原文后重试。');
+      }
+      if (!TranslationChecks.preservesCriticalMeaning(source, translated)) {
+        throw const TranslationException('译文的左右舷、车钟、通过位置或否定指令可能不一致，请核对识别原文后重试。');
+      }
       return translated;
     } on TranslationException {
       rethrow;
+    } on ModelInvalidException catch (error) {
+      throw TranslationException(error.toString(), isModelMissing: true);
     } on ModelMissingException catch (error) {
       throw TranslationException(
         '翻译模型 ${error.fileName} 未随应用一起打包。\n'
@@ -119,6 +141,11 @@ class LlmService implements ResidentModel {
 
   @override
   Future<void> release() async {
+    try {
+      await _pendingSession;
+    } on Object {
+      // A failed load has no native session to release.
+    }
     final LlamaSession? session = _session;
     _session = null;
     if (session == null) return;
@@ -157,8 +184,9 @@ class LlmService implements ResidentModel {
   }
 
   Future<LlamaSession> _loadSession() async {
-    final String path =
-        _modelPath ??= await ModelLocator.locate(MaritimeConfig.llmModelAssetPath);
+    final String path = _modelPath ??= await ModelLocator.locate(
+      MaritimeConfig.llmModelAssetPath,
+    );
 
     if (!File(path).existsSync()) {
       throw TranslationException('找不到翻译模型文件：$path', isModelMissing: true);

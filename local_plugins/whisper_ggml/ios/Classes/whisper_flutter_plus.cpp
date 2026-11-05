@@ -422,7 +422,12 @@ json transcribe(json jsonBody)
     }
     // run the inference
     {
-        whisper_full_params wparams = whisper_full_default_params(WHISPER_SAMPLING_GREEDY);
+        // Search several hypotheses for short radio utterances. Benchmark the
+        // latency/accuracy tradeoff with bridge recordings on the target phone.
+        whisper_full_params wparams = whisper_full_default_params(WHISPER_SAMPLING_BEAM_SEARCH);
+        wparams.beam_search.beam_size = 5;
+        wparams.temperature = 0.0f;
+        wparams.suppress_blank = true;
 
         wparams.print_realtime = false;
         wparams.print_progress = false;
