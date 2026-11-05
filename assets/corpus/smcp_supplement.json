@@ -1,0 +1,7080 @@
+{
+  "version": 1,
+  "source": {
+    "repository": "https://github.com/JMU0802/JMU_nauticalEnglishOralAndListening",
+    "revision": "b7828d065107188ddfb77918cbe3e158d98ab362",
+    "databasePath": "corpus/db/corpus.db",
+    "databaseSha256": "bdbc9ec5e1934dc8f173c48120c49b929d7c82ff7427416632ec1fa328f69b3c",
+    "records": 5133,
+    "runtimeNormalizedUniqueEnglish": 3896,
+    "duplicateRecords": 1237,
+    "nonemptyChineseRecords": 0
+  },
+  "reviewBasis": {
+    "standard": "IMO A.918(22), adopted 29 November 2001",
+    "url": "https://wwwcdn.imo.org/localresources/en/OurWork/Safety/Documents/A.918%2822%29.pdf",
+    "method": "Selected complete operational expressions; editorial Chinese translations and review of SMCP alternatives. Not an official Chinese edition or a certified translation.",
+    "excludedResources": "1997 draft, 2000 pre-adoption text, upstream audio, network services and model weights"
+  },
+  "entries": [
+    {
+      "id": "jmu:2",
+      "category": "A2",
+      "en": "Use the centre lead.",
+      "zh": "使用中间导缆装置。",
+      "sourceRecordIds": [
+        2,
+        1308
+      ],
+      "sourceEnglish": "Use the centre lead.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        64,
+        65
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:3",
+      "category": "B2",
+      "en": "Do not go to the liferaft stations before ordered.",
+      "zh": "未接到命令，不要前往救生筏集合站。",
+      "sourceRecordIds": [
+        3
+      ],
+      "sourceEnglish": "Do not go to the liferaft stations before ordered.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        73
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:11",
+      "category": "A2",
+      "en": "Yes, the anchor is holding.",
+      "zh": "是的，锚已抓牢。",
+      "sourceRecordIds": [
+        11
+      ],
+      "sourceEnglish": "Yes, the anchor is holding.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        63
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:13",
+      "category": "B2",
+      "en": "Brief all crew members on the symptoms caused by dangerous substances.",
+      "zh": "向全体船员说明危险物质引起的症状。",
+      "sourceRecordIds": [
+        13
+      ],
+      "sourceEnglish": "Brief all crew members on the symptoms caused by dangerous substances.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        77
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:22",
+      "category": "A2",
+      "en": "Slack away the breast line.",
+      "zh": "松横缆。",
+      "sourceRecordIds": [
+        22
+      ],
+      "sourceEnglish": "Slack away the breast line.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        66
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:26",
+      "category": "B3",
+      "en": "Instruct the pumpman and report.",
+      "zh": "向泵工交代任务并报告。",
+      "sourceRecordIds": [
+        26
+      ],
+      "sourceEnglish": "Instruct the pumpman and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        95
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:31",
+      "category": "A2",
+      "en": "Hold on the forward spring.",
+      "zh": "刹住前倒缆。",
+      "sourceRecordIds": [
+        31
+      ],
+      "sourceEnglish": "Hold on the forward spring.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        66
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:33",
+      "category": "B1",
+      "en": "Rain is in the area.",
+      "zh": "该区域正在下雨。",
+      "sourceRecordIds": [
+        33
+      ],
+      "sourceEnglish": "Rain is in the area.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        69
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:34",
+      "category": "B3",
+      "en": "Yes, the humidity recorders in the holds are operational.",
+      "zh": "是的，货舱内各湿度记录仪正常工作。",
+      "sourceRecordIds": [
+        34
+      ],
+      "sourceEnglish": "Yes, the humidity recorders in the holds are operational.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        98
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:42",
+      "category": "B3",
+      "en": "No, the holds are not free of smell.",
+      "zh": "不，货舱仍有异味。",
+      "sourceRecordIds": [
+        42
+      ],
+      "sourceEnglish": "No, the holds are not free of smell.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        91
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:47",
+      "category": "B1",
+      "en": "Call the watch engineer.",
+      "zh": "通知值班轮机员。",
+      "sourceRecordIds": [
+        47,
+        850,
+        2995
+      ],
+      "sourceEnglish": "Call the watch engineer.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        70
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:53",
+      "category": "B2",
+      "en": "Stand by bridge team.",
+      "zh": "驾驶台团队做好准备。",
+      "sourceRecordIds": [
+        53
+      ],
+      "sourceEnglish": "Stand by bridge team.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        89
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:57",
+      "category": "A2",
+      "en": "Stern thruster full to port.",
+      "zh": "艉侧推向左全速。",
+      "sourceRecordIds": [
+        57
+      ],
+      "sourceEnglish": "Stern thruster full to port.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        61
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:58",
+      "category": "B3",
+      "en": "Yes, the cargo list is available and complete.",
+      "zh": "是的，货物清单齐全，可以提供。",
+      "sourceRecordIds": [
+        58
+      ],
+      "sourceEnglish": "Yes, the cargo list is available and complete.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        91
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:60",
+      "category": "B2",
+      "en": "Close all openings in all rooms and report.",
+      "zh": "关闭所有房间的全部开口并报告。",
+      "sourceRecordIds": [
+        60,
+        490
+      ],
+      "sourceEnglish": "Close all openings in all rooms and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        81
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:63",
+      "category": "B2",
+      "en": "Sound ''man overboard'' alarm.",
+      "zh": "发出人员落水警报。",
+      "sourceRecordIds": [
+        63
+      ],
+      "sourceEnglish": "Sound ''man overboard'' alarm.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        87
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:69",
+      "category": "A2",
+      "en": "Is the radar operational?",
+      "zh": "雷达是否正常工作？",
+      "sourceRecordIds": [
+        69
+      ],
+      "sourceEnglish": "Is the radar operational?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        62
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:71",
+      "category": "A1",
+      "en": "I cannot control flooding.",
+      "zh": "我船无法控制进水。",
+      "sourceRecordIds": [
+        71
+      ],
+      "sourceEnglish": "I cannot control flooding.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        32
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:72",
+      "category": "B2",
+      "en": "Close all outlets and report.",
+      "zh": "关闭所有排出口并报告。",
+      "sourceRecordIds": [
+        72
+      ],
+      "sourceEnglish": "Close all outlets and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        83
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:74",
+      "category": "A2",
+      "en": "Change the radar to relative head-up.",
+      "zh": "将雷达改为相对运动、首向上显示模式。",
+      "sourceRecordIds": [
+        74
+      ],
+      "sourceEnglish": "Change the radar to relative head-up.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        68
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:77",
+      "category": "B2",
+      "en": "Check the smoke alarm and report.",
+      "zh": "检查烟雾报警器并报告。",
+      "sourceRecordIds": [
+        77
+      ],
+      "sourceEnglish": "Check the smoke alarm and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        78
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:79",
+      "category": "B3",
+      "en": "Refuse damaged packings with dangerous goods.",
+      "zh": "拒收包装损坏的危险货物。",
+      "sourceRecordIds": [
+        79
+      ],
+      "sourceEnglish": "Refuse damaged packings with dangerous goods.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        93
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:84",
+      "category": "B3",
+      "en": "What is the maximum reach of the crane?",
+      "zh": "起重机最大工作幅度是多少？",
+      "sourceRecordIds": [
+        84
+      ],
+      "sourceEnglish": "What is the maximum reach of the crane?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        91
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:89",
+      "category": "B2",
+      "en": "No, fire not extinguished yet.",
+      "zh": "不，火尚未扑灭。",
+      "sourceRecordIds": [
+        89
+      ],
+      "sourceEnglish": "No, fire not extinguished yet.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        81
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:93",
+      "category": "B2",
+      "en": "Dry-docking is necessary.",
+      "zh": "需要进干船坞。",
+      "sourceRecordIds": [
+        93
+      ],
+      "sourceEnglish": "Dry - docking is necessary.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        86
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:98",
+      "category": "B2",
+      "en": "Replace the missing hoses.",
+      "zh": "补齐缺失的水带。",
+      "sourceRecordIds": [
+        98
+      ],
+      "sourceEnglish": "Replace the missing hoses.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        79
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:104",
+      "category": "B1",
+      "en": "A vessel is passing on port side.",
+      "zh": "一艘船正从左舷通过。",
+      "sourceRecordIds": [
+        104
+      ],
+      "sourceEnglish": "A vessel is passing on port side.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        68
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:110",
+      "category": "A1",
+      "en": "Do you have any deficiencies?",
+      "zh": "你船有任何缺陷吗？",
+      "sourceRecordIds": [
+        110
+      ],
+      "sourceEnglish": "Do you have any deficiencies?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        49
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:111",
+      "category": "B2",
+      "en": "Search for missing crew member and report.",
+      "zh": "搜寻失踪船员并报告。",
+      "sourceRecordIds": [
+        111
+      ],
+      "sourceEnglish": "Search for missing crew member and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        75
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:117",
+      "category": "A1",
+      "en": "Yes, I am ready for the helicopter.",
+      "zh": "是的，我船已做好接应直升机的准备。",
+      "sourceRecordIds": [
+        117
+      ],
+      "sourceEnglish": "Yes, I am ready for the helicopter.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        44
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:120",
+      "category": "A1",
+      "en": "I have damage above waterline.",
+      "zh": "我船水线以上部位受损。",
+      "sourceRecordIds": [
+        120
+      ],
+      "sourceEnglish": "I have damage above waterline.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        38
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:125",
+      "category": "B3",
+      "en": "Keep within the safe working load of derricks.",
+      "zh": "起货吊杆作业应保持在安全工作负荷以内。",
+      "sourceRecordIds": [
+        125
+      ],
+      "sourceEnglish": "Keep within the safe working load of derricks.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        92
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:128",
+      "category": "A1",
+      "en": "What is the result of search?",
+      "zh": "搜寻结果如何？",
+      "sourceRecordIds": [
+        128,
+        1579
+      ],
+      "sourceEnglish": "What is the result of search?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        34,
+        36
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:131",
+      "category": "A2",
+      "en": "Stand by for making fast the tugs.",
+      "zh": "准备带妥拖轮。",
+      "sourceRecordIds": [
+        131
+      ],
+      "sourceEnglish": "Stand by for making fast the tugs.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        64
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:132",
+      "category": "B3",
+      "en": "The contents of drums are unknown.",
+      "zh": "桶内物质不明。",
+      "sourceRecordIds": [
+        132
+      ],
+      "sourceEnglish": "The contents of drums are unknown.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        98
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:133",
+      "category": "B3",
+      "en": "What is the pressure in the inerted tanks?",
+      "zh": "已惰化液舱内的压力是多少？",
+      "sourceRecordIds": [
+        133
+      ],
+      "sourceEnglish": "What is the pressure in the inerted tanks?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        95
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:139",
+      "category": "B4",
+      "en": "Who needs medical first aid?",
+      "zh": "谁需要医疗急救？",
+      "sourceRecordIds": [
+        139
+      ],
+      "sourceEnglish": "Who needs medical first aid?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:143",
+      "category": "A1",
+      "en": "From what direction are you approaching?",
+      "zh": "你船正从哪个方向驶近？",
+      "sourceRecordIds": [
+        143
+      ],
+      "sourceEnglish": "From what direction are you approaching?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        48
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:161",
+      "category": "A2",
+      "en": "We use the towing lines of the tugs.",
+      "zh": "使用拖轮的拖缆。",
+      "sourceRecordIds": [
+        161
+      ],
+      "sourceEnglish": "We use the towing lines of the tugs.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        64
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:162",
+      "category": "B2",
+      "en": "Check the power supply and report.",
+      "zh": "检查电源并报告。",
+      "sourceRecordIds": [
+        162
+      ],
+      "sourceEnglish": "Check the power supply and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        82
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:164",
+      "category": "B2",
+      "en": "The watertight door control is operational.",
+      "zh": "水密门控制装置正常工作。",
+      "sourceRecordIds": [
+        164
+      ],
+      "sourceEnglish": "The watertight door control is operational.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        79
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:167",
+      "category": "B1",
+      "en": "There was a breakdown of the main engine.",
+      "zh": "主机曾发生故障。",
+      "sourceRecordIds": [
+        167
+      ],
+      "sourceEnglish": "There was a breakdown of the main engine.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        71
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:174",
+      "category": "B3",
+      "en": "Yes, the cargo hoses are connected.",
+      "zh": "是的，输货软管已接好。",
+      "sourceRecordIds": [
+        174
+      ],
+      "sourceEnglish": "Yes, the cargo hoses are connected.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        96
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:177",
+      "category": "A2",
+      "en": "Walk back port one shackle.",
+      "zh": "左锚送出一节锚链。",
+      "sourceRecordIds": [
+        177
+      ],
+      "sourceEnglish": "Walk back port one shackle.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        63
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:184",
+      "category": "B3",
+      "en": "Check the proper use of handling gear.",
+      "zh": "检查装卸属具是否正确使用。",
+      "sourceRecordIds": [
+        184
+      ],
+      "sourceEnglish": "Check the proper use of handling gear.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        92
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:185",
+      "category": "B4",
+      "en": "When your name is called out, please answer loudly ''Here''.",
+      "zh": "点到姓名时，请大声回答“到”。",
+      "sourceRecordIds": [
+        185
+      ],
+      "sourceEnglish": "When your name is called out, please answer loudly ''Here''.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        102
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:192",
+      "category": "A2",
+      "en": "Send the stern line ashore.",
+      "zh": "把尾缆送上岸。",
+      "sourceRecordIds": [
+        192
+      ],
+      "sourceEnglish": "Send the stern line ashore.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        65
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:195",
+      "category": "A1",
+      "en": "Yes, I am on even keel.",
+      "zh": "是的，我船平吃水。",
+      "sourceRecordIds": [
+        195
+      ],
+      "sourceEnglish": "Yes, I am on even keel.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        49
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:197",
+      "category": "B3",
+      "en": "Secure the heavy lifts immediately.",
+      "zh": "立即固定重大件货物。",
+      "sourceRecordIds": [
+        197
+      ],
+      "sourceEnglish": "Secure the heavy lifts immediately.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        93
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:200",
+      "category": "B3",
+      "en": "Yes, the inert gas system is operational.",
+      "zh": "是的，惰性气体系统正常工作。",
+      "sourceRecordIds": [
+        200
+      ],
+      "sourceEnglish": "Yes, the inert gas system is operational.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        95
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:201",
+      "category": "B3",
+      "en": "No, dockside cranes are not available.",
+      "zh": "不，岸边起重机不可用。",
+      "sourceRecordIds": [
+        201
+      ],
+      "sourceEnglish": "No, dockside cranes are not available.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        91
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:202",
+      "category": "A1",
+      "en": "How many lifeboats with how many persons will you launch?",
+      "zh": "你船将放下几艘救生艇，每艘载多少人？",
+      "sourceRecordIds": [
+        202
+      ],
+      "sourceEnglish": "How many lifeboats with how many persons will you launch?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        35
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:203",
+      "category": "B3",
+      "en": "Is the certificate of survey available and complete?",
+      "zh": "检验证书是否齐全并可提供？",
+      "sourceRecordIds": [
+        203
+      ],
+      "sourceEnglish": "Is the certificate of survey available and complete?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        98
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:211",
+      "category": "A1",
+      "en": "The pilot boat is coming to you.",
+      "zh": "引航艇正驶向你船。",
+      "sourceRecordIds": [
+        211
+      ],
+      "sourceEnglish": "The pilot boat is coming to you.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        57
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:220",
+      "category": "A1",
+      "en": "I cannot send divers.",
+      "zh": "我方无法派出潜水员。",
+      "sourceRecordIds": [
+        220
+      ],
+      "sourceEnglish": "I cannot send divers.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        32
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:222",
+      "category": "A1",
+      "en": "No, I cannot stop spillage.",
+      "zh": "不，我船无法停止溢漏。",
+      "sourceRecordIds": [
+        222
+      ],
+      "sourceEnglish": "No, I cannot stop spillage.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        42
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:224",
+      "category": "B4",
+      "en": "Give assistance when entering lifeboats.",
+      "zh": "在人员进入救生艇时给予协助。",
+      "sourceRecordIds": [
+        224
+      ],
+      "sourceEnglish": "Give assistance when entering lifeboats.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:231",
+      "category": "B2",
+      "en": "Brief all crew members on the storm.",
+      "zh": "向全体船员说明风暴情况。",
+      "sourceRecordIds": [
+        231
+      ],
+      "sourceEnglish": "Brief all crew members on the storm.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        77
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:239",
+      "category": "A1",
+      "en": "Yes, dangerous goods are on fire.",
+      "zh": "是的，危险货物正在燃烧。",
+      "sourceRecordIds": [
+        239
+      ],
+      "sourceEnglish": "Yes, dangerous goods are on fire.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        31
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:241",
+      "category": "A2",
+      "en": "What is the manoeuvring speed at half ahead?",
+      "zh": "半速前进时的操纵航速是多少？",
+      "sourceRecordIds": [
+        241
+      ],
+      "sourceEnglish": "What is the manoeuvring speed at half ahead?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        62
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:242",
+      "category": "A2",
+      "en": "Do you have a controllable or fixed pitch propeller?",
+      "zh": "你船使用可调螺距螺旋桨还是固定螺距螺旋桨？",
+      "sourceRecordIds": [
+        242
+      ],
+      "sourceEnglish": "Do you have a controllable or fixed pitch propeller?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        61
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:244",
+      "category": "B2",
+      "en": "Do not enter the unmanned engine room without permission.",
+      "zh": "未经许可，不得进入无人值守机舱。",
+      "sourceRecordIds": [
+        244
+      ],
+      "sourceEnglish": "Do not enter the unmanned engine room without permission.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        77
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:245",
+      "category": "B2",
+      "en": "The flooding is under control.",
+      "zh": "进水已得到控制。",
+      "sourceRecordIds": [
+        245,
+        1548
+      ],
+      "sourceEnglish": "The flooding is under control.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        32
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:256",
+      "category": "A1",
+      "en": "Keep sharp lookout for lifeboats.",
+      "zh": "密切瞭望救生艇。",
+      "sourceRecordIds": [
+        256
+      ],
+      "sourceEnglish": "Keep sharp lookout for lifeboats.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        36
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:257",
+      "category": "A1",
+      "en": "Stop in present position and wait for the pilot.",
+      "zh": "在当前位置停船，等候引航员。",
+      "sourceRecordIds": [
+        257
+      ],
+      "sourceEnglish": "Stop in present position and wait for the pilot.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        57
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:258",
+      "category": "A1",
+      "en": "What is the name of your vessel and call sign?",
+      "zh": "你船的船名和呼号是什么？",
+      "sourceRecordIds": [
+        258
+      ],
+      "sourceEnglish": "What is the name of your vessel and call sign?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        48
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:267",
+      "category": "B3",
+      "en": "Observe the IMDG-Code when stowing.",
+      "zh": "积载时遵守《国际海运危险货物规则》。",
+      "sourceRecordIds": [
+        267
+      ],
+      "sourceEnglish": "Observe the IMDG-Code when stowing.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        93
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:268",
+      "category": "A1",
+      "en": "You are running into danger - risk of collision.",
+      "zh": "你船正驶入险境，有碰撞危险。",
+      "sourceRecordIds": [
+        268,
+        2252
+      ],
+      "sourceEnglish": "You are running into danger - risk of collision.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        53
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:272",
+      "category": "A2",
+      "en": "Let go all aft.",
+      "zh": "船尾所有缆绳解掉。",
+      "sourceRecordIds": [
+        272
+      ],
+      "sourceEnglish": "Let go all aft.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        66
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:273",
+      "category": "B2",
+      "en": "Stand by lines and report.",
+      "zh": "备好绳缆并报告。",
+      "sourceRecordIds": [
+        273
+      ],
+      "sourceEnglish": "Stand by lines and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        90
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:274",
+      "category": "B1",
+      "en": "We will alter course to give way.",
+      "zh": "我船将改向让路。",
+      "sourceRecordIds": [
+        274
+      ],
+      "sourceEnglish": "We will alter course to give way.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        68
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:280",
+      "category": "B3",
+      "en": "Is the cargo list available and complete?",
+      "zh": "货物清单是否齐全并可提供？",
+      "sourceRecordIds": [
+        280
+      ],
+      "sourceEnglish": "Is the cargo list available and complete?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        91
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:288",
+      "category": "B3",
+      "en": "Do not touch the spillage.",
+      "zh": "不要接触溢漏物。",
+      "sourceRecordIds": [
+        288
+      ],
+      "sourceEnglish": "Do not touch the spillage.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        94
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:292",
+      "category": "B3",
+      "en": "Are floating cranes available?",
+      "zh": "是否有可用的浮式起重机？",
+      "sourceRecordIds": [
+        292
+      ],
+      "sourceEnglish": "Are floating cranes available?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        91
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:293",
+      "category": "B3",
+      "en": "Stand by emergency foam monitor and report.",
+      "zh": "备好应急泡沫炮并报告。",
+      "sourceRecordIds": [
+        293,
+        2653
+      ],
+      "sourceEnglish": "Stand by emergency foam monitor and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        95
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:294",
+      "category": "B2",
+      "en": "Watertight door not operational.",
+      "zh": "水密门无法正常工作。",
+      "sourceRecordIds": [
+        294
+      ],
+      "sourceEnglish": "Watertight door not operational.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        82
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:301",
+      "category": "B2",
+      "en": "Stand by boat crews and report.",
+      "zh": "艇员做好准备并报告。",
+      "sourceRecordIds": [
+        301
+      ],
+      "sourceEnglish": "Stand by boat crews and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        88
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:304",
+      "category": "A2",
+      "en": "Fifteen minutes notice is required.",
+      "zh": "需要提前15分钟通知。",
+      "sourceRecordIds": [
+        304
+      ],
+      "sourceEnglish": "Fifteen minutes notice is required.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        62
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:308",
+      "category": "B2",
+      "en": "The fire alarm is cancelled.",
+      "zh": "火警已解除。",
+      "sourceRecordIds": [
+        308
+      ],
+      "sourceEnglish": "The fire alarm is cancelled.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        82
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:310",
+      "category": "A1",
+      "en": "You are approaching a prohibited fishing area.",
+      "zh": "你船正接近禁渔区。",
+      "sourceRecordIds": [
+        310
+      ],
+      "sourceEnglish": "You are approaching a prohibited fishing area.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        55
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:313",
+      "category": "A1",
+      "en": "The pilot ladder has loose steps.",
+      "zh": "引航梯踏板松动。",
+      "sourceRecordIds": [
+        313
+      ],
+      "sourceEnglish": "The pilot ladder has loose steps.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        43
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:315",
+      "category": "B1",
+      "en": "I will complete the manoeuvre.",
+      "zh": "我将完成该操纵。",
+      "sourceRecordIds": [
+        315
+      ],
+      "sourceEnglish": "I will complete the manoeuvre.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        68
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:322",
+      "category": "B3",
+      "en": "Close and secure the stern door and report.",
+      "zh": "关闭并固定尾门，然后报告。",
+      "sourceRecordIds": [
+        322
+      ],
+      "sourceEnglish": "Close and secure the stern door and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        97
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:324",
+      "category": "B3",
+      "en": "Switch on the hold ventilation to supply air.",
+      "zh": "启动货舱通风设备进行送风。",
+      "sourceRecordIds": [
+        324
+      ],
+      "sourceEnglish": "Switch on the hold ventilation to supply air.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        99
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:326",
+      "category": "A1",
+      "en": "You must proceed by the fairway.",
+      "zh": "你船必须沿航道航行。",
+      "sourceRecordIds": [
+        326
+      ],
+      "sourceEnglish": "You must proceed by the fairway.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        55
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:330",
+      "category": "B2",
+      "en": "The danger area is secured.",
+      "zh": "危险区域已封控。",
+      "sourceRecordIds": [
+        330
+      ],
+      "sourceEnglish": "The danger area is secured.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        78
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:332",
+      "category": "B2",
+      "en": "Missing crew member not recovered yet - search is continuing.",
+      "zh": "尚未找到失踪船员，搜寻仍在继续。",
+      "sourceRecordIds": [
+        332
+      ],
+      "sourceEnglish": "Missing crew member not recovered yet - search is continuing.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        75
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:334",
+      "category": "B4",
+      "en": "Do not use elevators.",
+      "zh": "不要使用电梯。",
+      "sourceRecordIds": [
+        334
+      ],
+      "sourceEnglish": "Do not use elevators.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        102
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:335",
+      "category": "A1",
+      "en": "Have a heaving line ready at the pilot ladder.",
+      "zh": "在引航梯处备好撇缆。",
+      "sourceRecordIds": [
+        335
+      ],
+      "sourceEnglish": "Have a heaving line ready at the pilot ladder.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        43
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:338",
+      "category": "B2",
+      "en": "What was the number of lifeboats launched?",
+      "zh": "已放下多少艘救生艇？",
+      "sourceRecordIds": [
+        338
+      ],
+      "sourceEnglish": "What was the number of lifeboats launched?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        89
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:341",
+      "category": "A1",
+      "en": "I am in danger of capsizing, list increasing.",
+      "zh": "我船有倾覆危险，横倾正在加剧。",
+      "sourceRecordIds": [
+        341
+      ],
+      "sourceEnglish": "I am in danger of capsizing, list increasing.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        33
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:342",
+      "category": "B2",
+      "en": "Let go sea anchor and report.",
+      "zh": "放出海锚并报告。",
+      "sourceRecordIds": [
+        342
+      ],
+      "sourceEnglish": "Let go sea anchor and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        76
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:348",
+      "category": "A2",
+      "en": "Is the engine a diesel or a turbine?",
+      "zh": "主机是柴油机还是汽轮机？",
+      "sourceRecordIds": [
+        348
+      ],
+      "sourceEnglish": "Is the engine a diesel or a turbine?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        61
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:351",
+      "category": "A2",
+      "en": "How long does it take to change the engines from ahead to astern?",
+      "zh": "主机由前进转换到后退需要多长时间？",
+      "sourceRecordIds": [
+        351
+      ],
+      "sourceEnglish": "How long does it take to change the engines from ahead to astern?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        61
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:363",
+      "category": "B3",
+      "en": "Switch on the hold ventilation to exhaust air.",
+      "zh": "启动货舱通风设备进行排风。",
+      "sourceRecordIds": [
+        363
+      ],
+      "sourceEnglish": "Switch on the hold ventilation to exhaust air.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        99
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:366",
+      "category": "B2",
+      "en": "Inform the engine room.",
+      "zh": "通知机舱。",
+      "sourceRecordIds": [
+        366,
+        1126
+      ],
+      "sourceEnglish": "Inform the engine room.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        84
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:368",
+      "category": "A1",
+      "en": "What kind of assistance is required?",
+      "zh": "需要何种援助？",
+      "sourceRecordIds": [
+        260,
+        368,
+        1109,
+        1184,
+        2291,
+        2923,
+        3038,
+        4482
+      ],
+      "sourceEnglish": "What kind of assistance is required?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        31,
+        32,
+        33,
+        37,
+        38,
+        42,
+        78
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:369",
+      "category": "A2",
+      "en": "Yes, the radar is operational.",
+      "zh": "是的，雷达正常工作。",
+      "sourceRecordIds": [
+        369
+      ],
+      "sourceEnglish": "Yes, the radar is operational.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        62
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:373",
+      "category": "B3",
+      "en": "Switch on the hold lights.",
+      "zh": "打开货舱照明。",
+      "sourceRecordIds": [
+        373
+      ],
+      "sourceEnglish": "Switch on the hold lights.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        92
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:375",
+      "category": "B3",
+      "en": "These goods are liable to spontaneous heating and combustion.",
+      "zh": "这些货物容易自热、自燃。",
+      "sourceRecordIds": [
+        375
+      ],
+      "sourceEnglish": "These goods are liable to spontaneous heating and combustion.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        93
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:380",
+      "category": "A2",
+      "en": "Port engines full astern.",
+      "zh": "左舷主机全速后退。",
+      "sourceRecordIds": [
+        380
+      ],
+      "sourceEnglish": "Port engines full astern.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        61
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:381",
+      "category": "B3",
+      "en": "What is the grain capacity of vessel?",
+      "zh": "船舶的散装舱容是多少？",
+      "sourceRecordIds": [
+        381
+      ],
+      "sourceEnglish": "What is the grain capacity of vessel?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        90
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:383",
+      "category": "B3",
+      "en": "Are your tanks inerted?",
+      "zh": "你船各液舱是否已惰化？",
+      "sourceRecordIds": [
+        383
+      ],
+      "sourceEnglish": "Are your tanks inerted?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        95
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:386",
+      "category": "A2",
+      "en": "Heave up both cables.",
+      "zh": "绞起两舷锚链。",
+      "sourceRecordIds": [
+        386
+      ],
+      "sourceEnglish": "Heave up both cables.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        64
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:387",
+      "category": "A2",
+      "en": "Heave on the stern line.",
+      "zh": "绞紧尾缆。",
+      "sourceRecordIds": [
+        387
+      ],
+      "sourceEnglish": "Heave on the stern line.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        66
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:388",
+      "category": "B2",
+      "en": "Check the smoke alarms and report.",
+      "zh": "检查各烟雾报警器并报告。",
+      "sourceRecordIds": [
+        388
+      ],
+      "sourceEnglish": "Check the smoke alarms and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        78
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:389",
+      "category": "A2",
+      "en": "Finished with engines - no more manoeuvring.",
+      "zh": "完车，不再操纵主机。",
+      "sourceRecordIds": [
+        389
+      ],
+      "sourceEnglish": "Finished with engines - no more manoeuvring.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        61
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:390",
+      "category": "A2",
+      "en": "Port engines dead slow astern.",
+      "zh": "左舷主机微速后退。",
+      "sourceRecordIds": [
+        390
+      ],
+      "sourceEnglish": "Port engines dead slow astern.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        61
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:393",
+      "category": "B1",
+      "en": "The echo sounder recordings are unreliable.",
+      "zh": "测深仪记录不可靠。",
+      "sourceRecordIds": [
+        393
+      ],
+      "sourceEnglish": "The echo sounder recordings are unreliable.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        68
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:395",
+      "category": "B2",
+      "en": "Bilge pumps switched on.",
+      "zh": "舱底泵已启动。",
+      "sourceRecordIds": [
+        395
+      ],
+      "sourceEnglish": "Bilge pumps switched on.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        83
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:396",
+      "category": "A2",
+      "en": "Use the starboard quarter lead.",
+      "zh": "使用右舷尾部导缆装置。",
+      "sourceRecordIds": [
+        396
+      ],
+      "sourceEnglish": "Use the starboard quarter lead.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        65
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:402",
+      "category": "B2",
+      "en": "Take immediate action to recover injured persons.",
+      "zh": "立即采取行动救起受伤人员。",
+      "sourceRecordIds": [
+        402
+      ],
+      "sourceEnglish": "Take immediate action to recover injured persons.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        78
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:406",
+      "category": "A2",
+      "en": "Hold on the port cable.",
+      "zh": "刹住左锚链。",
+      "sourceRecordIds": [
+        406
+      ],
+      "sourceEnglish": "Hold on the port cable.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        63
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:408",
+      "category": "A1",
+      "en": "What is the latest ice information?",
+      "zh": "最新冰情如何？",
+      "sourceRecordIds": [
+        408
+      ],
+      "sourceEnglish": "What is the latest ice information?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        39
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:412",
+      "category": "A1",
+      "en": "I am not under command.",
+      "zh": "我船处于失控状态。",
+      "sourceRecordIds": [
+        412,
+        1079,
+        4907,
+        5037,
+        5097
+      ],
+      "sourceEnglish": "I am not under command.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        32
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:415",
+      "category": "B3",
+      "en": "What is the maximum discharging rate?",
+      "zh": "最大卸货速率是多少？",
+      "sourceRecordIds": [
+        415
+      ],
+      "sourceEnglish": "What is the maximum discharging rate?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        92
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:419",
+      "category": "A1",
+      "en": "Wind is backing and decreasing.",
+      "zh": "风向正逆时针转变，风力正在减弱。",
+      "sourceRecordIds": [
+        419
+      ],
+      "sourceEnglish": "Wind is backing and decreasing.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        51
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:422",
+      "category": "A1",
+      "en": "Do you require a pilot?",
+      "zh": "你船需要引航员吗？",
+      "sourceRecordIds": [
+        422
+      ],
+      "sourceEnglish": "Do you require a pilot?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        57
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:423",
+      "category": "B2",
+      "en": "Missing crew member not recovered.",
+      "zh": "尚未找到失踪船员。",
+      "sourceRecordIds": [
+        423
+      ],
+      "sourceEnglish": "Missing crew member not recovered.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        75
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:424",
+      "category": "B2",
+      "en": "No, bilge pumps not operational yet.",
+      "zh": "不，舱底泵尚不能正常工作。",
+      "sourceRecordIds": [
+        424
+      ],
+      "sourceEnglish": "No, bilge pumps not operational yet.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        85
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:425",
+      "category": "A2",
+      "en": "Yes, fenders are on the berth.",
+      "zh": "是的，泊位已备好碰垫。",
+      "sourceRecordIds": [
+        425
+      ],
+      "sourceEnglish": "Yes, fenders are on the berth.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        65
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:426",
+      "category": "B1",
+      "en": "Visibility is reduced by dust.",
+      "zh": "能见度受沙尘影响。",
+      "sourceRecordIds": [
+        426
+      ],
+      "sourceEnglish": "Visibility is reduced by dust.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        69
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:429",
+      "category": "A1",
+      "en": "Is your radar in operation?",
+      "zh": "你船的雷达是否正常工作？",
+      "sourceRecordIds": [
+        429
+      ],
+      "sourceEnglish": "Is your radar in operation?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        52
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:430",
+      "category": "B2",
+      "en": "Report the result of the diving survey.",
+      "zh": "报告潜水检查结果。",
+      "sourceRecordIds": [
+        430
+      ],
+      "sourceEnglish": "Report the result of the diving survey.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        86
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:441",
+      "category": "A1",
+      "en": "What is your MMSI number?",
+      "zh": "你船的海上移动业务识别码是什么？",
+      "sourceRecordIds": [
+        441
+      ],
+      "sourceEnglish": "What is your MMSI number?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        34
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:445",
+      "category": "B3",
+      "en": "No, my tanks are not inerted yet.",
+      "zh": "不，我船各液舱尚未惰化。",
+      "sourceRecordIds": [
+        445
+      ],
+      "sourceEnglish": "No, my tanks are not inerted yet.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        95
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:448",
+      "category": "A2",
+      "en": "What is the manoeuvring speed at full ahead?",
+      "zh": "全速前进时的操纵航速是多少？",
+      "sourceRecordIds": [
+        448
+      ],
+      "sourceEnglish": "What is the manoeuvring speed at full ahead?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        49
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:449",
+      "category": "A2",
+      "en": "Slack out the cables.",
+      "zh": "松出锚链。",
+      "sourceRecordIds": [
+        449
+      ],
+      "sourceEnglish": "Slack out the cables.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        63
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:450",
+      "category": "B3",
+      "en": "Bonding wire is fitted.",
+      "zh": "跨接线已连接。",
+      "sourceRecordIds": [
+        450
+      ],
+      "sourceEnglish": "Bonding wire is fitted.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        95
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:459",
+      "category": "B3",
+      "en": "Hatch covers closed and secured.",
+      "zh": "各舱盖已关闭并固定。",
+      "sourceRecordIds": [
+        459
+      ],
+      "sourceEnglish": "Hatch covers closed and secured.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        97
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:461",
+      "category": "B2",
+      "en": "Shoreside assistance is required.",
+      "zh": "需要岸上援助。",
+      "sourceRecordIds": [
+        461
+      ],
+      "sourceEnglish": "Shoreside assistance is required.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        78
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:464",
+      "category": "A2",
+      "en": "How much weight is on the cable?",
+      "zh": "锚链受力情况如何？",
+      "sourceRecordIds": [
+        464
+      ],
+      "sourceEnglish": "How much weight is on the cable?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        64
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:465",
+      "category": "A1",
+      "en": "The barometer is rising rapidly.",
+      "zh": "气压正在迅速上升。",
+      "sourceRecordIds": [
+        465
+      ],
+      "sourceEnglish": "The barometer is rising rapidly.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        38
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:468",
+      "category": "A1",
+      "en": "Are there dangers to navigation?",
+      "zh": "是否存在航行危险？",
+      "sourceRecordIds": [
+        468
+      ],
+      "sourceEnglish": "Are there dangers to navigation?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        35
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:473",
+      "category": "B4",
+      "en": "There are enough life-saving appliances for everyone on board.",
+      "zh": "船上的救生设备足供全体人员使用。",
+      "sourceRecordIds": [
+        473
+      ],
+      "sourceEnglish": "There are enough life-saving appliances for everyone on board.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:475",
+      "category": "A1",
+      "en": "What is your air draft?",
+      "zh": "你船水面以上最大高度是多少？",
+      "sourceRecordIds": [
+        475,
+        5031
+      ],
+      "sourceEnglish": "What is your air draft?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        49,
+        63
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:476",
+      "category": "B2",
+      "en": "Provide first aid in the vessel's hospital.",
+      "zh": "在船上医务室实施急救。",
+      "sourceRecordIds": [
+        476
+      ],
+      "sourceEnglish": "Provide first aid in the vessel's hospital.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        74
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:477",
+      "category": "A1",
+      "en": "What is your freeboard?",
+      "zh": "你船的干舷高度是多少？",
+      "sourceRecordIds": [
+        477,
+        2180
+      ],
+      "sourceEnglish": "What is your freeboard?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        49,
+        57
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:485",
+      "category": "A1",
+      "en": "Yes, you must take a pilot - pilotage is compulsory.",
+      "zh": "是的，你船必须使用引航员，此处实行强制引航。",
+      "sourceRecordIds": [
+        485
+      ],
+      "sourceEnglish": "Yes, you must take a pilot - pilotage is compulsory.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        57
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:486",
+      "category": "B2",
+      "en": "Survivor is in bad condition.",
+      "zh": "幸存者状况不佳。",
+      "sourceRecordIds": [
+        486
+      ],
+      "sourceEnglish": "Survivor is in bad condition.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        88
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:488",
+      "category": "B2",
+      "en": "All liferafts are in position and operational.",
+      "zh": "所有救生筏均已就位并可用。",
+      "sourceRecordIds": [
+        488
+      ],
+      "sourceEnglish": "All liferafts are in position and operational.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        74
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:489",
+      "category": "B2",
+      "en": "Muster damage control team and report.",
+      "zh": "损管队集合并报告。",
+      "sourceRecordIds": [
+        489
+      ],
+      "sourceEnglish": "Muster damage control team and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        83
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:492",
+      "category": "B4",
+      "en": "Follow closely the demonstration given by the officer.",
+      "zh": "仔细观看驾驶员的示范。",
+      "sourceRecordIds": [
+        492
+      ],
+      "sourceEnglish": "Follow closely the demonstration given by the officer.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:502",
+      "category": "B4",
+      "en": "Provisions and drinking water will be distributed by an officer only.",
+      "zh": "只有驾驶员负责分发食品和饮用水。",
+      "sourceRecordIds": [
+        502
+      ],
+      "sourceEnglish": "Provisions and drinking water will be distributed by an officer only.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:505",
+      "category": "B3",
+      "en": "Close the discharges and report.",
+      "zh": "关闭各排出口并报告。",
+      "sourceRecordIds": [
+        505
+      ],
+      "sourceEnglish": "Close the discharges and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        95
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:515",
+      "category": "A1",
+      "en": "I require ice breaker escort.",
+      "zh": "我船需要破冰船护航。",
+      "sourceRecordIds": [
+        515
+      ],
+      "sourceEnglish": "I require ice breaker escort.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        45
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:516",
+      "category": "A2",
+      "en": "No weight is on the cable.",
+      "zh": "锚链不受力。",
+      "sourceRecordIds": [
+        516
+      ],
+      "sourceEnglish": "No weight is on the cable.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        64
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:517",
+      "category": "B2",
+      "en": "All escape routes are clear.",
+      "zh": "所有逃生通道均畅通。",
+      "sourceRecordIds": [
+        517
+      ],
+      "sourceEnglish": "All escape routes are clear.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        73
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:519",
+      "category": "B2",
+      "en": "Report number of all passengers at assembly stations.",
+      "zh": "报告集合站的旅客总人数。",
+      "sourceRecordIds": [
+        519
+      ],
+      "sourceEnglish": "Report number of all passengers at assembly stations.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        75
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:522",
+      "category": "A2",
+      "en": "Stand by lookout in the port wing.",
+      "zh": "安排瞭望人员到左舷驾驶台翼桥待命。",
+      "sourceRecordIds": [
+        522
+      ],
+      "sourceEnglish": "Stand by lookout in the port wing.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        62
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:523",
+      "category": "A2",
+      "en": "Hold on the breast line.",
+      "zh": "刹住横缆。",
+      "sourceRecordIds": [
+        523
+      ],
+      "sourceEnglish": "Hold on the breast line.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        66
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:525",
+      "category": "A1",
+      "en": "Can you stop spillage?",
+      "zh": "你船能停止溢漏吗？",
+      "sourceRecordIds": [
+        525
+      ],
+      "sourceEnglish": "Can you stop spillage?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        42
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:529",
+      "category": "B2",
+      "en": "The fire is not under control yet.",
+      "zh": "火势尚未得到控制。",
+      "sourceRecordIds": [
+        529
+      ],
+      "sourceEnglish": "The fire is not under control yet.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        94
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:530",
+      "category": "B3",
+      "en": "Are the holds dry?",
+      "zh": "各货舱是否干燥？",
+      "sourceRecordIds": [
+        530
+      ],
+      "sourceEnglish": "Are the holds dry?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        91
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:533",
+      "category": "B2",
+      "en": "Replace the missing lifebuoys.",
+      "zh": "补齐缺失的救生圈。",
+      "sourceRecordIds": [
+        533
+      ],
+      "sourceEnglish": "Replace the missing lifebuoys.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        87
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:535",
+      "category": "A1",
+      "en": "What wind is expected in my position?",
+      "zh": "预计我船所在位置的风况如何？",
+      "sourceRecordIds": [
+        535
+      ],
+      "sourceEnglish": "What wind is expected in my position?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        38
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:536",
+      "category": "A2",
+      "en": "The engine is a turbine.",
+      "zh": "主机是汽轮机。",
+      "sourceRecordIds": [
+        536
+      ],
+      "sourceEnglish": "The engine is a turbine.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        61
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:542",
+      "category": "A1",
+      "en": "Fire is in engine-room.",
+      "zh": "机舱发生火灾。",
+      "sourceRecordIds": [
+        542
+      ],
+      "sourceEnglish": "Fire is in engine-room.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        31
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:543",
+      "category": "A1",
+      "en": "Fishing gear has fouled my propellers.",
+      "zh": "渔具缠住了我船螺旋桨。",
+      "sourceRecordIds": [
+        543
+      ],
+      "sourceEnglish": "Fishing gear has fouled my propellers.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        42
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:544",
+      "category": "B2",
+      "en": "Do not enter lower deck.",
+      "zh": "不得进入下层甲板。",
+      "sourceRecordIds": [
+        544
+      ],
+      "sourceEnglish": "Do not enter lower deck.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        74
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:555",
+      "category": "A2",
+      "en": "Stand by lookout on the bridge.",
+      "zh": "安排瞭望人员到驾驶台待命。",
+      "sourceRecordIds": [
+        555
+      ],
+      "sourceEnglish": "Stand by lookout on the bridge.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        62
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:560",
+      "category": "B2",
+      "en": "What was the number of persons in water?",
+      "zh": "水中共有多少人？",
+      "sourceRecordIds": [
+        560
+      ],
+      "sourceEnglish": "What was the number of persons in water?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        89
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:562",
+      "category": "B2",
+      "en": "Stand by fire fighting team and report.",
+      "zh": "消防队做好准备并报告。",
+      "sourceRecordIds": [
+        562
+      ],
+      "sourceEnglish": "Stand by fire fighting team and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        81
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:564",
+      "category": "B3",
+      "en": "The hatch covers are in order.",
+      "zh": "各舱盖状况良好。",
+      "sourceRecordIds": [
+        564
+      ],
+      "sourceEnglish": "The hatch covers are in order.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        91
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:566",
+      "category": "B3",
+      "en": "What is the hold capacity of vessel?",
+      "zh": "船舶的货舱容量是多少？",
+      "sourceRecordIds": [
+        566
+      ],
+      "sourceEnglish": "What is the hold capacity of vessel?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        90
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:572",
+      "category": "A1",
+      "en": "Yes, the pilot boat is on station.",
+      "zh": "是的，引航艇已在指定位置待命。",
+      "sourceRecordIds": [
+        572
+      ],
+      "sourceEnglish": "Yes, the pilot boat is on station.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        57
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:573",
+      "category": "B2",
+      "en": "Start the engine and report.",
+      "zh": "启动发动机并报告。",
+      "sourceRecordIds": [
+        573
+      ],
+      "sourceEnglish": "Start the engine and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        76
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:580",
+      "category": "B3",
+      "en": "No, the holds are not dry.",
+      "zh": "不，各货舱不干燥。",
+      "sourceRecordIds": [
+        580
+      ],
+      "sourceEnglish": "No, the holds are not dry.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        91
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:584",
+      "category": "B2",
+      "en": "Check the skylights and report.",
+      "zh": "检查天窗并报告。",
+      "sourceRecordIds": [
+        584
+      ],
+      "sourceEnglish": "Check the skylights and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        79
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:587",
+      "category": "B2",
+      "en": "Check the fuel of the lifeboat engines and report.",
+      "zh": "检查救生艇发动机燃油并报告。",
+      "sourceRecordIds": [
+        587
+      ],
+      "sourceEnglish": "Check the fuel of the lifeboat engines and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        73
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:590",
+      "category": "B2",
+      "en": "What part is aground?",
+      "zh": "船体哪个部位搁浅？",
+      "sourceRecordIds": [
+        590
+      ],
+      "sourceEnglish": "What part is aground?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        84
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:592",
+      "category": "A1",
+      "en": "I am ready to get underway.",
+      "zh": "我船已做好开航准备。",
+      "sourceRecordIds": [
+        592,
+        4266
+      ],
+      "sourceEnglish": "I am ready to get underway.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        49,
+        54
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:593",
+      "category": "A1",
+      "en": "I have problems with steering gear.",
+      "zh": "我船操舵装置存在问题。",
+      "sourceRecordIds": [
+        593
+      ],
+      "sourceEnglish": "I have problems with steering gear.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        37
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:594",
+      "category": "A1",
+      "en": "What is local time?",
+      "zh": "现在当地时间是多少？",
+      "sourceRecordIds": [
+        594
+      ],
+      "sourceEnglish": "What is local time?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        57
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:601",
+      "category": "B1",
+      "en": "The radar is true-motion north-up.",
+      "zh": "雷达处于真运动、北向上显示模式。",
+      "sourceRecordIds": [
+        601
+      ],
+      "sourceEnglish": "The radar is true-motion north-up.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        68
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:610",
+      "category": "B2",
+      "en": "Clear the entrance of the lifeboat.",
+      "zh": "清空救生艇入口。",
+      "sourceRecordIds": [
+        610
+      ],
+      "sourceEnglish": "Clear the entrance of the lifeboat.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        75,
+        103
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:611",
+      "category": "A2",
+      "en": "Is the anchor holding?",
+      "zh": "锚是否抓牢？",
+      "sourceRecordIds": [
+        611
+      ],
+      "sourceEnglish": "Is the anchor holding?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        63
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:616",
+      "category": "B3",
+      "en": "Check the correct fixing of the rope clips.",
+      "zh": "检查钢丝绳夹是否正确固定。",
+      "sourceRecordIds": [
+        616
+      ],
+      "sourceEnglish": "Check the correct fixing of the rope clips.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        93
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:623",
+      "category": "A1",
+      "en": "I am flooding in the holds.",
+      "zh": "我船货舱正在进水。",
+      "sourceRecordIds": [
+        623
+      ],
+      "sourceEnglish": "I am flooding in the holds.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        32
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:625",
+      "category": "B2",
+      "en": "Check the pumps and report.",
+      "zh": "检查各泵并报告。",
+      "sourceRecordIds": [
+        625
+      ],
+      "sourceEnglish": "Check the pumps and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        82
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:627",
+      "category": "A1",
+      "en": "I have no damage.",
+      "zh": "我船没有受损。",
+      "sourceRecordIds": [
+        627
+      ],
+      "sourceEnglish": "I have no damage.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        33
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:632",
+      "category": "A1",
+      "en": "I require fire fighting assistance.",
+      "zh": "我船需要灭火援助。",
+      "sourceRecordIds": [
+        632
+      ],
+      "sourceEnglish": "I require fire fighting assistance.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        58
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:633",
+      "category": "A2",
+      "en": "Let go the towing line.",
+      "zh": "解掉拖缆。",
+      "sourceRecordIds": [
+        633
+      ],
+      "sourceEnglish": "Let go the towing line.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        66
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:634",
+      "category": "B3",
+      "en": "Order a surveyor to check the cargo securings.",
+      "zh": "安排检验人员检查货物系固情况。",
+      "sourceRecordIds": [
+        634
+      ],
+      "sourceEnglish": "Order a surveyor to check the cargo securings.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        98
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:636",
+      "category": "A1",
+      "en": "Yes, I require medical assistance.",
+      "zh": "是的，我船需要医疗援助。",
+      "sourceRecordIds": [
+        636
+      ],
+      "sourceEnglish": "Yes, I require medical assistance.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        36
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:638",
+      "category": "B2",
+      "en": "Check the fire alarms and report.",
+      "zh": "检查各火灾报警器并报告。",
+      "sourceRecordIds": [
+        638
+      ],
+      "sourceEnglish": "Check the fire alarms and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        78
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:639",
+      "category": "B2",
+      "en": "The ventilation system is not operational.",
+      "zh": "通风系统无法正常工作。",
+      "sourceRecordIds": [
+        639
+      ],
+      "sourceEnglish": "The ventilation system is not operational.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        79
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:642",
+      "category": "B2",
+      "en": "Check the escape routes and report.",
+      "zh": "检查逃生通道并报告。",
+      "sourceRecordIds": [
+        642
+      ],
+      "sourceEnglish": "Check the escape routes and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        73
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:643",
+      "category": "B2",
+      "en": "Inform the vessels in vicinity on radio.",
+      "zh": "通过无线电通知附近船舶。",
+      "sourceRecordIds": [
+        643
+      ],
+      "sourceEnglish": "Inform the vessels in vicinity on radio.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        72
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:647",
+      "category": "A1",
+      "en": "I am manoeuvring with difficulty.",
+      "zh": "我船操纵困难。",
+      "sourceRecordIds": [
+        647
+      ],
+      "sourceEnglish": "I am manoeuvring with difficulty.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        37
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:649",
+      "category": "B3",
+      "en": "Lower and secure the cranes and report.",
+      "zh": "放低并固定各起重机，然后报告。",
+      "sourceRecordIds": [
+        649
+      ],
+      "sourceEnglish": "Lower and secure the cranes and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        97
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:657",
+      "category": "A1",
+      "en": "Are dangerous goods on fire?",
+      "zh": "危险货物是否正在燃烧？",
+      "sourceRecordIds": [
+        657
+      ],
+      "sourceEnglish": "Are dangerous goods on fire?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        31
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:663",
+      "category": "B2",
+      "en": "Replace the cut hoses.",
+      "zh": "更换割破的水带。",
+      "sourceRecordIds": [
+        663
+      ],
+      "sourceEnglish": "Replace the cut hoses.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        79
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:664",
+      "category": "B2",
+      "en": "Shut down main engines and report.",
+      "zh": "停止各主机并报告。",
+      "sourceRecordIds": [
+        664
+      ],
+      "sourceEnglish": "Shut down main engines and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        80
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:667",
+      "category": "A1",
+      "en": "The pilot ladder is rigged on port side.",
+      "zh": "引航梯已设置在左舷。",
+      "sourceRecordIds": [
+        667
+      ],
+      "sourceEnglish": "The pilot ladder is rigged on port side.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        43
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:668",
+      "category": "B2",
+      "en": "When was the last man overboard drill?",
+      "zh": "上一次人员落水演习是什么时候？",
+      "sourceRecordIds": [
+        668
+      ],
+      "sourceEnglish": "When was the last man overboard drill?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        87
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:669",
+      "category": "A2",
+      "en": "Let go both anchors.",
+      "zh": "抛双锚。",
+      "sourceRecordIds": [
+        669
+      ],
+      "sourceEnglish": "Let go both anchors.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        63
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:682",
+      "category": "B3",
+      "en": "Quantity received - stop pumping.",
+      "zh": "已收足数量，停止泵送。",
+      "sourceRecordIds": [
+        682
+      ],
+      "sourceEnglish": "Quantity received - stop pumping.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        96
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:684",
+      "category": "B2",
+      "en": "Inform the coast radio station about the cancellation of search and rescue.",
+      "zh": "通知岸台，搜救行动已取消。",
+      "sourceRecordIds": [
+        684
+      ],
+      "sourceEnglish": "Inform the coast radio station about the cancellation of search and rescue.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        90
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:687",
+      "category": "A1",
+      "en": "What is the weather situation in your position?",
+      "zh": "你船所在位置的天气情况如何？",
+      "sourceRecordIds": [
+        687
+      ],
+      "sourceEnglish": "What is the weather situation in your position?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        35
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:689",
+      "category": "A1",
+      "en": "What is your cargo?",
+      "zh": "你船装载什么货物？",
+      "sourceRecordIds": [
+        689
+      ],
+      "sourceEnglish": "What is your cargo?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        49
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:696",
+      "category": "A1",
+      "en": "My cargo is coal.",
+      "zh": "我船装载煤炭。",
+      "sourceRecordIds": [
+        696
+      ],
+      "sourceEnglish": "My cargo is coal.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        49
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:697",
+      "category": "B2",
+      "en": "Stand by rescue net and report.",
+      "zh": "备好救助网并报告。",
+      "sourceRecordIds": [
+        697
+      ],
+      "sourceEnglish": "Stand by rescue net and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        88
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:699",
+      "category": "B3",
+      "en": "Check the hatch covers for damage and report.",
+      "zh": "检查舱盖是否损坏并报告。",
+      "sourceRecordIds": [
+        699
+      ],
+      "sourceEnglish": "Check the hatch covers for damage and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        91
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:705",
+      "category": "B3",
+      "en": "Is the equipment for cargo care operational?",
+      "zh": "货物照管设备是否正常工作？",
+      "sourceRecordIds": [
+        705
+      ],
+      "sourceEnglish": "Is the equipment for cargo care operational?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        97
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:707",
+      "category": "A2",
+      "en": "Make fast the forward tugs alongside on port side.",
+      "zh": "将船首各拖轮在左舷旁带妥。",
+      "sourceRecordIds": [
+        707,
+        3784
+      ],
+      "sourceEnglish": "Make fast the forward tugs alongside on port side.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        64
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:709",
+      "category": "A1",
+      "en": "No, I cannot proceed.",
+      "zh": "不，我船无法继续航行。",
+      "sourceRecordIds": [
+        709
+      ],
+      "sourceEnglish": "No, I cannot proceed.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        35,
+        38
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:710",
+      "category": "A2",
+      "en": "No, the turning effect of the propeller is not very strong.",
+      "zh": "不，螺旋桨横向效应并不很强。",
+      "sourceRecordIds": [
+        710
+      ],
+      "sourceEnglish": "No, the turning effect of the propeller is not very strong.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        62
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:712",
+      "category": "A2",
+      "en": "The tug is fast.",
+      "zh": "拖轮已带妥。",
+      "sourceRecordIds": [
+        712
+      ],
+      "sourceEnglish": "The tug is fast.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        64
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:714",
+      "category": "B4",
+      "en": "We require warm clothing and blankets for the elderly.",
+      "zh": "我们需要为老年人提供保暖衣物和毯子。",
+      "sourceRecordIds": [
+        714
+      ],
+      "sourceEnglish": "We require warm clothing and blankets for the elderly.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        104
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:720",
+      "category": "B3",
+      "en": "Take actions according to the Emergency Plan.",
+      "zh": "按照应急计划采取行动。",
+      "sourceRecordIds": [
+        720
+      ],
+      "sourceEnglish": "Take actions according to the Emergency Plan.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        94
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:725",
+      "category": "B2",
+      "en": "The fixed foam system is operational.",
+      "zh": "固定式泡沫灭火系统正常工作。",
+      "sourceRecordIds": [
+        725
+      ],
+      "sourceEnglish": "The fixed foam system is operational.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        79
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:726",
+      "category": "B3",
+      "en": "Prepare the vessel for loading.",
+      "zh": "做好装货准备。",
+      "sourceRecordIds": [
+        726
+      ],
+      "sourceEnglish": "Prepare the vessel for loading.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        91
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:733",
+      "category": "A1",
+      "en": "Is your SART transmitting?",
+      "zh": "你船的搜救雷达应答器是否正在发射信号？",
+      "sourceRecordIds": [
+        733
+      ],
+      "sourceEnglish": "Is your SART transmitting?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        34
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:737",
+      "category": "B1",
+      "en": "The vessel has not given way yet.",
+      "zh": "该船尚未让路。",
+      "sourceRecordIds": [
+        737
+      ],
+      "sourceEnglish": "The vessel has not given way yet.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        68
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:739",
+      "category": "A2",
+      "en": "No, the propeller is not clear.",
+      "zh": "不，螺旋桨周围尚未清爽。",
+      "sourceRecordIds": [
+        739
+      ],
+      "sourceEnglish": "No, the propeller is not clear.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        65
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:745",
+      "category": "A1",
+      "en": "You are not on the radar reference line.",
+      "zh": "你船不在雷达参考线上。",
+      "sourceRecordIds": [
+        745
+      ],
+      "sourceEnglish": "You are not on the radar reference line.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        52
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:746",
+      "category": "B3",
+      "en": "Plug the scuppers and report.",
+      "zh": "堵住甲板排水孔并报告。",
+      "sourceRecordIds": [
+        746,
+        3183
+      ],
+      "sourceEnglish": "Plug the scuppers and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        96
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:747",
+      "category": "B3",
+      "en": "Side ramp folded and secured.",
+      "zh": "侧跳板已收起并固定。",
+      "sourceRecordIds": [
+        747
+      ],
+      "sourceEnglish": "Side ramp folded and secured.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        97
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:750",
+      "category": "B2",
+      "en": "Replace the missing portable extinguishers.",
+      "zh": "补齐缺失的手提式灭火器。",
+      "sourceRecordIds": [
+        750
+      ],
+      "sourceEnglish": "Replace the missing portable extinguishers.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        78
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:751",
+      "category": "B4",
+      "en": "We require warm clothing and blankets for the injured.",
+      "zh": "我们需要为受伤人员提供保暖衣物和毯子。",
+      "sourceRecordIds": [
+        751
+      ],
+      "sourceEnglish": "We require warm clothing and blankets for the injured.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        104
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:752",
+      "category": "A2",
+      "en": "Bow thruster full to starboard.",
+      "zh": "艏侧推向右全速。",
+      "sourceRecordIds": [
+        752
+      ],
+      "sourceEnglish": "Bow thruster full to starboard.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        61
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:753",
+      "category": "B2",
+      "en": "Lower deck not accessible yet.",
+      "zh": "下层甲板尚无法到达。",
+      "sourceRecordIds": [
+        753
+      ],
+      "sourceEnglish": "Lower deck not accessible yet.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        74
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:754",
+      "category": "B2",
+      "en": "Auxiliary engines shut down.",
+      "zh": "各辅机已停机。",
+      "sourceRecordIds": [
+        754
+      ],
+      "sourceEnglish": "Auxiliary engines shut down.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        80
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:756",
+      "category": "A2",
+      "en": "Stand by bow anchor.",
+      "zh": "备好船首锚。",
+      "sourceRecordIds": [
+        756
+      ],
+      "sourceEnglish": "Stand by bow anchor.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        66
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:757",
+      "category": "A2",
+      "en": "No, the propellers are not clear.",
+      "zh": "不，各螺旋桨周围尚未清爽。",
+      "sourceRecordIds": [
+        757
+      ],
+      "sourceEnglish": "No, the propellers are not clear.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        65
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:761",
+      "category": "A2",
+      "en": "Change the radar to relative course-up.",
+      "zh": "将雷达改为相对运动、航向向上显示模式。",
+      "sourceRecordIds": [
+        761
+      ],
+      "sourceEnglish": "Change the radar to relative course-up.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        68
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:764",
+      "category": "B1",
+      "en": "Barometer is dropping rapidly.",
+      "zh": "气压正在迅速下降。",
+      "sourceRecordIds": [
+        764
+      ],
+      "sourceEnglish": "Barometer is dropping rapidly.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        69
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:770",
+      "category": "A1",
+      "en": "Receive towing line on deck.",
+      "zh": "在甲板上接收拖缆。",
+      "sourceRecordIds": [
+        770
+      ],
+      "sourceEnglish": "Receive towing line on deck.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        46
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:775",
+      "category": "A1",
+      "en": "You must rig another pilot ladder.",
+      "zh": "你船必须另设一副引航梯。",
+      "sourceRecordIds": [
+        775
+      ],
+      "sourceEnglish": "You must rig another pilot ladder.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        43
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:777",
+      "category": "A1",
+      "en": "Wind is veering and increasing.",
+      "zh": "风向正顺时针转变，风力正在增强。",
+      "sourceRecordIds": [
+        777
+      ],
+      "sourceEnglish": "Wind is veering and increasing.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        51
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:789",
+      "category": "B2",
+      "en": "Emergency generator is not operational yet.",
+      "zh": "应急发电机尚不能正常工作。",
+      "sourceRecordIds": [
+        789
+      ],
+      "sourceEnglish": "Emergency generator is not operational yet.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        82
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:791",
+      "category": "A2",
+      "en": "Hold on the head line.",
+      "zh": "刹住首缆。",
+      "sourceRecordIds": [
+        791
+      ],
+      "sourceEnglish": "Hold on the head line.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        66
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:795",
+      "category": "B2",
+      "en": "The electrical lighting is operational.",
+      "zh": "电气照明正常工作。",
+      "sourceRecordIds": [
+        795
+      ],
+      "sourceEnglish": "The electrical lighting is operational.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        79
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:798",
+      "category": "B1",
+      "en": "There is no list.",
+      "zh": "没有横倾。",
+      "sourceRecordIds": [
+        798
+      ],
+      "sourceEnglish": "There is no list.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        71
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:799",
+      "category": "A1",
+      "en": "Flooding is under control.",
+      "zh": "进水已得到控制。",
+      "sourceRecordIds": [
+        799
+      ],
+      "sourceEnglish": "Flooding is under control.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        32,
+        72,
+        101
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:800",
+      "category": "A2",
+      "en": "The engine is on bridge control.",
+      "zh": "主机处于驾驶台控制状态。",
+      "sourceRecordIds": [
+        800
+      ],
+      "sourceEnglish": "The engine is on bridge control.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        61
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:803",
+      "category": "B2",
+      "en": "Have a permanent fire watch.",
+      "zh": "安排持续消防值守。",
+      "sourceRecordIds": [
+        803
+      ],
+      "sourceEnglish": "Have a permanent fire watch.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        78
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:805",
+      "category": "A2",
+      "en": "Make fast the tugs on port bow.",
+      "zh": "将各拖轮在左舷船首带妥。",
+      "sourceRecordIds": [
+        805
+      ],
+      "sourceEnglish": "Make fast the tugs on port bow.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        64
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:807",
+      "category": "A2",
+      "en": "No, we do not have tension winches.",
+      "zh": "不，我船没有自动张力绞车。",
+      "sourceRecordIds": [
+        807
+      ],
+      "sourceEnglish": "No, we do not have tension winches.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        65
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:811",
+      "category": "B3",
+      "en": "One container was damaged during loading.",
+      "zh": "一个集装箱在装货时受损。",
+      "sourceRecordIds": [
+        811
+      ],
+      "sourceEnglish": "One container was damaged during loading.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        99
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:813",
+      "category": "B2",
+      "en": "Is flooding under control?",
+      "zh": "进水是否已得到控制？",
+      "sourceRecordIds": [
+        813
+      ],
+      "sourceEnglish": "Is flooding under control?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        82,
+        84
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:814",
+      "category": "A2",
+      "en": "Slack away the forward spring.",
+      "zh": "松前倒缆。",
+      "sourceRecordIds": [
+        814
+      ],
+      "sourceEnglish": "Slack away the forward spring.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        65
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:815",
+      "category": "A1",
+      "en": "No, I have no list.",
+      "zh": "不，我船没有横倾。",
+      "sourceRecordIds": [
+        815
+      ],
+      "sourceEnglish": "No, I have no list.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        49
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:817",
+      "category": "A2",
+      "en": "We have a fixed pitch propeller.",
+      "zh": "我船使用固定螺距螺旋桨。",
+      "sourceRecordIds": [
+        817
+      ],
+      "sourceEnglish": "We have a fixed pitch propeller.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        61
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:820",
+      "category": "B2",
+      "en": "Watertight door is not accessible.",
+      "zh": "无法到达水密门。",
+      "sourceRecordIds": [
+        820
+      ],
+      "sourceEnglish": "Watertight door is not accessible.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        82
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:824",
+      "category": "A1",
+      "en": "What is your position?",
+      "zh": "你船的船位是什么？",
+      "sourceRecordIds": [
+        824,
+        1413,
+        3679,
+        3818
+      ],
+      "sourceEnglish": "What is your position?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        34,
+        44,
+        48,
+        52,
+        57
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:825",
+      "category": "A1",
+      "en": "What is your present heading?",
+      "zh": "你船当前船首向是多少？",
+      "sourceRecordIds": [
+        825
+      ],
+      "sourceEnglish": "What is your present heading?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        60
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:833",
+      "category": "B3",
+      "en": "Are the safety arrangements in the hold operational?",
+      "zh": "货舱内的安全设施是否正常工作？",
+      "sourceRecordIds": [
+        833
+      ],
+      "sourceEnglish": "Are the safety arrangements in the hold operational?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        91
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:837",
+      "category": "A1",
+      "en": "Your course is deviating from the radar reference line.",
+      "zh": "你船航向正在偏离雷达参考线。",
+      "sourceRecordIds": [
+        837
+      ],
+      "sourceEnglish": "Your course is deviating from the radar reference line.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        55
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:838",
+      "category": "B3",
+      "en": "Check the lashings and securings every day.",
+      "zh": "每天检查绑扎和系固情况。",
+      "sourceRecordIds": [
+        838
+      ],
+      "sourceEnglish": "Check the lashings and securings every day.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        98
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:839",
+      "category": "B3",
+      "en": "The hold ladder is bent.",
+      "zh": "货舱梯已弯曲。",
+      "sourceRecordIds": [
+        839
+      ],
+      "sourceEnglish": "The hold ladder is bent.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        92
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:840",
+      "category": "B2",
+      "en": "The vessel in distress capsized.",
+      "zh": "遇险船舶已倾覆。",
+      "sourceRecordIds": [
+        840
+      ],
+      "sourceEnglish": "The vessel in distress capsized.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        90
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:842",
+      "category": "B3",
+      "en": "Fold and secure the side ramp and report.",
+      "zh": "收起并固定侧跳板，然后报告。",
+      "sourceRecordIds": [
+        842
+      ],
+      "sourceEnglish": "Fold and secure the side ramp and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        97
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:844",
+      "category": "B2",
+      "en": "Switch on the outboard lighting.",
+      "zh": "打开舷外照明。",
+      "sourceRecordIds": [
+        844
+      ],
+      "sourceEnglish": "Switch on the outboard lighting.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        89
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:852",
+      "category": "B2",
+      "en": "Sit down in the liferaft immediately.",
+      "zh": "立即在救生筏内坐下。",
+      "sourceRecordIds": [
+        852,
+        5010
+      ],
+      "sourceEnglish": "Sit down in the liferaft immediately.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:855",
+      "category": "B2",
+      "en": "Chief Officer in command of rescue team.",
+      "zh": "由大副指挥救助队。",
+      "sourceRecordIds": [
+        855
+      ],
+      "sourceEnglish": "Chief Officer in command of rescue team.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        81
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:857",
+      "category": "A2",
+      "en": "Put the windlass in gear.",
+      "zh": "将锚机合上离合器。",
+      "sourceRecordIds": [
+        857
+      ],
+      "sourceEnglish": "Put the windlass in gear.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        63
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:858",
+      "category": "A1",
+      "en": "I require tug assistance.",
+      "zh": "我船需要拖轮协助。",
+      "sourceRecordIds": [
+        858,
+        1022,
+        1202,
+        1820,
+        3317,
+        4072,
+        4848
+      ],
+      "sourceEnglish": "I require tug assistance.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        59
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:859",
+      "category": "A1",
+      "en": "The wind in your position is expected to decrease.",
+      "zh": "预计你船所在位置的风力将减弱。",
+      "sourceRecordIds": [
+        859
+      ],
+      "sourceEnglish": "The wind in your position is expected to decrease.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        38
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:867",
+      "category": "B2",
+      "en": "Close all valves and report.",
+      "zh": "关闭所有阀门并报告。",
+      "sourceRecordIds": [
+        867
+      ],
+      "sourceEnglish": "Close all valves and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        83
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:869",
+      "category": "A2",
+      "en": "How is the cable leading?",
+      "zh": "锚链导向如何？",
+      "sourceRecordIds": [
+        869,
+        1966
+      ],
+      "sourceEnglish": "How is the cable leading?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        63
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:870",
+      "category": "A1",
+      "en": "I cannot send pumps.",
+      "zh": "我方无法提供水泵。",
+      "sourceRecordIds": [
+        870
+      ],
+      "sourceEnglish": "I cannot send pumps.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        32
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:871",
+      "category": "B2",
+      "en": "What was the total number of persons on board the vessel in distress?",
+      "zh": "遇险船舶上原有总人数是多少？",
+      "sourceRecordIds": [
+        871
+      ],
+      "sourceEnglish": "What was the total number of persons on board the vessel in distress?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        89
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:872",
+      "category": "B2",
+      "en": "Check the emergency power supply and report.",
+      "zh": "检查应急电源并报告。",
+      "sourceRecordIds": [
+        872
+      ],
+      "sourceEnglish": "Check the emergency power supply and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        79
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:876",
+      "category": "B4",
+      "en": "We require warm clothing and blankets for the sick.",
+      "zh": "我们需要为病人提供保暖衣物和毯子。",
+      "sourceRecordIds": [
+        876
+      ],
+      "sourceEnglish": "We require warm clothing and blankets for the sick.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        104
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:884",
+      "category": "A1",
+      "en": "I have dangerous list to starboard.",
+      "zh": "我船正向右舷危险横倾。",
+      "sourceRecordIds": [
+        884,
+        1253
+      ],
+      "sourceEnglish": "I have dangerous list to starboard.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        33
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:885",
+      "category": "A1",
+      "en": "Can you proceed without assistance?",
+      "zh": "你船能在没有援助的情况下继续航行吗？",
+      "sourceRecordIds": [
+        885
+      ],
+      "sourceEnglish": "Can you proceed without assistance?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        38
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:886",
+      "category": "A1",
+      "en": "Stand by pilot ladder.",
+      "zh": "备好引航梯。",
+      "sourceRecordIds": [
+        886
+      ],
+      "sourceEnglish": "Stand by pilot ladder.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        43
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:892",
+      "category": "B3",
+      "en": "What is the IMO Class of these goods?",
+      "zh": "这些货物属于国际海事组织哪一类危险货物？",
+      "sourceRecordIds": [
+        892
+      ],
+      "sourceEnglish": "What is the IMO Class of these goods?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        93
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:903",
+      "category": "B3",
+      "en": "Take injured persons to a safe area.",
+      "zh": "将受伤人员转移到安全区域。",
+      "sourceRecordIds": [
+        903
+      ],
+      "sourceEnglish": "Take injured persons to a safe area.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        94
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:904",
+      "category": "A2",
+      "en": "Let go port anchor.",
+      "zh": "抛左锚。",
+      "sourceRecordIds": [
+        904
+      ],
+      "sourceEnglish": "Let go port anchor.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        63
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:906",
+      "category": "B2",
+      "en": "Stand by rescue team and report.",
+      "zh": "救助队做好准备并报告。",
+      "sourceRecordIds": [
+        906,
+        3850
+      ],
+      "sourceEnglish": "Stand by rescue team and report.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        83
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:913",
+      "category": "A1",
+      "en": "I am proceeding to your assistance.",
+      "zh": "我船正前往援助你船。",
+      "sourceRecordIds": [
+        913,
+        2146
+      ],
+      "sourceEnglish": "I am proceeding to your assistance.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        33
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:927",
+      "category": "B3",
+      "en": "No, the cargo hoses are not connected.",
+      "zh": "不，输货软管尚未接好。",
+      "sourceRecordIds": [
+        927
+      ],
+      "sourceEnglish": "No, the cargo hoses are not connected.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        96
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:930",
+      "category": "B1",
+      "en": "I changed to manual steering.",
+      "zh": "我已改为手动操舵。",
+      "sourceRecordIds": [
+        930
+      ],
+      "sourceEnglish": "I changed to manual steering.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        68
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:933",
+      "category": "A1",
+      "en": "Proceed with your voyage.",
+      "zh": "你船可继续航行。",
+      "sourceRecordIds": [
+        933
+      ],
+      "sourceEnglish": "Proceed with your voyage.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        34
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:935",
+      "category": "A2",
+      "en": "We have a right-hand propeller.",
+      "zh": "我船使用右旋螺旋桨。",
+      "sourceRecordIds": [
+        935
+      ],
+      "sourceEnglish": "We have a right-hand propeller.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        61
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:943",
+      "category": "A2",
+      "en": "Is extra power available in an emergency?",
+      "zh": "紧急情况下是否可以提供额外功率？",
+      "sourceRecordIds": [
+        943
+      ],
+      "sourceEnglish": "Is extra power available in an emergency?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        61
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:945",
+      "category": "B1",
+      "en": "NAVTEX is switched on.",
+      "zh": "航行警告电传接收机已开启。",
+      "sourceRecordIds": [
+        945
+      ],
+      "sourceEnglish": "NAVTEX is switched on.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        68
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:947",
+      "category": "A1",
+      "en": "Do not cross the fairway.",
+      "zh": "不要横越航道。",
+      "sourceRecordIds": [
+        947
+      ],
+      "sourceEnglish": "Do not cross the fairway.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        47
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:950",
+      "category": "A1",
+      "en": "I require medical assistance.",
+      "zh": "我船需要医疗援助。",
+      "sourceRecordIds": [
+        950,
+        1893,
+        3570
+      ],
+      "sourceEnglish": "I require medical assistance.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        36
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:954",
+      "category": "A1",
+      "en": "No, I have no deficiencies.",
+      "zh": "不，我船没有缺陷。",
+      "sourceRecordIds": [
+        954
+      ],
+      "sourceEnglish": "No, I have no deficiencies.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        49
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:958",
+      "category": "B3",
+      "en": "No, the cargo list is not available and complete.",
+      "zh": "不，货物清单不齐全，无法完整提供。",
+      "sourceRecordIds": [
+        958
+      ],
+      "sourceEnglish": "No, the cargo list is not available and complete.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        91
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:960",
+      "category": "B1",
+      "en": "The radar is relative north-up.",
+      "zh": "雷达处于相对运动、北向上显示模式。",
+      "sourceRecordIds": [
+        960
+      ],
+      "sourceEnglish": "The radar is relative north-up.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        68
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:962",
+      "category": "A1",
+      "en": "The tide is falling.",
+      "zh": "潮水正在下降。",
+      "sourceRecordIds": [
+        962
+      ],
+      "sourceEnglish": "The tide is falling.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        51
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:963",
+      "category": "A1",
+      "en": "What is your port of destination?",
+      "zh": "你船的目的港是哪里？",
+      "sourceRecordIds": [
+        963
+      ],
+      "sourceEnglish": "What is your port of destination?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        48
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:983",
+      "category": "A2",
+      "en": "Hold on the aft spring.",
+      "zh": "刹住后倒缆。",
+      "sourceRecordIds": [
+        983
+      ],
+      "sourceEnglish": "Hold on the aft spring.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        66
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:989",
+      "category": "B1",
+      "en": "The log books are completed and signed.",
+      "zh": "航海日志已填写完毕并签字。",
+      "sourceRecordIds": [
+        989
+      ],
+      "sourceEnglish": "The log books are completed and signed.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        71
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:993",
+      "category": "B1",
+      "en": "Sign the standing orders.",
+      "zh": "在常规命令上签字。",
+      "sourceRecordIds": [
+        993
+      ],
+      "sourceEnglish": "Sign the standing orders.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        69
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1000",
+      "category": "A1",
+      "en": "I cannot repair damage.",
+      "zh": "我船无法修复损坏。",
+      "sourceRecordIds": [
+        1000
+      ],
+      "sourceEnglish": "I cannot repair damage.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        32
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1001",
+      "category": "B3",
+      "en": "Unlock the hatch covers.",
+      "zh": "解除舱盖锁定。",
+      "sourceRecordIds": [
+        1001
+      ],
+      "sourceEnglish": "Unlock the hatch covers.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        91
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1002",
+      "category": "A2",
+      "en": "The engine is a diesel.",
+      "zh": "主机是柴油机。",
+      "sourceRecordIds": [
+        1002
+      ],
+      "sourceEnglish": "The engine is a diesel.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        61
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1003",
+      "category": "B4",
+      "en": "Hold on to ropes or to your seat when hoisting.",
+      "zh": "吊升时，抓牢绳索或座位。",
+      "sourceRecordIds": [
+        1003
+      ],
+      "sourceEnglish": "Hold on to ropes or to your seat when hoisting.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1010",
+      "category": "A1",
+      "en": "Your track is diverging from the reference line.",
+      "zh": "你船航迹正在远离参考线。",
+      "sourceRecordIds": [
+        1010
+      ],
+      "sourceEnglish": "Your track is diverging from the reference line.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        53
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1012",
+      "category": "A1",
+      "en": "Your track is converging to the reference line.",
+      "zh": "你船航迹正在趋近参考线。",
+      "sourceRecordIds": [
+        1012
+      ],
+      "sourceEnglish": "Your track is converging to the reference line.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        53
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1016",
+      "category": "A1",
+      "en": "What range scale are you using?",
+      "zh": "你船正在使用什么量程？",
+      "sourceRecordIds": [
+        1016
+      ],
+      "sourceEnglish": "What range scale are you using?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        52
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1020",
+      "category": "A1",
+      "en": "I require a helicopter.",
+      "zh": "我船需要直升机援助。",
+      "sourceRecordIds": [
+        1020
+      ],
+      "sourceEnglish": "I require a helicopter.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        44
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1034",
+      "category": "A2",
+      "en": "Have fenders ready forward and aft.",
+      "zh": "船首、船尾备好碰垫。",
+      "sourceRecordIds": [
+        1034
+      ],
+      "sourceEnglish": "Have fenders ready forward and aft.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        65
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1035",
+      "category": "A2",
+      "en": "Are the propellers clear?",
+      "zh": "各螺旋桨周围是否清爽？",
+      "sourceRecordIds": [
+        1035
+      ],
+      "sourceEnglish": "Are the propellers clear?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        65
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1036",
+      "category": "A2",
+      "en": "What is the speed at full ahead?",
+      "zh": "全速前进时的航速是多少？",
+      "sourceRecordIds": [
+        1036
+      ],
+      "sourceEnglish": "What is the speed at full ahead?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        49
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1039",
+      "category": "A1",
+      "en": "I am on fire.",
+      "zh": "我船发生火灾。",
+      "sourceRecordIds": [
+        1039
+      ],
+      "sourceEnglish": "I am on fire.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        58
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1047",
+      "category": "B1",
+      "en": "A vessel is crossing from port side.",
+      "zh": "一艘船正从左舷横越。",
+      "sourceRecordIds": [
+        1047
+      ],
+      "sourceEnglish": "A vessel is crossing from port side.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        68
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1058",
+      "category": "A1",
+      "en": "Yes, my EPIRB is transmitting by mistake.",
+      "zh": "是的，我船应急无线电示位标正在误发信号。",
+      "sourceRecordIds": [
+        1058
+      ],
+      "sourceEnglish": "Yes, my EPIRB is transmitting by mistake.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        35
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1067",
+      "category": "A1",
+      "en": "Recover your fishing gear.",
+      "zh": "收回你船的渔具。",
+      "sourceRecordIds": [
+        1067
+      ],
+      "sourceEnglish": "Recover your fishing gear.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        42,
+        55
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1069",
+      "category": "A2",
+      "en": "The anchor is home.",
+      "zh": "锚已收妥。",
+      "sourceRecordIds": [
+        1069
+      ],
+      "sourceEnglish": "The anchor is home.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        64
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1071",
+      "category": "A1",
+      "en": "Say again your position for identification.",
+      "zh": "请重复你船船位，以便识别。",
+      "sourceRecordIds": [
+        1071
+      ],
+      "sourceEnglish": "Say again your position for identification.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        52
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1074",
+      "category": "A2",
+      "en": "Starboard engines slow ahead.",
+      "zh": "右舷主机慢速前进。",
+      "sourceRecordIds": [
+        1074
+      ],
+      "sourceEnglish": "Starboard engines slow ahead.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        61
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1082",
+      "category": "A1",
+      "en": "What is condition of person?",
+      "zh": "该人员的状况如何？",
+      "sourceRecordIds": [
+        1082
+      ],
+      "sourceEnglish": "What is condition of person?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        34
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1084",
+      "category": "A1",
+      "en": "Be ready to get underway.",
+      "zh": "做好开航准备。",
+      "sourceRecordIds": [
+        1084
+      ],
+      "sourceEnglish": "Be ready to get underway.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        54,
+        66
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1088",
+      "category": "A2",
+      "en": "The cable is leading up and down.",
+      "zh": "锚链垂直。",
+      "sourceRecordIds": [
+        1088,
+        2866
+      ],
+      "sourceEnglish": "The cable is leading up and down.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        63
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1096",
+      "category": "A1",
+      "en": "No, fire is not under control.",
+      "zh": "不，火势尚未得到控制。",
+      "sourceRecordIds": [
+        1096
+      ],
+      "sourceEnglish": "No, fire is not under control.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        31
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1113",
+      "category": "A1",
+      "en": "Stand by for receiving towing line.",
+      "zh": "准备接收拖缆。",
+      "sourceRecordIds": [
+        1113
+      ],
+      "sourceEnglish": "Stand by for receiving towing line.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        45
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1124",
+      "category": "A1",
+      "en": "When do you expect to refloat?",
+      "zh": "你船预计何时能够起浮？",
+      "sourceRecordIds": [
+        1124
+      ],
+      "sourceEnglish": "When do you expect to refloat?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        32
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1132",
+      "category": "A1",
+      "en": "Wait until high water.",
+      "zh": "等候高潮。",
+      "sourceRecordIds": [
+        1132
+      ],
+      "sourceEnglish": "Wait until high water.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        39
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1142",
+      "category": "A1",
+      "en": "The pilot ladder has broken.",
+      "zh": "引航梯已断裂。",
+      "sourceRecordIds": [
+        1142
+      ],
+      "sourceEnglish": "The pilot ladder has broken.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        43
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1143",
+      "category": "B4",
+      "en": "Give assistance when entering liferafts.",
+      "zh": "在人员进入救生筏时给予协助。",
+      "sourceRecordIds": [
+        1143
+      ],
+      "sourceEnglish": "Give assistance when entering liferafts.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1146",
+      "category": "A1",
+      "en": "No, you need not take tug.",
+      "zh": "不，你船不需要使用拖轮。",
+      "sourceRecordIds": [
+        1146
+      ],
+      "sourceEnglish": "No, you need not take tug.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        43
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1151",
+      "category": "A1",
+      "en": "Put helm hard to port.",
+      "zh": "左满舵。",
+      "sourceRecordIds": [
+        1151
+      ],
+      "sourceEnglish": "Put helm hard to port.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        43
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1166",
+      "category": "A1",
+      "en": "I require a helicopter with liferaft.",
+      "zh": "我船需要携带救生筏的直升机。",
+      "sourceRecordIds": [
+        1166
+      ],
+      "sourceEnglish": "I require a helicopter with liferaft.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        44
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1168",
+      "category": "A1",
+      "en": "Is fishing gear ahead of me?",
+      "zh": "我船前方是否有渔具？",
+      "sourceRecordIds": [
+        1168
+      ],
+      "sourceEnglish": "Is fishing gear ahead of me?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        42
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1189",
+      "category": "B4",
+      "en": "Have a lifebuoy ready.",
+      "zh": "备好救生圈。",
+      "sourceRecordIds": [
+        1189
+      ],
+      "sourceEnglish": "Have a lifebuoy ready.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1209",
+      "category": "A1",
+      "en": "What maximum winds are expected in the storm area?",
+      "zh": "预计风暴区内最大风力是多少？",
+      "sourceRecordIds": [
+        1209
+      ],
+      "sourceEnglish": "What maximum winds are expected in the storm area?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        38
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1210",
+      "category": "A1",
+      "en": "I am flooding in the engine room.",
+      "zh": "我船机舱正在进水。",
+      "sourceRecordIds": [
+        1210
+      ],
+      "sourceEnglish": "I am flooding in the engine room.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        80
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1215",
+      "category": "B4",
+      "en": "If one of your cabinmates is not able to attend the roll call, please inform the crew immediately.",
+      "zh": "如果同舱人员无法参加点名，请立即通知船员。",
+      "sourceRecordIds": [
+        1215
+      ],
+      "sourceEnglish": "If one of your cabinmates is not able to attend the roll call, please inform the crew immediately.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        102
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1224",
+      "category": "B4",
+      "en": "If you have any questions regarding safety, do not hesitate to ask any of the officers or crew.",
+      "zh": "如有任何安全问题，请向驾驶员或船员询问。",
+      "sourceRecordIds": [
+        1224
+      ],
+      "sourceEnglish": "If you have any questions regarding safety, do not hesitate to ask any of the officers or crew.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        102
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1226",
+      "category": "B4",
+      "en": "Enter the liferaft only when ordered by an officer.",
+      "zh": "只有接到驾驶员命令后才能进入救生筏。",
+      "sourceRecordIds": [
+        1226
+      ],
+      "sourceEnglish": "Enter the liferaft only when ordered by an officer.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1230",
+      "category": "A2",
+      "en": "Use the port quarter lead.",
+      "zh": "使用左舷尾部导缆装置。",
+      "sourceRecordIds": [
+        1230
+      ],
+      "sourceEnglish": "Use the port quarter lead.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        65
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1233",
+      "category": "B4",
+      "en": "Do not go to the lifeboat stations until you are ordered to do so.",
+      "zh": "未接到命令，不要前往救生艇集合站。",
+      "sourceRecordIds": [
+        1233
+      ],
+      "sourceEnglish": "Do not go to the lifeboat stations until you are ordered to do so.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        101
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1235",
+      "category": "A1",
+      "en": "You have permission to proceed by yourself.",
+      "zh": "准许你船自行航行。",
+      "sourceRecordIds": [
+        1235
+      ],
+      "sourceEnglish": "You have permission to proceed by yourself.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        57
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1242",
+      "category": "A2",
+      "en": "We will moor to buoy.",
+      "zh": "我船将系泊浮筒。",
+      "sourceRecordIds": [
+        1242
+      ],
+      "sourceEnglish": "We will moor to buoy.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        65
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1243",
+      "category": "A1",
+      "en": "Do you have any list?",
+      "zh": "你船是否有横倾？",
+      "sourceRecordIds": [
+        1243
+      ],
+      "sourceEnglish": "Do you have any list?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        49
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1250",
+      "category": "A1",
+      "en": "In what position will the tug meet me?",
+      "zh": "拖轮将在什么位置与我船会合？",
+      "sourceRecordIds": [
+        1250
+      ],
+      "sourceEnglish": "In what position will the tug meet me?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        43
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1257",
+      "category": "A2",
+      "en": "No, the anchor is not holding.",
+      "zh": "不，锚未抓牢。",
+      "sourceRecordIds": [
+        1257
+      ],
+      "sourceEnglish": "No, the anchor is not holding.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        63
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1259",
+      "category": "A2",
+      "en": "Stern thruster half to port.",
+      "zh": "艉侧推向左半速。",
+      "sourceRecordIds": [
+        1259
+      ],
+      "sourceEnglish": "Stern thruster half to port.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        61
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1260",
+      "category": "A1",
+      "en": "Change to a larger range scale.",
+      "zh": "改用较大量程。",
+      "sourceRecordIds": [
+        1260
+      ],
+      "sourceEnglish": "Change to a larger range scale.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        52
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1275",
+      "category": "A1",
+      "en": "What is the latest tropical storm warning?",
+      "zh": "最新热带风暴警报是什么？",
+      "sourceRecordIds": [
+        1275
+      ],
+      "sourceEnglish": "What is the latest tropical storm warning?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        38
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1284",
+      "category": "A1",
+      "en": "Spell the name of your vessel.",
+      "zh": "请拼读你船船名。",
+      "sourceRecordIds": [
+        1284
+      ],
+      "sourceEnglish": "Spell the name of your vessel.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        48
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1290",
+      "category": "B4",
+      "en": "Never throw a cigarette overboard.",
+      "zh": "严禁把烟头扔到舷外。",
+      "sourceRecordIds": [
+        1290
+      ],
+      "sourceEnglish": "Never throw a cigarette overboard.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        100
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1294",
+      "category": "B4",
+      "en": "Keep a sharp lookout for persons in the water.",
+      "zh": "密切瞭望水中人员。",
+      "sourceRecordIds": [
+        1294
+      ],
+      "sourceEnglish": "Keep a sharp lookout for persons in the water.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1295",
+      "category": "A1",
+      "en": "I require helicopter with doctor to pick up person.",
+      "zh": "我船需要携带医生的直升机接走人员。",
+      "sourceRecordIds": [
+        1295
+      ],
+      "sourceEnglish": "I require helicopter with doctor to pick up person.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        37
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1304",
+      "category": "B4",
+      "en": "Helicopters are coming to our rescue.",
+      "zh": "直升机正前来救援。",
+      "sourceRecordIds": [
+        1304
+      ],
+      "sourceEnglish": "Helicopters are coming to our rescue.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1311",
+      "category": "A2",
+      "en": "Is the propeller clear?",
+      "zh": "螺旋桨周围是否清爽？",
+      "sourceRecordIds": [
+        1311
+      ],
+      "sourceEnglish": "Is the propeller clear?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        65
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1320",
+      "category": "B1",
+      "en": "There is no list at present.",
+      "zh": "目前没有横倾。",
+      "sourceRecordIds": [
+        1320
+      ],
+      "sourceEnglish": "There is no list at present.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        71
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1326",
+      "category": "A2",
+      "en": "We will berth port side alongside.",
+      "zh": "我船将左舷靠泊。",
+      "sourceRecordIds": [
+        1326,
+        3384
+      ],
+      "sourceEnglish": "We will berth port side alongside.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        65
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1331",
+      "category": "B1",
+      "en": "The vessel is on even keel.",
+      "zh": "该船平吃水。",
+      "sourceRecordIds": [
+        1331
+      ],
+      "sourceEnglish": "The vessel is on even keel.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        71
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1334",
+      "category": "A2",
+      "en": "The cable is leading to starboard.",
+      "zh": "锚链导向右舷。",
+      "sourceRecordIds": [
+        1334,
+        4370
+      ],
+      "sourceEnglish": "The cable is leading to starboard.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        63
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1339",
+      "category": "A1",
+      "en": "Yes, I can stop spillage.",
+      "zh": "是的，我船能够停止溢漏。",
+      "sourceRecordIds": [
+        1339
+      ],
+      "sourceEnglish": "Yes, I can stop spillage.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        42
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1342",
+      "category": "A1",
+      "en": "Located oil spill in your wake.",
+      "zh": "在你船尾流中发现溢油。",
+      "sourceRecordIds": [
+        1342
+      ],
+      "sourceEnglish": "Located oil spill in your wake.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        42
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1343",
+      "category": "A1",
+      "en": "The barometer is steady.",
+      "zh": "气压保持稳定。",
+      "sourceRecordIds": [
+        1343
+      ],
+      "sourceEnglish": "The barometer is steady.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        38
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1351",
+      "category": "A2",
+      "en": "No, the anchors are not holding.",
+      "zh": "不，各锚未抓牢。",
+      "sourceRecordIds": [
+        1351
+      ],
+      "sourceEnglish": "No, the anchors are not holding.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        63
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1366",
+      "category": "B1",
+      "en": "Fog is in the area.",
+      "zh": "该区域有雾。",
+      "sourceRecordIds": [
+        1366
+      ],
+      "sourceEnglish": "Fog is in the area.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        69
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1375",
+      "category": "A2",
+      "en": "Send heaving line to the tug.",
+      "zh": "把撇缆送到拖轮。",
+      "sourceRecordIds": [
+        1375
+      ],
+      "sourceEnglish": "Send heaving line to the tug.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        64
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1376",
+      "category": "A2",
+      "en": "Keep the propellers clear.",
+      "zh": "保持各螺旋桨周围清爽。",
+      "sourceRecordIds": [
+        1376
+      ],
+      "sourceEnglish": "Keep the propellers clear.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        65
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1378",
+      "category": "A2",
+      "en": "Starboard engines dead slow ahead.",
+      "zh": "右舷主机微速前进。",
+      "sourceRecordIds": [
+        1378
+      ],
+      "sourceEnglish": "Starboard engines dead slow ahead.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        61
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1382",
+      "category": "A1",
+      "en": "I expect to refloat when weather improves.",
+      "zh": "我船预计在天气好转时起浮。",
+      "sourceRecordIds": [
+        1382
+      ],
+      "sourceEnglish": "I expect to refloat when weather improves.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        32
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1396",
+      "category": "A1",
+      "en": "My position was obtained by RADAR.",
+      "zh": "我船船位通过雷达测得。",
+      "sourceRecordIds": [
+        1396
+      ],
+      "sourceEnglish": "My position was obtained by RADAR.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        52
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1421",
+      "category": "B1",
+      "en": "No, I do not understand, please explain.",
+      "zh": "不，我没有理解，请解释。",
+      "sourceRecordIds": [
+        1421
+      ],
+      "sourceEnglish": "No, I do not understand, please explain.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        69
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1429",
+      "category": "A2",
+      "en": "Have the heaving lines ready forward and aft.",
+      "zh": "船首、船尾备好撇缆。",
+      "sourceRecordIds": [
+        1429
+      ],
+      "sourceEnglish": "Have the heaving lines ready forward and aft.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        65
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1435",
+      "category": "A1",
+      "en": "No, I do not carry any dangerous goods.",
+      "zh": "不，我船未载运任何危险货物。",
+      "sourceRecordIds": [
+        1435
+      ],
+      "sourceEnglish": "No, I do not carry any dangerous goods.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        49
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1437",
+      "category": "A2",
+      "en": "Walk back starboard anchor one shackle.",
+      "zh": "右锚送出一节锚链。",
+      "sourceRecordIds": [
+        1437
+      ],
+      "sourceEnglish": "Walk back starboard anchor one shackle.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        63
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1469",
+      "category": "A1",
+      "en": "How many persons will stay on board?",
+      "zh": "有多少人将留在船上？",
+      "sourceRecordIds": [
+        1469
+      ],
+      "sourceEnglish": "How many persons will stay on board?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        35
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1478",
+      "category": "A1",
+      "en": "Sighted persons in water.",
+      "zh": "发现水中有人员。",
+      "sourceRecordIds": [
+        1478
+      ],
+      "sourceEnglish": "Sighted persons in water.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        89
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1480",
+      "category": "A1",
+      "en": "Visibility is restricted by dust.",
+      "zh": "能见度受沙尘影响。",
+      "sourceRecordIds": [
+        1480
+      ],
+      "sourceEnglish": "Visibility is restricted by dust.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        39
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1490",
+      "category": "A2",
+      "en": "Starboard engines full astern.",
+      "zh": "右舷主机全速后退。",
+      "sourceRecordIds": [
+        1490
+      ],
+      "sourceEnglish": "Starboard engines full astern.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        61
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1491",
+      "category": "A1",
+      "en": "Vessels must avoid this area.",
+      "zh": "各船必须避开该区域。",
+      "sourceRecordIds": [
+        1491
+      ],
+      "sourceEnglish": "Vessels must avoid this area.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        55
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1497",
+      "category": "A1",
+      "en": "What is the atmospheric pressure in your position?",
+      "zh": "你船所在位置的气压是多少？",
+      "sourceRecordIds": [
+        1497,
+        4694
+      ],
+      "sourceEnglish": "What is the atmospheric pressure in your position?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        38
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1498",
+      "category": "A2",
+      "en": "We are going to anchorage.",
+      "zh": "我船正驶往锚地。",
+      "sourceRecordIds": [
+        1498
+      ],
+      "sourceEnglish": "We are going to anchorage.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        63
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1513",
+      "category": "A1",
+      "en": "No, the pilot boat is not on station.",
+      "zh": "不，引航艇不在指定位置。",
+      "sourceRecordIds": [
+        1513
+      ],
+      "sourceEnglish": "No, the pilot boat is not on station.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        57
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1514",
+      "category": "B1",
+      "en": "The vessel is standing on.",
+      "zh": "该船正在保向保速。",
+      "sourceRecordIds": [
+        1514
+      ],
+      "sourceEnglish": "The vessel is standing on.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        68
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1519",
+      "category": "A1",
+      "en": "I cannot establish damage.",
+      "zh": "我船无法确定损坏情况。",
+      "sourceRecordIds": [
+        1519
+      ],
+      "sourceEnglish": "I cannot establish damage.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        32
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1529",
+      "category": "B1",
+      "en": "A vessel is on opposite course.",
+      "zh": "一艘船与我船航向相反。",
+      "sourceRecordIds": [
+        1529
+      ],
+      "sourceEnglish": "A vessel is on opposite course.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        68
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1530",
+      "category": "A1",
+      "en": "Yes, you can land on deck.",
+      "zh": "是的，你方可以在甲板上降落。",
+      "sourceRecordIds": [
+        1530
+      ],
+      "sourceEnglish": "Yes, you can land on deck.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        44
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1533",
+      "category": "B4",
+      "en": "Free the lifeboat from water.",
+      "zh": "排净救生艇内的积水。",
+      "sourceRecordIds": [
+        1533
+      ],
+      "sourceEnglish": "Free the lifeboat from water.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1534",
+      "category": "A2",
+      "en": "Lower towing lines to the tugs.",
+      "zh": "把拖缆放下交给各拖轮。",
+      "sourceRecordIds": [
+        1534
+      ],
+      "sourceEnglish": "Lower towing lines to the tugs.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        64
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1543",
+      "category": "A2",
+      "en": "Let go all forward.",
+      "zh": "船首所有缆绳解掉。",
+      "sourceRecordIds": [
+        1543
+      ],
+      "sourceEnglish": "Let go all forward.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        66
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1550",
+      "category": "A2",
+      "en": "What is the full sea speed?",
+      "zh": "海上全速航速是多少？",
+      "sourceRecordIds": [
+        1550
+      ],
+      "sourceEnglish": "What is the full sea speed?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        62
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1552",
+      "category": "A1",
+      "en": "No, I do not require navigational assistance.",
+      "zh": "不，我船不需要助航服务。",
+      "sourceRecordIds": [
+        1552
+      ],
+      "sourceEnglish": "No, I do not require navigational assistance.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        52
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1561",
+      "category": "A2",
+      "en": "Port engines slow ahead.",
+      "zh": "左舷主机慢速前进。",
+      "sourceRecordIds": [
+        1561
+      ],
+      "sourceEnglish": "Port engines slow ahead.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        61
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1566",
+      "category": "A1",
+      "en": "No, I cannot pick up survivors.",
+      "zh": "不，我船无法救起幸存者。",
+      "sourceRecordIds": [
+        1566
+      ],
+      "sourceEnglish": "No, I cannot pick up survivors.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        36
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1572",
+      "category": "A1",
+      "en": "Report number of persons on board.",
+      "zh": "报告船上人数。",
+      "sourceRecordIds": [
+        1572
+      ],
+      "sourceEnglish": "Report number of persons on board.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        34
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1573",
+      "category": "B4",
+      "en": "Never use lighted candles.",
+      "zh": "严禁使用点燃的蜡烛。",
+      "sourceRecordIds": [
+        1573
+      ],
+      "sourceEnglish": "Never use lighted candles.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        100
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1581",
+      "category": "B4",
+      "en": "All passengers must attend this drill.",
+      "zh": "所有旅客必须参加本次演习。",
+      "sourceRecordIds": [
+        1581
+      ],
+      "sourceEnglish": "All passengers must attend this drill.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        100
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1592",
+      "category": "A1",
+      "en": "The pilot ladder is too far aft.",
+      "zh": "引航梯设置位置太靠后。",
+      "sourceRecordIds": [
+        1592
+      ],
+      "sourceEnglish": "The pilot ladder is too far aft.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        43
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1600",
+      "category": "A1",
+      "en": "Did you transmit a DSC distress alert?",
+      "zh": "你船是否发出了数字选择性呼叫遇险报警？",
+      "sourceRecordIds": [
+        1600
+      ],
+      "sourceEnglish": "Did you transmit a DSC distress alert?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        35
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1602",
+      "category": "B1",
+      "en": "Present stability is poor.",
+      "zh": "当前稳性不良。",
+      "sourceRecordIds": [
+        1602
+      ],
+      "sourceEnglish": "Present stability is poor.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        71
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1610",
+      "category": "B1",
+      "en": "We filled the ballast tanks.",
+      "zh": "我船已向压载舱注水。",
+      "sourceRecordIds": [
+        1610
+      ],
+      "sourceEnglish": "We filled the ballast tanks.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        70
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1615",
+      "category": "A1",
+      "en": "Is visibility expected to change in my position?",
+      "zh": "预计我船所在位置的能见度会变化吗？",
+      "sourceRecordIds": [
+        1615
+      ],
+      "sourceEnglish": "Is visibility expected to change in my position?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        39
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1617",
+      "category": "A1",
+      "en": "No, I am not dredging anchor.",
+      "zh": "不，我船没有进行拖锚操纵。",
+      "sourceRecordIds": [
+        1617
+      ],
+      "sourceEnglish": "No, I am not dredging anchor.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        54
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1627",
+      "category": "A1",
+      "en": "Have you altered course?",
+      "zh": "你船是否已经改向？",
+      "sourceRecordIds": [
+        1627
+      ],
+      "sourceEnglish": "Have you altered course?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        53
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1636",
+      "category": "A1",
+      "en": "Switch on the bow search light.",
+      "zh": "打开船首探照灯。",
+      "sourceRecordIds": [
+        1636
+      ],
+      "sourceEnglish": "Switch on the bow search light.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        45
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1640",
+      "category": "B1",
+      "en": "I changed to automatic steering.",
+      "zh": "我已改为自动操舵。",
+      "sourceRecordIds": [
+        1640
+      ],
+      "sourceEnglish": "I changed to automatic steering.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        68
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1650",
+      "category": "A1",
+      "en": "I was under attack by pirates.",
+      "zh": "我船遭到了海盗袭击。",
+      "sourceRecordIds": [
+        1650
+      ],
+      "sourceEnglish": "I was under attack by pirates.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        33
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1692",
+      "category": "A1",
+      "en": "In what position can I take the pilot?",
+      "zh": "我船可以在什么位置接引航员？",
+      "sourceRecordIds": [
+        1692
+      ],
+      "sourceEnglish": "In what position can I take the pilot?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        57
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1702",
+      "category": "A1",
+      "en": "I require ice breaker assistance.",
+      "zh": "我船需要破冰船协助。",
+      "sourceRecordIds": [
+        1702
+      ],
+      "sourceEnglish": "I require ice breaker assistance.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        45
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1709",
+      "category": "A1",
+      "en": "Survivors in good condition.",
+      "zh": "幸存者状况良好。",
+      "sourceRecordIds": [
+        1709
+      ],
+      "sourceEnglish": "Survivors in good condition.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        36
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1715",
+      "category": "A1",
+      "en": "Yes, my SART is transmitting by mistake.",
+      "zh": "是的，我船搜救雷达应答器正在误发信号。",
+      "sourceRecordIds": [
+        1715
+      ],
+      "sourceEnglish": "Yes, my SART is transmitting by mistake.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        35
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1733",
+      "category": "B1",
+      "en": "Afterpeak tank was filled to change the trim.",
+      "zh": "已向艉尖舱注水以调整纵倾。",
+      "sourceRecordIds": [
+        1733
+      ],
+      "sourceEnglish": "Afterpeak tank was filled to change the trim.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        71
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1793",
+      "category": "B4",
+      "en": "Warning! Do not drink sea water whatever the situation.",
+      "zh": "警告！无论何种情况，都不要饮用海水。",
+      "sourceRecordIds": [
+        1793
+      ],
+      "sourceEnglish": "Warning! Do not drink sea water whatever the situation.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1856",
+      "category": "B4",
+      "en": "At your assembly station one of the crew will perform a roll call.",
+      "zh": "一名船员将在集合站点名。",
+      "sourceRecordIds": [
+        1856
+      ],
+      "sourceEnglish": "At your assembly station one of the crew will perform a roll call.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        102
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1869",
+      "category": "B1",
+      "en": "The record books are completed and signed.",
+      "zh": "记录簿已填写完毕并签字。",
+      "sourceRecordIds": [
+        1869
+      ],
+      "sourceEnglish": "The record books are completed and signed.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        71
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1920",
+      "category": "B1",
+      "en": "There are fishing boats in the area.",
+      "zh": "该区域有渔船。",
+      "sourceRecordIds": [
+        1920
+      ],
+      "sourceEnglish": "There are fishing boats in the area.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        68
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1940",
+      "category": "B1",
+      "en": "Do you understand the standing orders?",
+      "zh": "你是否理解常规命令？",
+      "sourceRecordIds": [
+        1940
+      ],
+      "sourceEnglish": "Do you understand the standing orders?",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        69
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1984",
+      "category": "B4",
+      "en": "We require warm clothing and blankets for the children.",
+      "zh": "我们需要为儿童提供保暖衣物和毯子。",
+      "sourceRecordIds": [
+        1984
+      ],
+      "sourceEnglish": "We require warm clothing and blankets for the children.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        104
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:1986",
+      "category": "B4",
+      "en": "The ship's damage control team is fighting the flooding.",
+      "zh": "本船损管队正在控制进水。",
+      "sourceRecordIds": [
+        1986
+      ],
+      "sourceEnglish": "The ship's damage control team is fighting the flooding.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        101
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2020",
+      "category": "B1",
+      "en": "You have the watch now.",
+      "zh": "现在由你接班。",
+      "sourceRecordIds": [
+        2020
+      ],
+      "sourceEnglish": "You have the watch now.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        71
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2027",
+      "category": "B4",
+      "en": "We have radio contact with rescue craft.",
+      "zh": "我船已与救助艇建立无线电联系。",
+      "sourceRecordIds": [
+        2027
+      ],
+      "sourceEnglish": "We have radio contact with rescue craft.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2039",
+      "category": "B1",
+      "en": "The course board is written up.",
+      "zh": "航向板已填写。",
+      "sourceRecordIds": [
+        2039
+      ],
+      "sourceEnglish": "The course board is written up.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        67
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2052",
+      "category": "B4",
+      "en": "We will send a MAYDAY.",
+      "zh": "我船将发出遇险呼叫。",
+      "sourceRecordIds": [
+        2052
+      ],
+      "sourceEnglish": "We will send a MAYDAY.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2083",
+      "category": "B1",
+      "en": "The vessel has given way.",
+      "zh": "该船已经让路。",
+      "sourceRecordIds": [
+        2083
+      ],
+      "sourceEnglish": "The vessel has given way.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        68
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2129",
+      "category": "B1",
+      "en": "Change the paper of the echo sounder.",
+      "zh": "更换测深仪记录纸。",
+      "sourceRecordIds": [
+        2129
+      ],
+      "sourceEnglish": "Change the paper of the echo sounder.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        71
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2153",
+      "category": "B4",
+      "en": "Have a hook ready.",
+      "zh": "备好钩子。",
+      "sourceRecordIds": [
+        2153
+      ],
+      "sourceEnglish": "Have a hook ready.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2188",
+      "category": "B1",
+      "en": "Barometer is rising rapidly.",
+      "zh": "气压正在迅速上升。",
+      "sourceRecordIds": [
+        2188
+      ],
+      "sourceEnglish": "Barometer is rising rapidly.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        69
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2255",
+      "category": "B1",
+      "en": "Yes, I understand the standing orders.",
+      "zh": "是的，我理解常规命令。",
+      "sourceRecordIds": [
+        2255
+      ],
+      "sourceEnglish": "Yes, I understand the standing orders.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        69
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2258",
+      "category": "B4",
+      "en": "All passengers with their lifejackets and blankets are requested to go to their assembly stations immediately.",
+      "zh": "请所有旅客携带救生衣和毯子，立即前往各自集合站。",
+      "sourceRecordIds": [
+        2258
+      ],
+      "sourceEnglish": "All passengers with their lifejackets and blankets are requested to go to their assembly stations immediately.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        102
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2303",
+      "category": "B4",
+      "en": "Pump out the water.",
+      "zh": "泵出积水。",
+      "sourceRecordIds": [
+        2303
+      ],
+      "sourceEnglish": "Pump out the water.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2308",
+      "category": "B4",
+      "en": "We will join the other liferafts.",
+      "zh": "我筏将与其他救生筏会合。",
+      "sourceRecordIds": [
+        2308
+      ],
+      "sourceEnglish": "We will join the other liferafts.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2341",
+      "category": "B1",
+      "en": "Automatic fog signal is switched on.",
+      "zh": "自动雾号装置已开启。",
+      "sourceRecordIds": [
+        2341
+      ],
+      "sourceEnglish": "Automatic fog signal is switched on.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        69
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2350",
+      "category": "B4",
+      "en": "Strictly obey all instructions given by the lifeboatman.",
+      "zh": "严格服从救生艇员的所有指令。",
+      "sourceRecordIds": [
+        2350
+      ],
+      "sourceEnglish": "Strictly obey all instructions given by the lifeboatman.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2402",
+      "category": "B1",
+      "en": "Visibility is reduced by rain.",
+      "zh": "能见度受降雨影响。",
+      "sourceRecordIds": [
+        2402
+      ],
+      "sourceEnglish": "Visibility is reduced by rain.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        69
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2437",
+      "category": "B1",
+      "en": "Visibility is reduced by fog.",
+      "zh": "能见度受雾影响。",
+      "sourceRecordIds": [
+        2437
+      ],
+      "sourceEnglish": "Visibility is reduced by fog.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        69
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2496",
+      "category": "B4",
+      "en": "Assist those who need help.",
+      "zh": "协助需要帮助的人员。",
+      "sourceRecordIds": [
+        2496
+      ],
+      "sourceEnglish": "Assist those who need help.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2508",
+      "category": "B1",
+      "en": "The sea state is expected to change.",
+      "zh": "预计海况将发生变化。",
+      "sourceRecordIds": [
+        2508
+      ],
+      "sourceEnglish": "The sea state is expected to change.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        69
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2629",
+      "category": "B4",
+      "en": "Never smoke in bed.",
+      "zh": "严禁在床上吸烟。",
+      "sourceRecordIds": [
+        2629
+      ],
+      "sourceEnglish": "Never smoke in bed.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        100
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2647",
+      "category": "B4",
+      "en": "Always act immediately if you detect fire or smell fumes or smoke.",
+      "zh": "发现火情或闻到烟气时，立即采取行动。",
+      "sourceRecordIds": [
+        2647
+      ],
+      "sourceEnglish": "Always act immediately if you detect fire or smell fumes or smoke.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        100
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2799",
+      "category": "B4",
+      "en": "Enter the lifeboat only when ordered by an officer.",
+      "zh": "只有接到驾驶员命令后才能进入救生艇。",
+      "sourceRecordIds": [
+        2799
+      ],
+      "sourceEnglish": "Enter the lifeboat only when ordered by an officer.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2891",
+      "category": "B4",
+      "en": "Do not push each other when entering the lifeboat.",
+      "zh": "进入救生艇时不要互相推挤。",
+      "sourceRecordIds": [
+        2891
+      ],
+      "sourceEnglish": "Do not push each other when entering the lifeboat.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2893",
+      "category": "B4",
+      "en": "Please follow the instructions given by the officers and crew.",
+      "zh": "请遵从驾驶员和船员的指示。",
+      "sourceRecordIds": [
+        2893
+      ],
+      "sourceEnglish": "Please follow the instructions given by the officers and crew.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        101
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:2972",
+      "category": "B4",
+      "en": "At your assembly station one of the officers will perform a roll call.",
+      "zh": "一名驾驶员将在集合站点名。",
+      "sourceRecordIds": [
+        2972
+      ],
+      "sourceEnglish": "At your assembly station one of the officers will perform a roll call.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        102
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:3172",
+      "category": "B4",
+      "en": "We will use smoke buoys to attract attention.",
+      "zh": "我方将使用烟雾浮标引起注意。",
+      "sourceRecordIds": [
+        3172
+      ],
+      "sourceEnglish": "We will use smoke buoys to attract attention.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:3231",
+      "category": "B4",
+      "en": "Clear the entrance of the liferaft immediately after entering.",
+      "zh": "进入救生筏后立即让开入口。",
+      "sourceRecordIds": [
+        3231
+      ],
+      "sourceEnglish": "Clear the entrance of the liferaft immediately after entering.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:3305",
+      "category": "B4",
+      "en": "Do not forget personal documents, your spectacles and medicine if necessary.",
+      "zh": "不要忘记个人证件、眼镜，以及必要的药品。",
+      "sourceRecordIds": [
+        3305
+      ],
+      "sourceEnglish": "Do not forget personal documents, your spectacles and medicine if necessary.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        102
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:3567",
+      "category": "B4",
+      "en": "Search all WCs for missing persons.",
+      "zh": "搜索所有卫生间，寻找失踪人员。",
+      "sourceRecordIds": [
+        3567
+      ],
+      "sourceEnglish": "Search all WCs for missing persons.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "reviewed_template_or_editorial_variant",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:3583",
+      "category": "B4",
+      "en": "From your assembly stations you will be escorted to your lifeboats.",
+      "zh": "工作人员将从集合站引导各位前往救生艇。",
+      "sourceRecordIds": [
+        3583
+      ],
+      "sourceEnglish": "From your assembly stations you will be escorted to your lifeboats.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        102
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:3746",
+      "category": "B4",
+      "en": "Strictly obey all instructions given by the officer.",
+      "zh": "严格服从驾驶员的所有指令。",
+      "sourceRecordIds": [
+        3746
+      ],
+      "sourceEnglish": "Strictly obey all instructions given by the officer.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:3805",
+      "category": "B4",
+      "en": "Never smoke on deck except in areas labelled as smoking areas.",
+      "zh": "严禁在甲板吸烟，标明吸烟区的地方除外。",
+      "sourceRecordIds": [
+        3805
+      ],
+      "sourceEnglish": "Never smoke on deck except in areas labelled as smoking areas.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        100
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    },
+    {
+      "id": "jmu:3867",
+      "category": "B4",
+      "en": "Help children, elderly, disabled, injured or sick persons with lifejackets.",
+      "zh": "协助儿童、老年人、残障人士、受伤人员或病人穿好救生衣。",
+      "sourceRecordIds": [
+        3867
+      ],
+      "sourceEnglish": "Help children, elderly, disabled, injured or sick persons with lifejackets.",
+      "standard": "IMO A.918(22)",
+      "referencePdfPages": [
+        103
+      ],
+      "referenceType": "literal_phrase",
+      "reviewStatus": "editorially_reviewed"
+    }
+  ]
+}

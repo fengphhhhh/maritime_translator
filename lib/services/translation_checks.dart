@@ -14,12 +14,19 @@ abstract final class TranslationChecks {
     final result = <String>{};
     for (final side in ['port', 'starboard']) {
       if (RegExp(
-            '\\b$side\\s+(side|bow|beam|quarter|anchor|engine|wing|capstan|alongside)\\b',
+            '\\b$side\\s+(side|bow|beam|quarter|anchors?|engines?|cables?|wing|capstan|alongside)\\b',
           ).hasMatch(s) ||
           RegExp('\\bpass(?:ing)?\\s+$side[- ]to[- ]$side\\b').hasMatch(s) ||
           RegExp('\\bhard(?:-a-|\\s+(?:to\\s+)?)$side\\b').hasMatch(s) ||
           RegExp('\\b(?:hard(?:-a-)?|course|turn)\\s+(?:to\\s+)?$side\\b')
-              .hasMatch(s)) {
+              .hasMatch(s) ||
+          RegExp(
+            '\\b(?:bow|stern)\\s+thruster\\s+(?:full|half)\\s+to\\s+$side\\b',
+          ).hasMatch(s) ||
+          RegExp('\\b(?:list(?:ing)?|leading)\\s+to\\s+$side\\b').hasMatch(s) ||
+          RegExp(
+            '\\bwalk\\s+back\\s+$side(?:\\s+anchor)?\\s+(?:one|two|[0-9]+)\\b',
+          ).hasMatch(s)) {
         result.add(side == 'port' ? 'left' : 'right');
       }
     }
@@ -85,13 +92,17 @@ abstract final class TranslationChecks {
         ).hasMatch(result)) {
       return false;
     }
+    final orderText = source.replaceAll(
+      RegExp(r"\b(?:do not|don't) hesitate to\b", caseSensitive: false),
+      '',
+    );
     final negativeOrder = RegExp(
-      r"\bdo not\b|\bdon't\b|\bnever\b|禁止|不得|请勿|不要",
+      r"\bdo not\b|\bdon't\b|\bnever\b|严禁|禁止|不得|请勿|不要",
       caseSensitive: false,
-    ).hasMatch(source);
+    ).hasMatch(orderText);
     if (negativeOrder &&
         !RegExp(
-          r"\bnot\b|\bnever\b|\bno\b|\bdon't\b|不|勿|禁止|未|无|没|别",
+          r"\bnot\b|\bnever\b|\bno\b|\bdon't\b|不|勿|严禁|禁止|未|无|没|别",
           caseSensitive: false,
         ).hasMatch(result)) {
       return false;

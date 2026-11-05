@@ -200,7 +200,7 @@ abstract final class MaritimeNumbers {
         if (phrase == 'oh') return phrase;
         if (phrase == 'one' &&
             !RegExp(
-              r'^[ -]*(?:(?:or|to)\s+(?:two|three)|(?:nautical\s+)?mile|knot|metre|meter|ton|minute|hour|day|deck|degree|scoop)\b',
+              r'^[ -]*(?:(?:or|to)\s+(?:two|three)|(?:nautical\s+)?mile|knot|metre|meter|ton|minute|hour|day|deck|degree|scoop|shackles?)\b',
             ).hasMatch(text.substring(m.end))) {
           return phrase;
         }

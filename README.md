@@ -8,6 +8,8 @@
 
 已完成用户提供的50个主题、1176个条目的校订与离线接入。完整说明见[CORPUS_UPGRADE.md](CORPUS_UPGRADE.md)。
 
+另从 JMU 参考项目筛选、复核并补译 437 条 SMCP 场景表达，已接入离线精确匹配和相关示例检索。来源、筛选与验证说明见 [SMCP_SUPPLEMENT.md](SMCP_SUPPLEMENT.md)。
+
 ## 当前进度
 
 - **第一步 · 界面与录音**：夜间暗黑主界面、32pt 主显示区、两个巨型按住说话按键、16 kHz 单声道 PCM 采集。

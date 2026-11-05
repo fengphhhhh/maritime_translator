@@ -1,9 +1,11 @@
 import '../config/maritime_corpus.dart';
+import '../config/smcp_supplement.dart';
 import 'maritime_numbers.dart';
 
 /// Entirely local, read-only phrase lookup and bounded example retrieval.
 /// Similarity never returns a final translation: only a literal full match can.
 abstract final class CorpusService {
+  static const _pairs = [...MaritimeCorpus.pairs, ...SmcpSupplement.pairs];
   static String normalize(String text) => text
       .toLowerCase()
       .replaceAll('’', "'")
@@ -22,6 +24,15 @@ abstract final class CorpusService {
       final target = englishSource ? pair.zh : pair.en;
       result.putIfAbsent(normalize(source), () => <String>{}).add(target);
     }
+    final originalKeys = result.keys.toSet();
+    for (final pair in SmcpSupplement.pairs) {
+      final source = englishSource ? pair.en : pair.zh;
+      final target = englishSource ? pair.zh : pair.en;
+      final key = normalize(source);
+      // Existing reviewed translations keep their behavior in both directions.
+      if (originalKeys.contains(key)) continue;
+      result.putIfAbsent(key, () => <String>{}).add(target);
+    }
     return result;
   }
 
@@ -32,10 +43,10 @@ abstract final class CorpusService {
   }
 
   static final _tokens = <bool, List<Set<String>>>{
-    true: MaritimeCorpus.pairs.map((p) => tokens(p.en, true)).toList(),
-    false: MaritimeCorpus.pairs.map((p) => tokens(p.zh, false)).toList(),
+    true: _pairs.map((p) => tokens(p.en, true)).toList(),
+    false: _pairs.map((p) => tokens(p.zh, false)).toList(),
   };
-  static final _hasNumbers = MaritimeCorpus.pairs
+  static final _hasNumbers = _pairs
       .map(
         (p) =>
             MaritimeNumbers.values(p.en).isNotEmpty ||
@@ -133,8 +144,8 @@ abstract final class CorpusService {
     if (query.length < 2) return const [];
     final signature = criticalSignature(text, englishSource);
     final ranked = <(double, CorpusPair)>[];
-    for (var i = 0; i < MaritimeCorpus.pairs.length; i++) {
-      final pair = MaritimeCorpus.pairs[i];
+    for (var i = 0; i < _pairs.length; i++) {
+      final pair = _pairs[i];
       final source = englishSource ? pair.en : pair.zh;
       // Numeric examples could leak a different position/speed into the answer.
       // Keep all digit-bearing references in the exact-match path only.

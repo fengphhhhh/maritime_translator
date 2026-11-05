@@ -27,7 +27,7 @@ def verify(ipa):
                      name.endswith(('.bin', '.gguf')))):
                 raise ValueError(f'Model weights must not be bundled: {name}')
         print('Verified: no bundled model weights')
-        for name in ('maritime_dialogues.json', 'maritime_turns.json'):
+        for name in ('maritime_dialogues.json', 'maritime_turns.json', 'smcp_supplement.json'):
             with (ROOT / 'assets' / 'corpus' / name).open('rb') as stream:
                 expected_hash = digest(stream)
             with archive.open(ASSETS + 'corpus/' + name) as stream:
